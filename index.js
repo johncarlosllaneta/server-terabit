@@ -3745,14 +3745,5 @@ app.get("/petOwner/services/health/card/:pet_id", (req, res) => {
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(
-    db.connect(function (err) {
-      if (err) {
-        return console.error("error: " + err.message);
-      }
-
-      console.log("Connected to the MySQL server.");
-    })
-  );
   console.log(`Running  Server ${PORT}`);
 });
