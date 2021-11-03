@@ -40,24 +40,23 @@ app.use(
 //Get, Add, Delete, and Update Ratings& Feedback
 
 //--------------------------------------------------------------------------//
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "	id16572533_terravetmobile",
-//   password: "W_Bs#S-XGsaq6G<",
-//   database: "id16572533_terravet",
-//   localAddress:""
-// });
-
-const db = mysql.createPool({
-  connectionLimit: 1000,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host: "us-cdbr-east-04.cleardb.com",
-  user: "be6527b0b7c051",
-  password: "412951dd",
-  database: "heroku_8275da6060fa8d2",
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "terravet",
 });
+
+// const db = mysql.createPool({
+//   connectionLimit: 1000,
+//   connectTimeout: 60 * 60 * 1000,
+//   acquireTimeout: 60 * 60 * 1000,
+//   timeout: 60 * 60 * 1000,
+//   host: "us-cdbr-east-04.cleardb.com",
+//   user: "be6527b0b7c051",
+//   password: "412951dd",
+//   database: "heroku_8275da6060fa8d2",
+// });
 
 // console.log(db);
 
@@ -689,9 +688,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-      Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -875,15 +874,24 @@ app.put("/vetclinic/update/:vet_admin_id", (req, res) => {
   const vet_name = req.body.vet_name;
   const vet_address = req.body.vet_address;
   const vet_contact_number = req.body.vet_contact_number;
-  // console.log(scheduleMonday);
-  const sqlQuery = `UPDATE vet_clinic SET email = ?, vet_name = ? ,vet_address = ?,vet_contact_number = ?
-    WHERE	vet_admin_id = ?`;
+  const oldnumber = req.body.oldnumber;
+  console.log(oldnumber);
+  const sqlQuery = `UPDATE vet_clinic SET email = ?, vet_name = ? ,vet_address = ?,vet_contact_number = ? WHERE	vet_admin_id = ?`;
   db.query(
     sqlQuery,
     [email, vet_name, vet_address, vet_contact_number, vet_admin_id],
     (err, result) => {
-      if (err === null) {
-        res.send({ message: "Update Successfully" });
+      if (err == null) {
+        db.query('UPDATE user_role SET email = ? , phone_number = ? WHERE email = ? AND phone_number = ?', [email, vet_contact_number, email, oldnumber], (err, result) => {
+          if (err == null) {
+            res.send({ message: "Update Successfully" });
+          } else {
+            console.log(err);
+          }
+
+
+        })
+
       } else {
         console.log(err);
         // res.sendStatus(400).send('Bad');
@@ -1006,10 +1014,11 @@ app.put("/vetclinic/remove/:vetid", (req, res) => {
 //authenticate Vet upon uploading permit
 app.get("/vet/uploads", (req, res) => {
   //Authenticate
-  // console.log("here");
-  const email = req.query.email;
 
+  const email = req.query.email;
+  console.log(email);
   db.query("SELECT * FROM user_role WHERE email = ?", email, (err, result) => {
+    console.log(result);
     if (err) {
       res.send({ err: err });
     }
@@ -1191,7 +1200,7 @@ app.get("/products/:vetid", (req, res) => {
   // console.log(vet_admin_id);
   const sqlQuery = "SELECT * FROM products WHERE vetid = ?";
   db.query(sqlQuery, vet_admin_id, (err, result) => {
-    // console.log(result);
+    console.log(result);
     res.send(result);
   });
 });
@@ -1240,7 +1249,7 @@ app.post("/product/delete/:product_id", (req, res) => {
   });
 });
 
-app.post("/product/update/:productUpdateId", (req, res) => {
+app.put("/product/update/:productUpdateId", (req, res) => {
   const product_id = req.params.productUpdateId;
   const vetid = req.body.vetid;
   const product_name = req.body.updateProductName;
@@ -1767,7 +1776,7 @@ app.post("/pharmacy/delete/:medicine_id", (req, res) => {
   });
 });
 
-app.post("/pharmacy/update/:pharmacyUpdateId", (req, res) => {
+app.put("/pharmacy/update/:pharmacyUpdateId", (req, res) => {
   const medicine_id = req.params.pharmacyUpdateId;
   const vetid = req.body.vetid;
   const medicine_image = req.body.medicine_image;
@@ -2036,7 +2045,7 @@ app.get("/vetclinic/dog/length/:vetid", (req, res) => {
     "SELECT DISTINCT pets.pet_id FROM pets JOIN appointment ON pets.pet_id = appointment.pet_id JOIN vet_clinic ON vet_clinic.vetid = appointment.vetid WHERE vet_clinic.vetid = ? AND appointment.appointment_status = 'Done' AND pets.type_of_pet= 'Dog'";
 
   db.query(sqlQuery, vetid, (err, result) => {
-    // console.log(result.length);
+    console.log(result.length);
     res.send({
       dog: result.length,
     });
@@ -2443,11 +2452,11 @@ function generateAccessToken(user) {
 //API for dashboard in vet clinic
 app.get("/pets/vetclinic/length/:vetid", (req, res) => {
   const vetid = req.params.vetid;
-  //console.log(vet_admin_id)
+  console.log(vetid)
   const sqlQuery =
     "SELECT DISTINCT pet_id FROM appointment where vetid=? && appointment.appointment_status = 'Done'";
-  db.query(sqlQuery, vetid.substring(1), (err, result) => {
-    // console.log(result.length);
+  db.query(sqlQuery, vetid, (err, result) => {
+    console.log(result.length);
     res.send({
       pets: result.length,
       // pets: 4,
@@ -2472,7 +2481,7 @@ app.get("/reserved/vetclinic/length/:vetid", (req, res) => {
   //console.log(vet_admin_id)
   const sqlQuery =
     "SELECT * FROM reservation where vetid=? && reservation_status= 'Pending'";
-  db.query(sqlQuery, vetid.substring(1), (err, result) => {
+  db.query(sqlQuery, vetid, (err, result) => {
     res.send({
       reserved: result.length,
     });
@@ -2484,7 +2493,7 @@ app.get("/pending/vetclinic/length/:vetid", (req, res) => {
   //console.log(vet_admin_id)
   const sqlQuery =
     "SELECT * FROM appointment WHERE vetid=? && appointment_status='Pending'";
-  db.query(sqlQuery, vetid.substring(1), (err, result) => {
+  db.query(sqlQuery, vetid, (err, result) => {
     res.send({
       pending: result.length,
     });
@@ -2693,7 +2702,7 @@ app.post("/web/user/compare", (req, res) => {
   const currentHashPassword = req.body.currentHashPassword;
   const currentPassword = req.body.currentPassword;
 
-  console.log(currentPassword);
+  // console.log(currentPassword);
 
   bcrypt.compare(currentPassword, currentHashPassword, function (err, result) {
     console.log(result);
@@ -2802,7 +2811,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => {}
+          (err, result) => { }
         );
       } else {
         console.log("invalid number");
@@ -3024,6 +3033,23 @@ app.get("/reservations/system/admin/:email", (req, res) => {
     // console.log(result);
 
     res.send(result);
+  });
+});
+
+
+///API for checking existing feedback
+app.post("/ratings&feedback/exist/rate", (req, res) => {
+  const appointment_id = req.body.appointment_id;
+  const pet_owner_id = req.body.pet_owner_id;
+  console.log(appointment_id);
+  const query =
+    "SELECT * FROM rate_feedback JOIN appointment ON rate_feedback.appointment_id = appointment.appointment_id JOIN pet_owners ON appointment.pet_owner_id = pet_owners.pet_owner_id WHERE appointment_id = ? AND pet_owner_id = ?";
+  db.query(query, [appointment_id, pet_owner_id], (err, result) => {
+    if (result <= 0) {
+      console.log(err);
+    } else {
+      res.send({ message: true });
+    }
   });
 });
 
