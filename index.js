@@ -73,23 +73,23 @@ app.post('/video/token', (req, res) => {
 //Get, Add, Delete, and Update Ratings& Feedback
 
 //--------------------------------------------------------------------------//
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "terravet",
-// });
-
-const db = mysql.createPool({
-  connectionLimit: 1000,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host: "us-cdbr-east-04.cleardb.com",
-  user: "be6527b0b7c051",
-  password: "412951dd",
-  database: "heroku_8275da6060fa8d2",
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "terravet",
 });
+
+// const db = mysql.createPool({
+//   connectionLimit: 1000,
+//   connectTimeout: 60 * 60 * 1000,
+//   acquireTimeout: 60 * 60 * 1000,
+//   timeout: 60 * 60 * 1000,
+//   host: "us-cdbr-east-04.cleardb.com",
+//   user: "be6527b0b7c051",
+//   password: "412951dd",
+//   database: "heroku_8275da6060fa8d2",
+// });
 
 // console.log(db);
 
@@ -2875,6 +2875,21 @@ app.post("/sendSMS/verify/:phoneNumber", (req, res) => {
   });
 });
 
+
+app.put("/petowner/change/:petowner_id", (req, res) => {
+  const petowner_id = req.params.petowner_id;
+  const profilePicture = req.body.profilePicture;
+
+  const sqlQuery =
+    "UPDATE pet_owners SET profilePicture = ? WHERE pet_owner_id = ? ";
+  db.query(sqlQuery, [profilePicture, petowner_id], (err, result) => {
+    if (err === null) {
+      res.send({ message: "Correct" });
+    } else {
+      console.log(err);
+    }
+  });
+});
 //change password
 app.post("/changepassword/:password", (req, res) => {
   const password = req.params.password;
@@ -3076,10 +3091,10 @@ app.post("/ratings&feedback/exist/rate", (req, res) => {
   const pet_owner_id = req.body.pet_owner_id;
   console.log(appointment_id);
   const query =
-    "SELECT * FROM rate_feedback JOIN appointment ON rate_feedback.appointment_id = appointment.appointment_id JOIN pet_owners ON appointment.pet_owner_id = pet_owners.pet_owner_id WHERE appointment_id = ? AND pet_owner_id = ?";
+    "SELECT * FROM rate_feedback WHERE rate_feedback.appointment_id = ?";
   db.query(query, [appointment_id, pet_owner_id], (err, result) => {
     if (result <= 0) {
-      console.log(err);
+      res.send({ message: false });
     } else {
       res.send({ message: true });
     }
