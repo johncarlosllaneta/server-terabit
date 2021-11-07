@@ -10,7 +10,7 @@ const saltRounds = 10;
 const multer = require("multer");
 const path = require("path");
 const config = require('./config');
-const pino = require('express-pino-logger')();
+// const pino = require('express-pino-logger')();
 const { videoToken } = require('./tokens');
 app.use(express.json());
 app.use(cors());
@@ -20,7 +20,7 @@ app.use(
     extended: true,
   })
 );
-app.use(pino);
+// app.use(pino);
 
 const sendTokenResponse = (token, res) => {
   res.set('Content-Type', 'application/json');
@@ -2461,6 +2461,25 @@ app.post("/talktovet/vetclinic/messages/sent", (req, res) => {
   );
 });
 
+
+// Talk to vet check thread exist
+app.post('/talktovet/thread/exist', (req, res) => {
+  const pet_owner_id = req.body.pet_owner_id;
+  const vetid = req.body.vetid;
+  console.log(pet_owner_id);
+  db.query("SELECT * FROM thread WHERE pet_owner_id = ? AND vetid = ?",
+    [pet_owner_id, vetid],
+    (err, result) => {
+      console.log(result);
+      if (result.length > 0) {
+        res.send({ exist: true });
+      } else {
+        res.send({ exist: false });
+      }
+    }
+  )
+})
+
 //--------------------------------------------------------------------------//
 
 function authenticateToken(req, res, next) {
@@ -2887,6 +2906,35 @@ app.put("/petowner/change/:petowner_id", (req, res) => {
       res.send({ message: "Correct" });
     } else {
       console.log(err);
+    }
+  });
+});
+
+///change Profile pic
+app.put("/petowner/change/profile/:petowner_id", (req, res) => {
+  const petowner_id = req.params.petowner_id;
+  const profilePicture = req.body.profilePicture;
+  console.log(profilePicture);
+  const sqlQuery =
+    "UPDATE pet_owners SET profilePicture = ? WHERE pet_owner_id = ? ";
+  db.query(sqlQuery, [profilePicture, petowner_id], (err, result) => {
+    if (err == null) {
+      res.send({ message: "Correct" });
+    } else {
+      res.send({ message: "error" });
+    }
+  });
+});
+
+app.put("/pet/change/profile/:pet_id", (req, res) => {
+  const pet_id = req.params.pet_id;
+  const pet_picture = req.body.pet_picture;
+  const sqlQuery = "UPDATE pets SET pet_picture = ? WHERE pet_id = ? ";
+  db.query(sqlQuery, [pet_picture, pet_id], (err, result) => {
+    if (err == null) {
+      res.send({ message: "Correct" });
+    } else {
+      res.send({ message: "error" });
     }
   });
 });
