@@ -73,23 +73,23 @@ app.post('/video/token', (req, res) => {
 //Get, Add, Delete, and Update Ratings& Feedback
 
 //--------------------------------------------------------------------------//
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "terravet",
-// });
-
-const db = mysql.createPool({
-  connectionLimit: 1000,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host: "us-cdbr-east-04.cleardb.com",
-  user: "be6527b0b7c051",
-  password: "412951dd",
-  database: "heroku_8275da6060fa8d2",
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "terravet",
 });
+
+// const db = mysql.createPool({
+//   connectionLimit: 1000,
+//   connectTimeout: 60 * 60 * 1000,
+//   acquireTimeout: 60 * 60 * 1000,
+//   timeout: 60 * 60 * 1000,
+//   host: "us-cdbr-east-04.cleardb.com",
+//   user: "be6527b0b7c051",
+//   password: "412951dd",
+//   database: "heroku_8275da6060fa8d2",
+// });
 
 // console.log(db);
 
