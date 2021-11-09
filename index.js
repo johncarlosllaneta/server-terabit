@@ -1713,28 +1713,26 @@ app.put("/reservation/cancel", (req, res) => {
   const sqlQuery =
     "UPDATE reservation SET reservation_status = 'Cancelled' WHERE reserve_id = ?";
   db.query(sqlQuery, reserve_id, (err, result) => {
+
+    var product = [];
+    const selectProduct = "SELECT * FROM products WHERE product_id = ?";
+    db.query(selectProduct, product_id, (err, result) => {
+      product.push(JSON.parse(JSON.stringify(result[0])));
+      // console.log(product[0].quantity);
+      var deduced = product[0].quantity + parseInt(quantity);
+      // console.log(deduced);
+
+      const updateProduct =
+        "UPDATE products SET quantity = ? WHERE product_id = ?";
+      db.query(updateProduct, [deduced, product_id], (err, result) => {
+
+      });
+    });
+
     console.log(err);
     res.send({ message: "Cancelled Reservation" });
   });
 
-  var product = [];
-  const selectProduct = "SELECT * FROM products WHERE product_id = ?";
-  db.query(selectProduct, product_id, (err, result) => {
-    product.push(JSON.parse(JSON.stringify(result[0])));
-    // console.log(product[0].quantity);
-    var deduced = product[0].quantity + parseInt(quantity);
-    // console.log(deduced);
-
-    const updateProduct =
-      "UPDATE products SET quantity = ? WHERE product_id = ?";
-    db.query(updateProduct, [deduced, product_id], (err, result) => {
-      if (err == null) {
-        console.log(err);
-      } else {
-        res.send("success");
-      }
-    });
-  });
 });
 
 //this api is for expired pending appointments per vet clinic
@@ -3156,15 +3154,25 @@ app.post("/ratings&feedback/:appointment_id", (req, res) => {
   const ratings = req.body.ratings;
   const comments = req.body.comments;
 
+  var today = new Date();
+  var date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  var time =
+    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date + " " + time;
+
   const query =
-    "INSERT INTO rate_feedback (appointment_id,ratings,comments) VALUES (?,?,?)";
-  db.query(query, [appointment_id, ratings, comments], (err, result) => {
-    if (err !== null) {
-      console.log(err);
-    } else {
-      res.send({ message: "success" });
-    }
-  });
+    "INSERT INTO rate_feedback (appointment_id,ratings,comments,date_created) VALUES (?,?,?,?)";
+  db.query(
+    query,
+    [appointment_id, ratings, comments, dateTime],
+    (err, result) => {
+      if (err !== null) {
+        console.log(err);
+      } else {
+        res.send({ message: "success" });
+      }
+    });
 });
 
 //LOGIN - SYSTEM LOG
