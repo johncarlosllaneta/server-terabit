@@ -3154,15 +3154,26 @@ app.post("/ratings&feedback/:appointment_id", (req, res) => {
   const ratings = req.body.ratings;
   const comments = req.body.comments;
 
+  var today = new Date();
+  var date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  var time =
+    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date + " " + time;
+
   const query =
-    "INSERT INTO rate_feedback (appointment_id,ratings,comments) VALUES (?,?,?)";
-  db.query(query, [appointment_id, ratings, comments], (err, result) => {
-    if (err !== null) {
-      console.log(err);
-    } else {
-      res.send({ message: "success" });
+    "INSERT INTO rate_feedback (appointment_id,ratings,comments,date_created) VALUES (?,?,?,?)";
+  db.query(
+    query,
+    [appointment_id, ratings, comments, dateTime],
+    (err, result) => {
+      if (err !== null) {
+        console.log(err);
+      } else {
+        res.send({ message: "success" });
+      }
     }
-  });
+  );
 });
 
 //LOGIN - SYSTEM LOG
