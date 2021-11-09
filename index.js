@@ -9,9 +9,9 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const multer = require("multer");
 const path = require("path");
-const config = require('./config');
+const config = require("./config");
 // const pino = require('express-pino-logger')();
-const { videoToken } = require('./tokens');
+const { videoToken } = require("./tokens");
 app.use(express.json());
 app.use(cors());
 
@@ -23,28 +23,27 @@ app.use(
 // app.use(pino);
 
 const sendTokenResponse = (token, res) => {
-  res.set('Content-Type', 'application/json');
+  res.set("Content-Type", "application/json");
   res.send(
     JSON.stringify({
-      token: token.toJwt()
+      token: token.toJwt(),
     })
   );
 };
 
-app.get('/api/greeting', (req, res) => {
-  const name = req.query.name || 'World';
-  res.setHeader('Content-Type', 'application/json');
+app.get("/api/greeting", (req, res) => {
+  const name = req.query.name || "World";
+  res.setHeader("Content-Type", "application/json");
   res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
 });
 
-app.get('/video/token', (req, res) => {
+app.get("/video/token", (req, res) => {
   const identity = req.query.identity;
   const room = req.query.room;
   const token = videoToken(identity, room, config);
   sendTokenResponse(token, res);
-
 });
-app.post('/video/token', (req, res) => {
+app.post("/video/token", (req, res) => {
   const identity = req.body.identity;
   const room = req.body.room;
   const token = videoToken(identity, room, config);
@@ -915,16 +914,17 @@ app.put("/vetclinic/update/:vet_admin_id", (req, res) => {
     [email, vet_name, vet_address, vet_contact_number, vet_admin_id],
     (err, result) => {
       if (err == null) {
-        db.query('UPDATE user_role SET email = ? , phone_number = ? WHERE email = ? AND phone_number = ?', [email, vet_contact_number, email, oldnumber], (err, result) => {
-          if (err == null) {
-            res.send({ message: "Update Successfully" });
-          } else {
-            console.log(err);
+        db.query(
+          "UPDATE user_role SET email = ? , phone_number = ? WHERE email = ? AND phone_number = ?",
+          [email, vet_contact_number, email, oldnumber],
+          (err, result) => {
+            if (err == null) {
+              res.send({ message: "Update Successfully" });
+            } else {
+              console.log(err);
+            }
           }
-
-
-        })
-
+        );
       } else {
         console.log(err);
         // res.sendStatus(400).send('Bad');
@@ -1404,7 +1404,7 @@ app.get("/pending/reservation/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   // console.log(pet_owner_id);
   const sqlQuery =
-    "SELECT * FROM vet_clinic JOIN products ON vet_clinic.vetid = products.vetid JOIN reservation ON reservation.product_id= products.product_id JOIN pet_owners ON pet_owners.pet_owner_id = reservation.pet_owner_id WHERE vet_clinic.vetid = ? AND reservation.reservation_status='Pending'";
+    "SELECT * FROM vet_clinic JOIN products ON vet_clinic.vetid = products.vetid JOIN reservation ON reservation.product_id= products.product_id JOIN pet_owners ON pet_owners.pet_owner_id = reservation.pet_owner_id WHERE vet_clinic.vetid = ? AND reservation.reservation_status='Pending' ORDER BY reservation.reserve_id DESC";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -1416,7 +1416,7 @@ app.get("/history/reservation/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   // console.log(pet_owner_id);
   const sqlQuery =
-    "SELECT * FROM vet_clinic JOIN products ON vet_clinic.vetid = products.vetid JOIN reservation ON reservation.product_id= products.product_id JOIN pet_owners ON pet_owners.pet_owner_id = reservation.pet_owner_id WHERE vet_clinic.vetid = ? AND reservation.reservation_status='Done' OR reservation.reservation_status='Expired'";
+    "SELECT * FROM vet_clinic JOIN products ON vet_clinic.vetid = products.vetid JOIN reservation ON reservation.product_id= products.product_id JOIN pet_owners ON pet_owners.pet_owner_id = reservation.pet_owner_id WHERE vet_clinic.vetid = ? AND reservation.reservation_status='Done' OR reservation.reservation_status='Expired' ORDER BY reservation.reserve_id DESC";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -2228,7 +2228,7 @@ app.get("/pending/appointment/:vet_admin_id", (req, res) => {
   const vet_admin_id = req.params.vet_admin_id;
   // console.log(vet_admin_id)
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Pending'";
+    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Pending' ORDER BY appointment.appoinment_id DESC";
   db.query(sqlQuery, vet_admin_id, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -2240,7 +2240,7 @@ app.get("/general/appointment/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   // console.log(vetid)
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Approved'";
+    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Approved' ORDER BY appointment.appointment_id DESC";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -2252,7 +2252,7 @@ app.get("/history/appointment/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   // console.log(vetid)
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc' AND appointment.appointment_status IN ('Done', 'Decline') ORDER BY appointment.logs DESC";
+    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status IN ('Done', 'Decline') ORDER BY appointment.logs DESC";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -2459,13 +2459,13 @@ app.post("/talktovet/vetclinic/messages/sent", (req, res) => {
   );
 });
 
-
 // Talk to vet check thread exist
-app.post('/talktovet/thread/exist', (req, res) => {
+app.post("/talktovet/thread/exist", (req, res) => {
   const pet_owner_id = req.body.pet_owner_id;
   const vetid = req.body.vetid;
   console.log(pet_owner_id);
-  db.query("SELECT * FROM thread WHERE pet_owner_id = ? AND vetid = ?",
+  db.query(
+    "SELECT * FROM thread WHERE pet_owner_id = ? AND vetid = ?",
     [pet_owner_id, vetid],
     (err, result) => {
       console.log(result);
@@ -2475,8 +2475,8 @@ app.post('/talktovet/thread/exist', (req, res) => {
         res.send({ exist: false });
       }
     }
-  )
-})
+  );
+});
 
 //--------------------------------------------------------------------------//
 
@@ -2502,7 +2502,7 @@ function generateAccessToken(user) {
 //API for dashboard in vet clinic
 app.get("/pets/vetclinic/length/:vetid", (req, res) => {
   const vetid = req.params.vetid;
-  console.log(vetid)
+  console.log(vetid);
   const sqlQuery =
     "SELECT DISTINCT pet_id FROM appointment where vetid=? && appointment.appointment_status = 'Done'";
   db.query(sqlQuery, vetid, (err, result) => {
@@ -2892,7 +2892,6 @@ app.post("/sendSMS/verify/:phoneNumber", (req, res) => {
   });
 });
 
-
 app.put("/petowner/change/:petowner_id", (req, res) => {
   const petowner_id = req.params.petowner_id;
   const profilePicture = req.body.profilePicture;
@@ -3130,15 +3129,14 @@ app.get("/reservations/system/admin/:email", (req, res) => {
   });
 });
 
-
 ///API for checking existing feedback
 app.post("/ratings&feedback/exist/rate", (req, res) => {
   const appointment_id = req.body.appointment_id;
-  const pet_owner_id = req.body.pet_owner_id;
-  console.log(appointment_id);
+  // const pet_owner_id = req.body.pet_owner_id;
+  // console.log(appointment_id);
   const query =
     "SELECT * FROM rate_feedback WHERE rate_feedback.appointment_id = ?";
-  db.query(query, [appointment_id, pet_owner_id], (err, result) => {
+  db.query(query, appointment_id, (err, result) => {
     if (result <= 0) {
       res.send({ message: false });
     } else {
@@ -3172,7 +3170,9 @@ app.post("/ratings&feedback/:appointment_id", (req, res) => {
       } else {
         res.send({ message: "success" });
       }
-    });
+
+    }
+  );
 });
 
 //LOGIN - SYSTEM LOG
