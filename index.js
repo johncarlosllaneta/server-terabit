@@ -720,9 +720,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-    Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1713,7 +1713,6 @@ app.put("/reservation/cancel", (req, res) => {
   const sqlQuery =
     "UPDATE reservation SET reservation_status = 'Cancelled' WHERE reserve_id = ?";
   db.query(sqlQuery, reserve_id, (err, result) => {
-
     var product = [];
     const selectProduct = "SELECT * FROM products WHERE product_id = ?";
     db.query(selectProduct, product_id, (err, result) => {
@@ -1724,15 +1723,12 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => {
-
-      });
+      db.query(updateProduct, [deduced, product_id], (err, result) => {});
     });
 
     console.log(err);
     res.send({ message: "Cancelled Reservation" });
   });
-
 });
 
 //this api is for expired pending appointments per vet clinic
@@ -2228,7 +2224,7 @@ app.get("/pending/appointment/:vet_admin_id", (req, res) => {
   const vet_admin_id = req.params.vet_admin_id;
   // console.log(vet_admin_id)
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Pending' ORDER BY appointment.appoinment_id DESC";
+    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Pending' ORDER BY appointment.appointment_id DESC";
   db.query(sqlQuery, vet_admin_id, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -2464,15 +2460,16 @@ app.post("/talktovet/thread/exist", (req, res) => {
   const pet_owner_id = req.body.pet_owner_id;
   const vetid = req.body.vetid;
   console.log(pet_owner_id);
+  console.log(vetid);
   db.query(
     "SELECT * FROM thread WHERE pet_owner_id = ? AND vetid = ?",
     [pet_owner_id, vetid],
     (err, result) => {
       console.log(result);
-      if (result.length > 0) {
-        res.send({ exist: true });
-      } else {
+      if (result.length <= 0) {
         res.send({ exist: false });
+      } else {
+        res.send({ exist: true });
       }
     }
   );
@@ -2861,7 +2858,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => { }
+          (err, result) => {}
         );
       } else {
         console.log("invalid number");
@@ -3170,7 +3167,6 @@ app.post("/ratings&feedback/:appointment_id", (req, res) => {
       } else {
         res.send({ message: "success" });
       }
-
     }
   );
 });
@@ -3867,6 +3863,71 @@ app.get("/petOwner/services/health/card/:pet_id", (req, res) => {
     // console.log(result.length);
     if (err == null) {
       res.send(result);
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+//notification for messages
+
+//pet owner
+app.put("/petOwner/messages/notification/:pet_owner_id", (req, res) => {
+  const pet_owner_id = req.params.pet_owner_id;
+  const sqlQuery =
+    "UPDATE messages SET isNewMessagePet = 1 WHERE messages.pet_owner_id = ? AND messages.user_message = 2";
+  db.query(sqlQuery, pet_owner_id, (err, result) => {
+    if (err === null) {
+      res.send({ message: "Viewed" });
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+app.get("/petOwner/messages/notification/length/:pet_owner_id", (req, res) => {
+  // console.log(vetAdminId);
+  const pet_owner_id = req.params.pet_owner_id;
+  // console.log(vetid);
+  const sqlQuery =
+    "SELECT * FROM messages WHERE messages.pet_owner_id = ? AND messages.isNewMessagePet = 0 AND messages.user_message = 2";
+
+  db.query(sqlQuery, pet_owner_id, (err, result) => {
+    // console.log(result.length);
+    if (err == null) {
+      res.send({ view: result.length });
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+//vet clinic
+
+app.put("/vetclinic/messages/notification/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  const sqlQuery =
+    "UPDATE messages SET isNewMessageVet = 1 WHERE messages.vetid = ? AND messages.user_message = 1";
+  db.query(sqlQuery, vetid, (err, result) => {
+    if (err === null) {
+      res.send({ message: "viewed" });
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+app.get("/vetclinic/messages/notification/length/:vetid", (req, res) => {
+  // console.log(vetAdminId);
+  const vetid = req.params.vetid;
+  // console.log(vetid);
+  const sqlQuery =
+    "SELECT * FROM messages WHERE messages.vetid = ? AND messages.isNewMessageVet = 0 AND messages.user_message = 1";
+
+  db.query(sqlQuery, vetid, (err, result) => {
+    // console.log(result.length);
+    if (err == null) {
+      res.send({ view: result.length });
     } else {
       console.log(err);
     }
