@@ -72,23 +72,23 @@ app.post("/video/token", (req, res) => {
 //Get, Add, Delete, and Update Ratings& Feedback
 
 //--------------------------------------------------------------------------//
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "terravet",
-// });
-
-const db = mysql.createPool({
-  connectionLimit: 1000,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host: "us-cdbr-east-04.cleardb.com",
-  user: "be6527b0b7c051",
-  password: "412951dd",
-  database: "heroku_8275da6060fa8d2",
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "terravet",
 });
+
+// const db = mysql.createPool({
+//   connectionLimit: 1000,
+//   connectTimeout: 60 * 60 * 1000,
+//   acquireTimeout: 60 * 60 * 1000,
+//   timeout: 60 * 60 * 1000,
+//   host: "us-cdbr-east-04.cleardb.com",
+//   user: "be6527b0b7c051",
+//   password: "412951dd",
+//   database: "heroku_8275da6060fa8d2",
+// });
 
 // console.log(db);
 
@@ -907,7 +907,7 @@ app.put("/vetclinic/update/:vet_admin_id", (req, res) => {
   const vet_address = req.body.vet_address;
   const vet_contact_number = req.body.vet_contact_number;
   const oldnumber = req.body.oldnumber;
-  console.log(oldnumber);
+  // console.log(oldnumber);
   const sqlQuery = `UPDATE vet_clinic SET email = ?, vet_name = ? ,vet_address = ?,vet_contact_number = ? WHERE	vet_admin_id = ?`;
   db.query(
     sqlQuery,
@@ -920,6 +920,7 @@ app.put("/vetclinic/update/:vet_admin_id", (req, res) => {
           (err, result) => {
             if (err == null) {
               res.send({ message: "Update Successfully" });
+              // console.log("Update Successfully");
             } else {
               console.log(err);
             }
@@ -2992,7 +2993,7 @@ app.post("/contact/tracing/insert", (req, res) => {
   const q2 = req.body.q2;
 
   const q3 = req.body.q3;
-
+  console.log("Inserting visitor monitoring");
   let questionOne;
   let questionTwo;
   let questionThree;
@@ -3014,14 +3015,30 @@ app.post("/contact/tracing/insert", (req, res) => {
   } else {
     questionThree = false;
   }
+
+  var today = new Date();
+  var date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  var time =
+    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date + " " + time;
   // console.log(q3);
   const sqlQuery =
-    "INSERT INTO visitor_monitoring (pet_owner_id,vetid,temperature,q1,q2,q3) VALUES (?,?,?,?,?,?)";
+    "INSERT INTO visitor_monitoring (pet_owner_id,vetid,temperature,date_visited,time_visited,q1,q2,q3) VALUES (?,?,?,?,?,?,?,?)";
 
   db.query(
     sqlQuery,
 
-    [pet_owner_id, vetid, temperature, questionOne, questionTwo, questionThree],
+    [
+      pet_owner_id,
+      vetid,
+      temperature,
+      dateTime,
+      dateTime,
+      questionOne,
+      questionTwo,
+      questionThree,
+    ],
 
     (err, result) => {
       console.log(err);
@@ -3149,26 +3166,22 @@ app.post("/ratings&feedback/:appointment_id", (req, res) => {
   const ratings = req.body.ratings;
   const comments = req.body.comments;
 
-  var today = new Date();
-  var date =
-    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-  var time =
-    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date + " " + time;
+  // var today = new Date();
+  // var date =
+  //   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  // var time =
+  //   today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  // var dateTime = date + " " + time;
 
   const query =
-    "INSERT INTO rate_feedback (appointment_id,ratings,comments,date_created) VALUES (?,?,?,?)";
-  db.query(
-    query,
-    [appointment_id, ratings, comments, dateTime],
-    (err, result) => {
-      if (err !== null) {
-        console.log(err);
-      } else {
-        res.send({ message: "success" });
-      }
+    "INSERT INTO rate_feedback (appointment_id,ratings,comments) VALUES (?,?,?)";
+  db.query(query, [appointment_id, ratings, comments], (err, result) => {
+    if (err !== null) {
+      console.log(err);
+    } else {
+      res.send({ message: "success" });
     }
-  );
+  });
 });
 
 //LOGIN - SYSTEM LOG
