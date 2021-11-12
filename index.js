@@ -2173,7 +2173,7 @@ app.get("/appointments/histories/:pet_owner_id", (req, res) => {
   const pet_owner_id = req.params.pet_owner_id;
   // console.log(pet_owner_id)
   const sqlQuery =
-    "SELECT * FROM appointment INNER JOIN services ON  appointment.service_id = services.service_id INNER JOIN vet_clinic ON vet_clinic.vetid = appointment.vetid WHERE pet_owner_id = ? AND appointment.appointment_status = 'Done' ORDER BY appointment.appointment_id DESC";
+    "SELECT * FROM appointment INNER JOIN services ON  appointment.service_id = services.service_id INNER JOIN vet_clinic ON vet_clinic.vetid = appointment.vetid WHERE pet_owner_id = ? AND appointment.appointment_status = 'Done' ORDER BY appointment.logs DESC";
 
   db.query(sqlQuery, pet_owner_id.substring(1), (err, result) => {
     // console.log(err);
