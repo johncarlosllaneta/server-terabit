@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2021 at 09:36 AM
+-- Generation Time: Dec 02, 2021 at 11:16 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -45,98 +45,32 @@ CREATE TABLE `appointment` (
 --
 
 INSERT INTO `appointment` (`appointment_id`, `vetid`, `pet_owner_id`, `pet_id`, `time_scheduled`, `date_scheduled`, `service_id`, `appointment_status`, `logs`, `date_accomplished`) VALUES
-(21, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 18, '10:00 AM - 11:00 AM', '2021-08-16', 18, 'Decline', '2021-08-16 19:17:56', '0000-00-00 00:00:00'),
-(22, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 19, '10:00 AM - 11:00 AM', '2021-08-19', 18, 'Done', '2021-09-24 08:48:41', '0000-00-00 00:00:00'),
-(23, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 19, '01:00 PM - 02:00 PM', '2021-08-21', 19, 'Done', '2021-09-24 08:39:39', '0000-00-00 00:00:00'),
-(24, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 19, '12:00 pm - 1:00 PM', '2021-08-22', 20, 'Done', '2021-09-24 09:23:10', '0000-00-00 00:00:00'),
-(25, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '10:00 AM - 11:00 AM', '2021-10-02', 2, 'Decline', '2021-10-07 19:50:19', '0000-00-00 00:00:00'),
-(26, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '03:00 PM - 04:00 PM', '2021-10-22', 2, 'Expired', '2021-10-24 06:01:15', '2021-10-24 14:01:15'),
-(27, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 24, '10:00 AM - 11:00 AM', '2021-10-08', 8, 'Done', '2021-10-08 20:54:06', '0000-00-00 00:00:00'),
-(28, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '08:00 AM - 09:00 AM', '2021-10-08', 8, 'Done', '2021-10-07 19:50:35', '0000-00-00 00:00:00'),
-(29, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 24, '08:00 AM - 09:00 AM', '2021-10-08', 8, 'Done', '2021-10-08 20:55:47', '0000-00-00 00:00:00'),
-(30, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 18, '04:00 PM - 05:00 PM', '2021-10-08', 2, 'Decline', '2021-10-07 19:41:42', '0000-00-00 00:00:00'),
-(31, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '04:00 PM - 05:00 PM', '2021-10-08', 8, 'Done', '2021-10-08 20:57:39', '0000-00-00 00:00:00'),
-(32, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '04:00 PM - 05:00 PM', '2021-10-10', 3, 'Done', '2021-10-09 16:47:49', '0000-00-00 00:00:00'),
-(33, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '12:00 PM - 01:00 PM', '2021-10-16', 4, 'Done', '2021-10-24 01:22:03', '0000-00-00 00:00:00'),
-(34, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '12:00 PM - 01:00 PM', '2021-10-16', 4, 'Approved', '2021-10-21 22:15:07', '0000-00-00 00:00:00'),
-(35, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '12:00 PM - 01:00 PM', '2021-10-14', 2, 'Decline', '2021-10-08 21:08:31', '0000-00-00 00:00:00'),
-(36, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '01:00 PM - 02:00 PM', '2021-10-18', 4, 'Expired', '2021-10-24 06:01:15', '2021-10-24 14:01:15'),
-(37, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '01:00 PM - 02:00 PM', '2021-10-27', 6, 'Decline', '2021-10-24 06:19:30', '0000-00-00 00:00:00'),
-(38, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 24, '12:00 PM - 01:00 PM', '2021-10-19', 6, 'Expired', '2021-10-24 06:01:15', '2021-10-24 14:01:15'),
-(39, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '02:00 PM - 03:00 PM', '2021-10-20', 8, 'Expired', '2021-10-24 06:01:15', '2021-10-24 14:01:15'),
-(40, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '02:00 PM - 03:00 PM', '2021-10-28', 4, 'Pending', '2021-10-07 19:20:16', '0000-00-00 00:00:00'),
-(41, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '02:00 PM - 03:00 PM', '2021-10-28', 4, 'Decline', '2021-10-24 06:18:06', '0000-00-00 00:00:00'),
-(42, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '02:00 PM - 03:00 PM', '2021-10-28', 4, 'Decline', '2021-10-24 06:18:20', '0000-00-00 00:00:00'),
-(43, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '02:00 PM - 03:00 PM', '2021-10-28', 4, 'Decline', '2021-10-24 06:17:45', '0000-00-00 00:00:00'),
-(44, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '02:00 PM - 03:00 PM', '2021-10-28', 4, 'Decline', '2021-10-24 06:16:25', '0000-00-00 00:00:00'),
-(45, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '12:00 PM - 01:00 PM', '2021-10-21', 4, 'Expired', '2021-10-24 06:03:44', '2021-10-24 14:03:44'),
-(46, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '12:00 PM - 01:00 PM', '2021-10-18', 4, 'Expired', '2021-10-24 06:01:15', '2021-10-24 14:01:15'),
-(47, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '12:00 PM - 01:00 PM', '2021-10-21', 3, 'Expired', '2021-10-24 06:01:15', '2021-10-24 14:01:15'),
-(48, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '02:00 PM - 03:00 PM', '2021-11-01', 3, 'Pending', '2021-10-07 19:27:09', '0000-00-00 00:00:00'),
-(49, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 24, '04:00 PM - 05:00 PM', '2021-10-09', 2, 'Done', '2021-10-08 21:03:52', '0000-00-00 00:00:00'),
-(50, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 24, '03:00 PM - 04:00 PM', '2021-11-30', 3, 'Pending', '2021-10-08 20:45:41', '0000-00-00 00:00:00'),
-(51, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 24, '03:00 PM - 04:00 PM', '2021-11-30', 3, 'Pending', '2021-10-08 20:45:42', '0000-00-00 00:00:00'),
-(52, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '08:00 AM - 09:00 AM', '2021-10-10', 2, 'Done', '2021-10-09 16:47:45', '0000-00-00 00:00:00'),
-(53, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 19, '12:00 PM - 01:00 PM', '2021-10-22', 2, 'Expired', '2021-10-24 06:01:15', '2021-10-24 14:01:15'),
-(54, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '01:00 PM - 02:00 PM', '2021-10-27', 8, 'Approved', '2021-10-24 06:19:14', '0000-00-00 00:00:00'),
-(55, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 24, '11:00 AM - 12:00 PM', '2021-11-02', 24, 'Done', '2021-10-24 05:42:04', '0000-00-00 00:00:00'),
-(56, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 23, '03:00 PM - 04:00 PM', '2021-10-24', 24, 'Expired', '2021-10-25 12:57:07', '2021-10-25 20:57:07'),
-(57, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '04:00 PM - 05:00 PM', '2021-10-24', 31, 'Done', '2021-10-24 07:26:15', '0000-00-00 00:00:00'),
-(58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 19, '04:00 PM - 05:00 PM', '2021-10-24', 31, 'Approved', '2021-10-24 07:51:13', '0000-00-00 00:00:00'),
-(59, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 75, 23, '03:00 PM - 04:00 PM', '2021-10-24', 3, 'Expired', '2021-10-24 16:12:33', '2021-10-25 00:12:33'),
-(60, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '03:00 PM - 04:00 PM', '2021-10-24', 8, 'Expired', '2021-10-24 16:12:33', '2021-10-25 00:12:33'),
-(61, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '01:00 PM - 02:00 PM', '2021-10-26', 4, 'Expired', '2021-10-26 16:04:33', '2021-10-27 00:04:33'),
-(62, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '01:00 PM - 02:00 PM', '2021-10-26', 3, 'Expired', '2021-10-26 16:04:33', '2021-10-27 00:04:33'),
-(63, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '02:00 PM - 03:00 PM', '2021-10-26', 4, 'Expired', '2021-10-26 16:04:33', '2021-10-27 00:04:33'),
-(64, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-10-27', 3, 'Pending', '2021-10-24 13:56:43', '0000-00-00 00:00:00'),
-(65, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-10-26', 2, 'Expired', '2021-10-26 16:04:33', '2021-10-27 00:04:33'),
-(66, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '02:00 PM - 03:00 PM', '2021-10-27', 3, 'Pending', '2021-10-24 13:59:03', '0000-00-00 00:00:00'),
-(67, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 19, '02:00 PM - 03:00 PM', '2021-10-28', 4, 'Pending', '2021-10-24 14:00:19', '0000-00-00 00:00:00'),
-(68, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '02:00 PM - 03:00 PM', '2021-10-28', 4, 'Pending', '2021-10-24 14:01:29', '0000-00-00 00:00:00'),
-(69, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-02', 4, 'Pending', '2021-10-24 14:04:20', '0000-00-00 00:00:00'),
-(70, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-02', 4, 'Pending', '2021-10-24 14:04:25', '0000-00-00 00:00:00'),
-(71, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-02', 4, 'Pending', '2021-10-24 14:16:12', '0000-00-00 00:00:00'),
-(72, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-02', 4, 'Pending', '2021-10-24 14:16:14', '0000-00-00 00:00:00'),
-(73, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-02', 4, 'Pending', '2021-10-24 14:16:14', '0000-00-00 00:00:00'),
-(74, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-02', 4, 'Pending', '2021-10-24 14:16:14', '0000-00-00 00:00:00'),
-(75, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-02', 4, 'Pending', '2021-10-24 14:16:14', '0000-00-00 00:00:00'),
-(76, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-02', 4, 'Pending', '2021-10-24 14:16:15', '0000-00-00 00:00:00'),
-(77, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-02', 4, 'Pending', '2021-10-24 14:16:15', '0000-00-00 00:00:00'),
-(78, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-02', 4, 'Pending', '2021-10-24 14:16:15', '0000-00-00 00:00:00'),
-(79, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-02', 4, 'Pending', '2021-10-24 14:16:15', '0000-00-00 00:00:00'),
-(80, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '03:00 PM - 04:00 PM', '2021-10-28', 3, 'Pending', '2021-10-24 14:17:52', '0000-00-00 00:00:00'),
-(81, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '01:00 PM - 02:00 PM', '2021-10-26', 4, 'Expired', '2021-10-26 16:04:33', '2021-10-27 00:04:33'),
-(82, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '02:00 PM - 03:00 PM', '2021-10-27', 4, 'Pending', '2021-10-24 14:20:10', '0000-00-00 00:00:00'),
-(83, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '01:00 PM - 02:00 PM', '2021-10-25', 3, 'Expired', '2021-10-26 16:04:33', '2021-10-27 00:04:33'),
-(84, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-10-28', 4, 'Pending', '2021-10-24 14:24:22', '0000-00-00 00:00:00'),
-(85, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '03:00 PM - 04:00 PM', '2021-10-28', 4, 'Pending', '2021-10-24 14:27:01', '0000-00-00 00:00:00'),
-(86, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '01:00 PM - 02:00 PM', '2021-10-27', 3, 'Pending', '2021-10-24 14:30:35', '0000-00-00 00:00:00'),
-(87, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '01:00 PM - 02:00 PM', '2021-10-27', 4, 'Pending', '2021-10-24 14:35:07', '0000-00-00 00:00:00'),
-(88, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '03:00 PM - 04:00 PM', '2021-10-30', 4, 'Pending', '2021-10-24 14:37:25', '0000-00-00 00:00:00'),
-(89, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '02:00 PM - 03:00 PM', '2021-10-25', 3, 'Expired', '2021-10-26 16:04:33', '2021-10-27 00:04:33'),
-(90, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '02:00 PM - 03:00 PM', '2021-11-04', 3, 'Pending', '2021-10-24 14:47:43', '0000-00-00 00:00:00'),
-(91, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '12:00 PM - 01:00 PM', '2021-10-27', 31, 'Pending', '2021-10-24 14:48:48', '0000-00-00 00:00:00'),
-(92, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 19, '02:00 PM - 03:00 PM', '2021-11-06', 4, 'Pending', '2021-10-24 14:51:15', '0000-00-00 00:00:00'),
-(93, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 18, '03:00 PM - 04:00 PM', '2021-11-03', 3, 'Pending', '2021-10-24 15:00:53', '0000-00-00 00:00:00'),
-(94, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 21, '01:00 PM - 02:00 PM', '2021-11-04', 4, 'Pending', '2021-10-24 15:02:23', '0000-00-00 00:00:00'),
-(95, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-06', 4, 'Pending', '2021-10-24 15:06:01', '0000-00-00 00:00:00'),
-(96, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '01:00 PM - 02:00 PM', '2021-10-26', 3, 'Expired', '2021-10-26 16:04:33', '2021-10-27 00:04:33'),
-(97, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '02:00 PM - 03:00 PM', '2021-10-28', 3, 'Pending', '2021-10-24 15:34:27', '0000-00-00 00:00:00'),
-(98, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '03:00 PM - 04:00 PM', '2021-10-28', 4, 'Pending', '2021-10-24 15:38:24', '0000-00-00 00:00:00'),
-(99, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '02:00 PM - 03:00 PM', '2021-10-28', 4, 'Pending', '2021-10-24 15:39:58', '0000-00-00 00:00:00'),
-(100, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '02:00 PM - 03:00 PM', '2021-10-28', 3, 'Pending', '2021-10-24 15:42:13', '0000-00-00 00:00:00'),
-(101, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-11-02', 31, 'Pending', '2021-10-24 15:44:34', '0000-00-00 00:00:00'),
-(102, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '02:00 PM - 03:00 PM', '2021-11-03', 2, 'Pending', '2021-10-24 15:45:47', '0000-00-00 00:00:00'),
-(103, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '03:00 PM - 04:00 PM', '2021-10-25', 31, 'Expired', '2021-10-26 16:04:33', '2021-10-27 00:04:33'),
-(104, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 24, '02:00 PM - 03:00 PM', '2021-10-26', 3, 'Expired', '2021-10-26 16:04:33', '2021-10-27 00:04:33'),
-(105, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 18, '02:00 PM - 03:00 PM', '2021-10-30', 2, 'Pending', '2021-10-24 15:49:57', '0000-00-00 00:00:00'),
-(106, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '02:00 PM - 03:00 PM', '2021-10-27', 8, 'Pending', '2021-10-24 15:52:49', '0000-00-00 00:00:00'),
-(107, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 22, '03:00 PM - 04:00 PM', '2021-10-26', 3, 'Expired', '2021-10-26 16:04:33', '2021-10-27 00:04:33'),
-(108, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 19, '01:00 PM - 02:00 PM', '2021-10-25', 18, 'Approved', '2021-10-25 12:59:53', '0000-00-00 00:00:00'),
-(109, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 23, '02:00 PM - 03:00 PM', '2021-10-27', 18, 'Expired', '2021-10-27 18:28:26', '2021-10-28 02:28:26'),
-(110, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 58, 18, '01:00 PM - 02:00 PM', '2021-10-27', 32, 'Done', '2021-10-25 13:58:16', '0000-00-00 00:00:00'),
-(111, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 58, 24, '03:00 PM - 04:00 PM', '2021-11-06', 32, 'Cancelled', '2021-10-26 18:39:48', '0000-00-00 00:00:00'),
-(112, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 22, '02:00 PM - 03:00 PM', '2021-10-27', 18, 'Expired', '2021-10-27 18:28:26', '2021-10-28 02:28:26');
+(126, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 24, '03:00 PM - 04:00 PM', '2021-11-03', 29, 'Done', '2021-10-29 17:26:08', '2021-10-30 01:26:08'),
+(127, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 23, '10:00 AM - 11:00 AM', '2021-11-01', 27, 'Done', '2021-10-29 19:47:10', '2021-10-30 01:34:31'),
+(128, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 24, '08:00 AM - 09:00 AM', '2021-11-04', 31, 'Done', '2021-11-03 04:50:51', '2021-11-03 12:50:51'),
+(129, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 24, '08:00 AM - 09:00 AM', '2021-11-08', 2, 'Done', '2021-11-03 09:15:55', '2021-11-03 17:15:55'),
+(130, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 18, '10:00 AM - 11:00 AM', '2021-11-12', 4, 'Approved', '2021-11-03 14:18:14', '2021-11-03 22:18:14'),
+(131, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 23, '10:00 AM - 11:00 AM', '2021-11-09', 31, 'Done', '2021-11-04 07:10:57', '2021-11-04 15:10:57'),
+(132, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 19, '08:00 AM - 09:00 AM', '2021-11-08', 20, 'Done', '2021-11-08 08:45:34', '2021-11-08 16:45:34'),
+(133, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 22, '11:00 AM - 12:00 PM', '2021-11-08', 21, 'Expired', '2021-11-09 23:07:55', '2021-11-10 07:07:55'),
+(134, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 58, 24, '09:00 AM - 10:00 AM', '2021-11-15', 3, 'Pending', '2021-11-06 14:44:54', '0000-00-00 00:00:00'),
+(135, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 58, 23, '08:00 AM - 09:00 AM', '2021-11-08', 18, 'Expired', '2021-11-09 23:07:55', '2021-11-10 07:07:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `consultation`
+--
+
+CREATE TABLE `consultation` (
+  `consultation_id` int(11) NOT NULL,
+  `consultation_type` varchar(100) NOT NULL,
+  `vet_admin_id` int(11) NOT NULL,
+  `vet_doc_id` int(11) NOT NULL,
+  `pet_id` int(11) NOT NULL,
+  `prescription` int(11) DEFAULT NULL,
+  `findings` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -234,10 +168,9 @@ CREATE TABLE `immunization_history` (
 --
 
 INSERT INTO `immunization_history` (`immunization_id`, `pet_id`, `pet_weight`, `date`, `vaccine_name`, `againts`, `vaccine_number`, `manufacturer`, `appointment_id`) VALUES
-(4, 19, 10, '2021-10-24 07:10:08', 'Sample', 'Anti-rABIES', '12123232323', 'Sample', 22),
-(5, 19, 12, '2021-10-24 07:10:12', 'DHCP', 'Anti-Distemper', '121314414', 'ashgdahsvdjavdasdasda', 24),
-(7, 21, 10, '2021-10-24 07:26:15', 'Sinovac', 'Anti Rabies', '106871598', 'China', 57),
-(8, 18, 20, '2021-10-25 13:58:16', 'Anti rabies', 'rabies', '0934342', 'rabies', 110);
+(11, 24, 50, '2021-11-03 04:50:51', 'Sinovac', 'Anti Rabies', '12574987', 'China', 128),
+(12, 23, 25, '2021-11-04 07:10:57', 'Sinovac', 'Anti Rabies', '1204689', 'Johnson & Johnson', 131),
+(13, 19, 10, '2021-11-08 08:45:34', 'sinovac', 'anti rabies', '1245478', 'china', 132);
 
 -- --------------------------------------------------------
 
@@ -247,17 +180,12 @@ INSERT INTO `immunization_history` (`immunization_id`, `pet_id`, `pet_weight`, `
 
 CREATE TABLE `medical_history` (
   `medical_history_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
   `pet_id` int(11) NOT NULL,
-  `pet_name` varchar(50) NOT NULL,
-  `Date` date NOT NULL,
-  `Service_Type` varchar(100) NOT NULL,
   `vet_admin_id` int(11) NOT NULL,
-  `vet_name` varchar(100) NOT NULL,
-  `tests_performed` varchar(150) NOT NULL,
-  `test_result` varchar(100) NOT NULL,
-  `recommendation` varchar(300) NOT NULL,
-  `medication` varchar(300) NOT NULL,
-  `remarks` varchar(300) NOT NULL
+  `vet_doc_id` int(11) NOT NULL,
+  `prescription` varchar(250) NOT NULL,
+  `findings` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -302,7 +230,10 @@ INSERT INTO `messages` (`message_id`, `thread_id`, `pet_owner_id`, `vetid`, `use
 (21, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 1, '2021-10-25 14:08:03', 'huiii'),
 (22, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 2, '2021-10-25 14:08:49', 'Video call room number is 84726076. \n Instruction: Click the video conference button located in the upper right corner of your screen, enter the room number to start video call. Thankyou!'),
 (23, 3, 58, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 1, '2021-10-25 14:13:45', 'hello'),
-(24, 3, 58, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 1, '2021-10-25 14:13:48', 'heloo');
+(24, 3, 58, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 1, '2021-10-25 14:13:48', 'heloo'),
+(25, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '2021-11-09 09:30:19', 'hello po'),
+(26, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '2021-11-09 17:09:29', 'hi po'),
+(27, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '2021-11-09 17:09:34', 'yess po');
 
 -- --------------------------------------------------------
 
@@ -316,15 +247,42 @@ CREATE TABLE `notifications` (
   `service_id` int(11) NOT NULL,
   `status` varchar(50) NOT NULL,
   `date_time_created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `isViewed` tinyint(1) NOT NULL
+  `isViewed` tinyint(1) NOT NULL,
+  `isNew` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `notifications`
 --
 
-INSERT INTO `notifications` (`notification_id`, `appointment_id`, `service_id`, `status`, `date_time_created`, `isViewed`) VALUES
-(60, 112, 18, 'Pending', '2021-10-27 18:00:48', 1);
+INSERT INTO `notifications` (`notification_id`, `appointment_id`, `service_id`, `status`, `date_time_created`, `isViewed`, `isNew`) VALUES
+(85, 126, 29, 'Pending', '2021-10-29 11:28:31', 1, 1),
+(86, 126, 29, 'Approved', '2021-10-29 11:29:51', 1, 1),
+(87, 126, 29, 'Done', '2021-10-29 13:27:54', 1, 1),
+(88, 126, 29, 'Approved', '2021-10-29 17:25:18', 1, 1),
+(89, 126, 29, 'Done', '2021-10-29 17:25:18', 1, 1),
+(90, 126, 29, 'Approved', '2021-10-29 17:25:18', 1, 1),
+(91, 126, 29, 'Done', '2021-10-29 17:25:18', 1, 1),
+(92, 126, 29, 'Approved', '2021-10-29 17:25:18', 1, 1),
+(93, 126, 29, 'Approved', '2021-10-29 17:25:18', 1, 1),
+(94, 126, 29, 'Done', '2021-10-29 17:26:32', 1, 1),
+(95, 127, 27, 'Approved', '2021-10-29 17:34:54', 1, 1),
+(96, 127, 27, 'Void', '2021-10-29 17:34:54', 1, 1),
+(97, 128, 31, 'Pending', '2021-11-03 04:50:56', 1, 1),
+(98, 128, 31, 'Approved', '2021-11-03 14:16:50', 1, 1),
+(99, 128, 31, 'Done', '2021-11-03 14:16:50', 1, 1),
+(100, 129, 2, 'Pending', '2021-11-03 14:18:15', 1, 1),
+(101, 129, 2, 'Approved', '2021-11-03 14:16:50', 1, 1),
+(102, 129, 2, 'Done', '2021-11-03 14:16:50', 1, 1),
+(103, 130, 4, 'Pending', '2021-11-03 14:18:15', 1, 1),
+(104, 130, 4, 'Approved', '2021-11-03 14:18:55', 1, 1),
+(105, 131, 31, 'Pending', '2021-11-04 06:58:36', 0, 1),
+(106, 131, 31, 'Approved', '2021-11-05 07:36:57', 1, 1),
+(107, 131, 31, 'Done', '2021-11-05 07:36:57', 1, 1),
+(108, 132, 20, 'Pending', '2021-11-06 14:06:35', 0, 1),
+(109, 133, 21, 'Pending', '2021-11-06 14:06:35', 0, 1),
+(110, 132, 20, 'Approved', '2021-11-06 14:07:03', 1, 0),
+(111, 132, 20, 'Done', '2021-11-08 08:45:34', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -338,45 +296,23 @@ CREATE TABLE `notification_reservation` (
   `product_id` varchar(70) NOT NULL,
   `status` varchar(50) NOT NULL,
   `date_time_created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `isViewed` tinyint(1) NOT NULL
+  `isViewed` tinyint(1) NOT NULL,
+  `isNew` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `notification_reservation`
 --
 
-INSERT INTO `notification_reservation` (`notif_reserve_id`, `reserve_id`, `product_id`, `status`, `date_time_created`, `isViewed`) VALUES
-(2, 68, '30375976', 'Reserved', '2021-10-27 15:52:52', 1),
-(3, 70, '30375976', 'Reserved', '2021-10-27 15:58:10', 1),
-(4, 71, '3006381', 'Reserved', '2021-10-27 15:59:04', 1),
-(5, 69, '30375976', 'Cancelled', '2021-10-27 16:15:19', 1),
-(6, 73, '28528578', 'Cancelled', '2021-10-27 16:15:42', 1),
-(7, 73, '30375976', 'Reserved', '2021-10-27 16:35:42', 1),
-(8, 74, '30375976', 'Purchased', '2021-10-27 16:35:59', 1),
-(10, 79, '3006381', 'Purchased', '2021-10-27 21:39:53', 1),
-(11, 76, '30375976', 'Purchased', '2021-10-27 21:39:55', 1),
-(12, 77, '30375976', 'Purchased', '2021-10-27 21:39:58', 1),
-(13, 78, '30375976', 'Purchased', '2021-10-27 21:40:00', 1),
-(14, 80, '3006381', 'Cancelled', '2021-10-27 21:49:10', 0),
-(15, 81, '3006381', 'Cancelled', '2021-10-27 21:51:22', 0),
-(16, 82, '3006381', 'Cancelled', '2021-10-27 22:06:23', 0),
-(17, 83, '30375976', 'Cancelled', '2021-10-27 22:06:27', 0),
-(18, 87, '8926439', 'Reserved', '2021-10-27 22:11:21', 0),
-(19, 84, '30375976', 'Cancelled', '2021-10-27 22:15:29', 0),
-(20, 85, '3006381', 'Cancelled', '2021-10-27 22:15:32', 0),
-(21, 87, '3006381', 'Cancelled', '2021-10-27 22:15:34', 0),
-(22, 86, '30375976', 'Cancelled', '2021-10-27 22:15:36', 0),
-(23, 88, '8926439', 'Cancelled', '2021-10-27 22:15:39', 0),
-(24, 89, '28528578', 'Cancelled', '2021-10-27 22:15:42', 0),
-(25, 89, '30375976', 'Reserved', '2021-10-27 22:15:53', 0),
-(26, 91, '30375976', 'Reserved', '2021-10-27 22:15:56', 0),
-(27, 91, '8926439', 'Reserved', '2021-10-27 22:16:51', 0),
-(28, 92, '30375976', 'Reserved', '2021-10-27 22:18:05', 0),
-(29, 93, '8926439', 'Reserved', '2021-10-27 22:19:49', 0),
-(30, 94, '30375976', 'Reserved', '2021-10-27 22:20:44', 0),
-(31, 95, '30375976', 'Reserved', '2021-10-27 22:21:13', 0),
-(32, 96, '8926439', 'Reserved', '2021-10-27 22:21:38', 0),
-(33, 97, '30375976', 'Reserved', '2021-10-28 06:46:47', 0);
+INSERT INTO `notification_reservation` (`notif_reserve_id`, `reserve_id`, `product_id`, `status`, `date_time_created`, `isViewed`, `isNew`) VALUES
+(38, 104, '30375976', 'Reserved', '2021-10-29 11:27:40', 1, 1),
+(39, 104, '30375976', 'Purchased', '2021-10-29 11:28:23', 1, 1),
+(40, 105, '3006381', 'Reserved', '2021-10-29 17:43:20', 1, 1),
+(41, 106, '30375976', 'Reserved', '2021-11-05 07:34:15', 0, 1),
+(42, 106, '30375976', 'Cancelled', '2021-11-05 07:38:27', 0, 1),
+(43, 107, '30375976', 'Reserved', '2021-11-05 13:44:56', 0, 1),
+(44, 108, '28528578', 'Reserved', '2021-11-05 14:09:05', 0, 1),
+(45, 108, '28528578', 'Purchased', '2021-11-05 14:13:31', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -410,13 +346,13 @@ INSERT INTO `pets` (`pet_id`, `pet_owner_id`, `pet_owner_name`, `pet_name`, `typ
 (23, 58, 'Jhaycee Llaneta', 'Togon', 'Dog', 'Aspin', 'Female', '2021-09-16', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/International-Corgi-Day-1.jpg?alt=media&token=6ecaa530-8479-4ab2-9867-2d3b4d20861e', 0),
 (24, 58, 'Jhaycee Llaneta', 'Max', 'Dog', 'Corgi', 'Male', '2021-09-06', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/International-Corgi-Day-1.jpg?alt=media&token=e87f827e-3e68-4b90-b0e9-1affd2deae3b', 0),
 (28, 76, 'Jimuel Mercado', 'Buddy', 'Dog', 'Bulldog', 'Male', '2021-06-21', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/jim1.jfif?alt=media&token=dcd83a21-394a-4d06-be3b-1c7d285e302c', 0),
-(29, 76, 'Jimuel Mercado', 'Archie', 'Dog', 'Shih Tzu', 'Female', '2021-09-13', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/jim2.jfif?alt=media&token=1ee7dda3-0863-471e-8958-02a542f49df1', 0),
-(30, 76, 'Jimuel Mercado', ' Oscar', 'Dog', 'Labrador', 'Male', '2021-09-10', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/jim3.jfif?alt=media&token=4aecd36d-d7f8-41d0-96bc-4223af9fe452', 0),
+(29, 76, 'Jimuel Mercado', 'Archie', 'Dog', 'Shih Tzu', 'Female', '2021-09-13', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/jim2.jfif?alt=media&token=1ee7dda3-0863-471e-8958-02a542f49df1', 1),
+(30, 76, 'Jimuel Mercado', ' Oscar', 'Dog', 'Labrador', 'Male', '2021-09-10', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/jim3.jfif?alt=media&token=4aecd36d-d7f8-41d0-96bc-4223af9fe452', 1),
 (31, 77, 'Richard Sasis', 'Mina', 'Cat', 'Scottish Fold', 'Female', '2021-05-02', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/chard1.jfif?alt=media&token=8ba6e14b-fd70-4a4d-9dec-cf41ab2d02aa', 0),
 (33, 77, 'Richard Sasis', 'Charlie', 'Dog', 'Beagle', 'Male', '2020-12-12', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/chard2.jpg?alt=media&token=01bae7ba-7d5f-43a3-8841-f742c7b0f129', 0),
 (34, 77, 'Richard Sasis', 'Chardei', 'Dog', 'Corgi', 'Male', '2021-02-16', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/corgi3.jfif?alt=media&token=03cd1e0c-e495-4249-aea3-a307d1cf9d99', 0),
 (36, 78, 'Carmella Joy Guelas', 'Teddy', 'Dog', 'Bulldog', 'Male', '2021-03-30', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/jim1.jfif?alt=media&token=80e825eb-c026-4ec9-af16-09dbb205f67b', 0),
-(37, 78, 'Carmella Joy Guelas', 'Alfie', 'Dog', 'Corgi', 'Female', '2020-07-21', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/corgi1.jpg?alt=media&token=7c5c194f-5bc9-4c6c-ae67-8349357f7c4e', 0),
+(37, 78, 'Carmella Joy Guelas', 'Alfie', 'Dog', 'Corgi', 'Female', '2020-07-21', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/corgi1.jpg?alt=media&token=7c5c194f-5bc9-4c6c-ae67-8349357f7c4e', 1),
 (38, 58, 'Jhaycee Llaneta', 'Jimmy', 'Dog', 'Bulldog', 'Male', '2021-09-14', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/jim1.jfif?alt=media&token=fc876a22-2d98-48b8-aa89-a263ca3b7ca4', 0);
 
 -- --------------------------------------------------------
@@ -480,17 +416,20 @@ CREATE TABLE `pharmacy` (
   `price` int(11) NOT NULL,
   `vetid` varchar(100) NOT NULL,
   `medicine_image` varchar(200) NOT NULL,
-  `med_id` varchar(100) NOT NULL
+  `med_id` varchar(100) NOT NULL,
+  `medicine_number` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pharmacy`
 --
 
-INSERT INTO `pharmacy` (`medicine_id`, `medicine_name`, `medicine_description`, `status`, `price`, `vetid`, `medicine_image`, `med_id`) VALUES
-(14, 'Heartgard (ivermectin/pyrantel)', 'Heartgard (ivermectin/pyrantel)\nFor Dogs 51 - 100 lbs\n6 Chewables', 1, 260, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Web%20capture_15-6-2021_234216_www.1800petmeds.com.jpeg?alt=media&token=8a5ed239-5445-4f11-b22d-565e97f62890', '93697429'),
-(16, 'MONDEX WATER SOLUBLE POWDER 100G ENERGY SUPPLEMENT', 'Contains 99.9% glucose monohydrate U.S.P. grade\nFast absorbed from the digestive tract to provide instant energy', 1, 95, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/mondex-water-soluble-powder-100g-energy-supplement.jpg?alt=media&token=e7b5821c-a934-48dc-84e2-bfb012d09327', '92162827'),
-(17, 'Rabisin', 'Rabisin description', 1, 250, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/download.jfif?alt=media&token=3f698df9-fc17-4674-94eb-7bf564029c65', '94702417');
+INSERT INTO `pharmacy` (`medicine_id`, `medicine_name`, `medicine_description`, `status`, `price`, `vetid`, `medicine_image`, `med_id`, `medicine_number`) VALUES
+(14, 'Heartgard (ivermectin/pyrantel)', 'Heartgard (ivermectin/pyrantel)\nFor Dogs 51 - 100 lbs\n6 Chewables', 1, 260, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Web%20capture_15-6-2021_234216_www.1800petmeds.com.jpeg?alt=media&token=8a5ed239-5445-4f11-b22d-565e97f62890', '93697429', ''),
+(16, 'MONDEX WATER SOLUBLE POWDER 100G ENERGY SUPPLEMENT', 'Contains 99.9% glucose monohydrate U.S.P. grade\nFast absorbed from the digestive tract to provide instant energy', 1, 95, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/mondex-water-soluble-powder-100g-energy-supplement.jpg?alt=media&token=e7b5821c-a934-48dc-84e2-bfb012d09327', '92162827', ''),
+(17, 'Rabisin', 'Rabisin description', 1, 250, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/download.jfif?alt=media&token=3f698df9-fc17-4674-94eb-7bf564029c65', '94702417', ''),
+(18, 'PET DRS MEGA OIL 200ML DOG LIQUID SUPPLEMENT', 'MADE IN AUSTRALIA\nWith Omega 3, 6 and 9 essential fatty acids\nFor healthy skin and coat', 1, 900, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/pet-drs-mega-oil-200ml-pet-oral-liquid.jpg?alt=media&token=a35b1f77-6b87-4132-a9fb-0ef2311b6af1', '71664150', ''),
+(22, 'PET DRS SHAMPOO 250ML PET SHAMPOO', 'MADE IN AUSTRALIA\nWith natural ingredients such as Coconut Oil and Manuka Honey\nGently cleans and conditions skin and coat\nSensitive skin formula, hypoallergenic\npH balanced', 1, 850, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/pet-drs-shampoo-250ml-pet-shampoo.jpg?alt=media&token=18113266-fc9c-409f-8d77-132c2549d201', '43194615', '');
 
 -- --------------------------------------------------------
 
@@ -515,11 +454,13 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `product_name`, `product_desc`, `vetid`, `quantity`, `price`, `product_image`, `category`, `pet_type`) VALUES
+('21849527', 'LIMITED EDITION ZEE.BED X CHINATOWN MARKET SMILEY PET BED', 'LIMITED EDITION DESIGN\nUltra comfortable memory foam orthopedic dog bed - perfect for all dogs!\nEasy to clean removable, hypoallergenic bed cover\nScratch resistant soft microfiber cover\nAnti-slip rubber bottom', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 400, 850, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/limited-edition-zeebed-x-chinatown-market-smiley-pet-bed.jpg?alt=media&token=97dd4112-2e94-4ee9-9daa-34029896178e', 'Merchandise', 'Dogs'),
 ('22022844', 'Pedigree', 'pedigree desc', '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 18, 300, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/91Kucfnn5KL._AC_SX522_.jpg?alt=media&token=bc8ff792-b7cf-4cf4-bf54-4675f1e9b7c3', 'Food', 'Dogs'),
-('28528578', 'ZEE.DOG BLACK POOP BAG DISPENSER', 'Comes with 1 poop bag roll\nEasy to attach to the leash, does not bounce and bother while walking\nReflective rope with custom design\nHolds Zee.Dog poop-bags rolls, bags never jam\nEasy screw system for bag replacement', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 44, 350, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Web%20capture_20-8-2021_32238_www.petwarehouse.ph.jpeg?alt=media&token=7c33dd90-5caa-443d-a0d2-e1553e116765', 'Accessories', 'Dogs'),
-('3006381', 'Royal Canin', 'Cat food for cats', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 140, 450, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Web%20capture_15-6-2021_221343_www.petwarehouse.ph.jpeg?alt=media&token=9eed0363-96ad-4512-8453-d38e11614cc4', 'Food', 'Cat'),
-('30375976', 'Fancy Feast (Classic Pate)', 'Cat food that taste good', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 90, 350, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Web%20capture_15-6-2021_225219_www.petwarehouse.ph.jpeg?alt=media&token=88d85381-c5f2-45a0-8a23-e8f8d469fc7b', 'Food', 'Cat'),
-('8926439', 'WEST PAW QWIZL DOG CHEW TOY', 'MADE IN THE USA\nBUILT FOR TOUGH CHEWERS\nMade with Zogoflex® material, non-toxic and dishwasher safe (top rack)\nPuzzle toy helps stimulate dogs’ brains to support healthy growth\nExtends life of spendy treats\n', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 195, 1095, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/west-paw-qwizl-dog-chew-toy.jpg?alt=media&token=1d955463-914d-4002-9432-ddad32612cd8', 'Toys', 'Dogs');
+('28528578', 'ZEE.DOG BLACK POOP BAG DISPENSER', 'Comes with 1 poop bag roll\nEasy to attach to the leash, does not bounce and bother while walking\nReflective rope with custom design\nHolds Zee.Dog poop-bags rolls, bags never jam\nEasy screw system for bag replacement', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 42, 350, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Web%20capture_20-8-2021_32238_www.petwarehouse.ph.jpeg?alt=media&token=7c33dd90-5caa-443d-a0d2-e1553e116765', 'Accessories', 'Dogs'),
+('3006381', 'Royal Canin', 'Cat food for cats', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 132, 450, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Web%20capture_15-6-2021_221343_www.petwarehouse.ph.jpeg?alt=media&token=9eed0363-96ad-4512-8453-d38e11614cc4', 'Food', 'Cat'),
+('30375976', 'Fancy Feast (Classic Pate)', 'Cat food that taste good', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 85, 350, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Web%20capture_15-6-2021_225219_www.petwarehouse.ph.jpeg?alt=media&token=88d85381-c5f2-45a0-8a23-e8f8d469fc7b', 'Food', 'Cat'),
+('32296526', 'ZEE.DOG CLASSIC MELAMINE CORAL & WHITE DOG BOWL', 'Anti-slip grip bottom\nMade with a unique melamine polymer which keeps bacteria away\nHygienic and easy to wash, dishwasher safe', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 250, 650, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/zeedog-classic-melamine-coral-white-dog-bowl.jpg?alt=media&token=aba1d462-e03a-42c5-bba1-94a5454f975c', 'Food', 'Dogs'),
+('8926439', 'WEST PAW QWIZL DOG CHEW TOY', 'MADE IN THE USA\nBUILT FOR TOUGH CHEWERS\nMade with Zogoflex® material, non-toxic and dishwasher safe (top rack)\nPuzzle toy helps stimulate dogs’ brains to support healthy growth\nExtends life of spendy treats\n', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 194, 1095, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/west-paw-qwizl-dog-chew-toy.jpg?alt=media&token=1d955463-914d-4002-9432-ddad32612cd8', 'Toys', 'Dogs');
 
 -- --------------------------------------------------------
 
@@ -567,36 +508,11 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`reserve_id`, `product_id`, `pet_owner_id`, `vetid`, `reserve_quantity`, `reservation_status`, `date_reserve`, `date_accomplished`) VALUES
-(68, 8926439, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, 'Expired', '2021-10-27 23:42:25', '2021-10-28 00:18:29'),
-(69, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, 'Expired', '2021-10-27 23:52:52', '2021-10-28 00:18:29'),
-(70, 8926439, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, 'Expired', '2021-10-27 23:57:24', '2021-10-28 00:18:29'),
-(71, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 3, 'Expired', '2021-10-27 23:58:10', '2021-10-28 00:18:29'),
-(72, 3006381, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, 'Expired', '2021-10-27 23:59:04', '2021-10-28 00:18:29'),
-(73, 28528578, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, 'Expired', '2021-10-27 23:59:31', '2021-10-28 00:18:29'),
-(74, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, 'Done', '2021-10-28 00:35:42', '2021-10-28 00:35:59'),
-(76, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, 'Done', '2021-10-28 05:32:25', '2021-10-28 05:39:55'),
-(77, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, 'Done', '2021-10-28 05:34:31', '2021-10-28 05:39:57'),
-(78, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, 'Done', '2021-10-28 05:35:39', '2021-10-28 05:39:59'),
-(79, 3006381, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 5, 'Done', '2021-10-28 05:38:44', '2021-10-28 05:39:52'),
-(80, 3006381, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, 'Cancelled', '2021-10-28 05:42:17', '0000-00-00 00:00:00'),
-(81, 3006381, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 10, 'Cancelled', '2021-10-28 05:50:32', '0000-00-00 00:00:00'),
-(82, 3006381, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 4, 'Cancelled', '2021-10-28 05:58:34', '0000-00-00 00:00:00'),
-(83, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 3, 'Cancelled', '2021-10-28 05:58:34', '0000-00-00 00:00:00'),
-(84, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 3, 'Cancelled', '2021-10-28 06:06:53', '0000-00-00 00:00:00'),
-(85, 3006381, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 3, 'Cancelled', '2021-10-28 06:08:55', '0000-00-00 00:00:00'),
-(86, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 3, 'Cancelled', '2021-10-28 06:10:57', '0000-00-00 00:00:00'),
-(87, 3006381, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 3, 'Cancelled', '2021-10-28 06:10:57', '0000-00-00 00:00:00'),
-(88, 8926439, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 4, 'Cancelled', '2021-10-28 06:11:21', '0000-00-00 00:00:00'),
-(89, 28528578, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 3, 'Cancelled', '2021-10-28 06:12:07', '0000-00-00 00:00:00'),
-(90, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 3, 'Pending', '2021-10-28 06:15:53', '0000-00-00 00:00:00'),
-(91, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 3, 'Pending', '2021-10-28 06:15:56', '0000-00-00 00:00:00'),
-(92, 8926439, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, 'Pending', '2021-10-28 06:16:51', '0000-00-00 00:00:00'),
-(93, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, 'Pending', '2021-10-28 06:18:05', '0000-00-00 00:00:00'),
-(94, 8926439, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, 'Pending', '2021-10-28 06:19:49', '0000-00-00 00:00:00'),
-(95, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, 'Pending', '2021-10-28 06:20:44', '0000-00-00 00:00:00'),
-(96, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, 'Pending', '2021-10-28 06:21:13', '0000-00-00 00:00:00'),
-(97, 8926439, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, 'Pending', '2021-10-28 06:21:38', '0000-00-00 00:00:00'),
-(98, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, 'Pending', '2021-10-28 14:46:47', '0000-00-00 00:00:00');
+(104, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, 'Expired', '2021-10-29 19:27:40', '2021-10-30 14:38:44'),
+(105, 3006381, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, 'Expired', '2021-10-30 01:43:20', '2021-11-02 23:14:26'),
+(106, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, 'Cancelled', '2021-11-05 15:34:15', '0000-00-00 00:00:00'),
+(107, 30375976, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, 'Pending', '2021-11-05 21:44:56', '0000-00-00 00:00:00'),
+(108, 28528578, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, 'Done', '2021-11-05 22:09:05', '2021-11-05 22:13:31');
 
 -- --------------------------------------------------------
 
@@ -658,7 +574,15 @@ CREATE TABLE `stock_in` (
 
 INSERT INTO `stock_in` (`stock_in_id`, `vetid`, `product_id`, `stockin_date`, `stockin_quantity`) VALUES
 (5, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 30375976, '2021-08-18 17:54:02', 50),
-(6, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 3006381, '2021-10-23 00:57:37', 50);
+(6, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 3006381, '2021-10-23 00:57:37', 50),
+(7, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 32296526, '2021-11-03 13:05:19', 10),
+(8, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 32296526, '2021-11-03 13:05:44', 10),
+(9, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 32296526, '2021-11-03 13:07:22', 10),
+(10, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 32296526, '2021-11-03 13:09:09', 50),
+(11, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 32296526, '2021-11-03 13:46:24', 10),
+(12, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 21849527, '2021-11-03 13:56:36', 30),
+(13, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 21849527, '2021-11-03 14:00:06', 30),
+(14, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 21849527, '2021-11-03 14:00:29', 40);
 
 -- --------------------------------------------------------
 
@@ -680,7 +604,8 @@ CREATE TABLE `stock_used` (
 
 INSERT INTO `stock_used` (`stockused_id`, `vetid`, `product_id`, `stockused_date`, `stockused_quantity`) VALUES
 (1, 0, '3006381', '2021-08-18 17:54:14', 50),
-(2, 0, '28528578', '2021-10-22 21:24:53', 2);
+(2, 0, '28528578', '2021-10-22 21:24:53', 2),
+(3, 0, '32296526', '2021-11-03 14:04:23', 20);
 
 -- --------------------------------------------------------
 
@@ -724,6 +649,141 @@ CREATE TABLE `system_logs` (
   `date_time_created` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `system_logs`
+--
+
+INSERT INTO `system_logs` (`logs_id`, `logs_description`, `logs_type`, `date_time_created`) VALUES
+(218, 'kingchardddffff has been logged out as system admin', 3, '2021-10-28 07:48:20'),
+(219, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-28 07:52:31'),
+(220, 'Tri-City Animal Hospital has been logged in as vet clinic', 1, '2021-10-28 08:23:01'),
+(221, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-28 14:55:34'),
+(222, 'Tri-City Animal Hospital has been logged in as vet clinic', 1, '2021-10-28 14:55:43'),
+(223, 'Tri-City Animal Hospital has been logged out as vet clinic', 3, '2021-10-28 14:55:56'),
+(224, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-28 14:56:10'),
+(225, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-28 15:03:03'),
+(226, 'Tri-City Animal Hospital has been logged in as vet clinic', 1, '2021-10-28 15:03:17'),
+(227, 'Tri-City Animal Hospital has been logged out as vet clinic', 3, '2021-10-28 15:03:37'),
+(228, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-28 15:03:45'),
+(229, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-28 15:05:40'),
+(230, 'Tri-City Animal Hospital has been logged in as vet clinic', 1, '2021-10-28 15:05:48'),
+(231, 'Tri-City Animal Hospital has been logged out as vet clinic', 3, '2021-10-28 15:06:45'),
+(232, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-28 15:07:02'),
+(233, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-28 15:08:32'),
+(234, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-28 15:09:54'),
+(235, 'Tri-City Animal Hospital has been logged in as vet clinic', 1, '2021-10-28 15:10:04'),
+(236, 'Tri-City Animal Hospital has been logged out as vet clinic', 3, '2021-10-29 01:17:09'),
+(237, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-29 01:17:23'),
+(238, 'undefined has been logged out in as petowner', 3, '2021-10-29 02:42:25'),
+(239, 'Tri-City Animal Hospital has been logged in as vet clinic', 1, '2021-10-29 02:42:39'),
+(240, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-29 02:47:43'),
+(241, 'Tri-City Animal Hospital has been logged in as vet clinic', 1, '2021-10-29 02:47:52'),
+(242, 'Tri-City Animal Hospital has been logged out as vet clinic', 3, '2021-10-29 02:48:00'),
+(243, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-29 02:48:10'),
+(244, 'Tri-City Animal Hospital has been logged out as vet clinic', 3, '2021-10-29 08:06:44'),
+(245, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-10-29 08:06:54'),
+(246, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-10-29 10:06:03'),
+(247, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-10-29 10:06:11'),
+(248, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-10-29 10:10:36'),
+(249, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-29 10:10:44'),
+(250, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-29 10:23:36'),
+(251, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-10-29 10:23:46'),
+(252, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-29 11:28:04'),
+(253, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-10-29 11:28:12'),
+(254, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-10-29 11:28:40'),
+(255, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-10-29 11:29:02'),
+(256, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-10-29 11:29:24'),
+(257, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-29 11:29:32'),
+(258, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-29 12:54:37'),
+(259, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-10-29 12:54:44'),
+(260, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-10-29 13:23:59'),
+(261, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-29 13:27:46'),
+(262, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-29 13:45:41'),
+(263, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-10-29 13:47:09'),
+(264, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-10-29 14:21:43'),
+(265, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-29 14:21:53'),
+(266, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-10-29 17:52:48'),
+(267, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-29 17:53:04'),
+(268, 'kingchardddffff has been logged in as system admin', 1, '2021-10-29 17:53:12'),
+(269, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-10-29 17:59:55'),
+(270, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-10-29 18:00:28'),
+(271, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-29 18:00:34'),
+(272, 'kingchardddffff has been logged out as system admin', 3, '2021-10-29 18:14:50'),
+(273, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-29 18:15:09'),
+(274, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-29 19:41:11'),
+(275, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-29 19:41:36'),
+(276, 'kingchardddffff has been logged in as system admin', 1, '2021-10-29 19:41:45'),
+(277, 'kingchardddffff has been logged out as system admin', 3, '2021-10-29 19:53:57'),
+(278, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-29 19:54:07'),
+(279, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-10-29 19:57:33'),
+(280, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-10-29 19:57:47'),
+(281, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-10-30 06:40:22'),
+(282, 'undefined has been logged out in as petowner', 3, '2021-11-02 15:01:04'),
+(283, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-02 15:01:22'),
+(284, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-11-02 15:14:01'),
+(285, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-11-02 15:14:18'),
+(286, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-11-03 04:48:45'),
+(287, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-03 04:49:23'),
+(288, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-11-03 04:49:59'),
+(289, 'Tri-City Animal Hospital has been logged in as vet clinic', 1, '2021-11-03 04:50:13'),
+(290, 'Tri City Animal Hospital has been logged out as vet clinic', 3, '2021-11-03 06:43:18'),
+(291, 'Tri City Animal Hospital has been logged in as vet clinic', 1, '2021-11-03 06:43:53'),
+(292, 'Tri City Animal Hospital has been logged out as vet clinic', 3, '2021-11-03 06:45:33'),
+(293, 'Tri City Animal Hospital has been logged in as vet clinic', 1, '2021-11-03 06:45:48'),
+(294, 'Tri City Animal Hospital has been logged out as vet clinic', 3, '2021-11-03 06:46:08'),
+(295, 'Tri City Animal Hospital has been logged in as vet clinic', 1, '2021-11-03 06:47:23'),
+(296, 'Tri City Animal Hospital has been logged out as vet clinic', 3, '2021-11-03 06:48:05'),
+(297, 'Tri City Animal Hospital has been logged in as vet clinic', 1, '2021-11-03 06:48:16'),
+(298, 'Tri City Animal Hospital has been logged out as vet clinic', 3, '2021-11-03 06:50:34'),
+(299, 'Tri City Animal Hospital has been logged in as vet clinic', 1, '2021-11-03 06:50:44'),
+(300, 'Tri City Animal Hospital has been logged out as vet clinic', 3, '2021-11-03 06:51:44'),
+(301, 'Tri City Animal Hospital has been logged in as vet clinic', 1, '2021-11-03 06:52:01'),
+(302, 'Tri City Animal Hospital has been logged out as vet clinic', 3, '2021-11-03 06:58:49'),
+(303, 'Tri City Animal Hospital has been logged in as vet clinic', 1, '2021-11-03 06:59:03'),
+(304, 'Tri City Animal Hospital has been logged out as vet clinic', 3, '2021-11-03 07:01:06'),
+(305, 'Tri City Animal Hospital has been logged in as vet clinic', 1, '2021-11-03 07:02:44'),
+(306, 'Tri City Animal Hospital has been logged out as vet clinic', 3, '2021-11-03 07:04:07'),
+(307, 'Tri City Animal Hospital has been logged in as vet clinic', 1, '2021-11-03 07:04:23'),
+(308, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-03 09:14:47'),
+(309, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-03 14:16:43'),
+(310, 'Tri City Animal Hospital has been logged in as vet clinic', 1, '2021-11-03 15:11:20'),
+(311, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-04 06:09:54'),
+(312, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-04 07:36:15'),
+(313, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-11-04 07:37:48'),
+(314, 'Tri City Animal Hospital has been logged out as vet clinic', 3, '2021-11-04 07:41:51'),
+(315, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-11-04 07:42:06'),
+(316, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-04 07:53:34'),
+(317, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-04 17:31:59'),
+(318, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-05 03:07:43'),
+(319, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-05 03:22:33'),
+(320, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-11-05 07:44:23'),
+(321, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-05 10:19:22'),
+(322, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-11-05 14:09:51'),
+(323, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-11-05 14:13:35'),
+(324, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-06 12:59:12'),
+(325, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-11-06 14:06:13'),
+(326, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-11-06 14:06:52'),
+(327, 'undefined has been logged out in as petowner', 3, '2021-11-07 14:02:53'),
+(328, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-07 14:03:26'),
+(329, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-07 21:31:27'),
+(330, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-11-08 08:44:48'),
+(331, 'undefined has been logged out in as petowner', 3, '2021-11-09 09:21:56'),
+(332, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-09 09:22:16'),
+(333, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-11-09 14:24:27'),
+(334, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-11-09 20:07:27'),
+(335, 'Sci Vet Animal Clinic has been registered as vet clinic', 2, '2021-11-09 20:09:09'),
+(336, 'Sci Vet Animal Clinic has been logged in as unverified vet clinic', 1, '2021-11-09 20:09:09'),
+(337, 'Sci Vet Animal Clinic has been logged out as unverified vet clinic', 3, '2021-11-09 20:09:33'),
+(338, 'Local Vet Animal Clinic has been registered as vet clinic', 2, '2021-11-09 20:16:41'),
+(339, 'Local Vet Animal Clinic has been logged in as unverified vet clinic', 1, '2021-11-09 20:16:41'),
+(340, 'Local Vet Animal Clinic has been logged out as unverified vet clinic', 3, '2021-11-09 20:19:28'),
+(341, 'Sky line Vet Clinic has been registered as vet clinic', 2, '2021-11-09 20:24:50'),
+(342, 'Sky line Vet Clinic has been logged in as unverified vet clinic', 1, '2021-11-09 20:24:50'),
+(343, 'Sky line Vet Clinic has been logged out as unverified vet clinic', 3, '2021-11-09 20:30:27'),
+(344, 'Jhocson Vet Clinic has been registered as vet clinic', 2, '2021-11-09 20:38:00'),
+(345, 'Jhocson Vet Clinic has been logged in as unverified vet clinic', 1, '2021-11-09 20:38:00'),
+(346, 'Jhocson Vet Clinic has been logged out as unverified vet clinic', 3, '2021-11-09 21:18:30');
+
 -- --------------------------------------------------------
 
 --
@@ -744,8 +804,7 @@ CREATE TABLE `thread` (
 INSERT INTO `thread` (`thread_id`, `pet_owner_id`, `vetid`, `created_time_date`) VALUES
 (1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', '2021-09-01 06:35:51'),
 (2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', '2021-09-23 15:38:15'),
-(3, 58, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', '2021-10-25 14:13:32'),
-(4, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', '2021-10-27 21:38:29');
+(3, 58, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', '2021-10-25 14:13:32');
 
 -- --------------------------------------------------------
 
@@ -767,7 +826,7 @@ CREATE TABLE `user_role` (
 INSERT INTO `user_role` (`user_role_id`, `email`, `userrole`, `phone_number`) VALUES
 (2, 'admin@gmail.com', 3, ''),
 (4, 'john040717@gmail.com', 1, '09558264299'),
-(48, 'tricity@gmail.com', 2, ''),
+(48, 'tricity@gmail.com', 2, '09404555899'),
 (74, 'animalhouse@gmail.com', 2, ''),
 (75, 'johnllaneta05@gmail.com', 1, ''),
 (76, 'westvalley@gmail.com', 2, ''),
@@ -780,7 +839,6 @@ INSERT INTO `user_role` (`user_role_id`, `email`, `userrole`, `phone_number`) VA
 (83, 'wt_clinic@gmail.com', 2, ''),
 (84, 'pspca@gmail.com', 2, ''),
 (85, 'manila_vet@gmail.com', 1, ''),
-(86, 'manila_vet1@gmail.com', 2, '09763723846'),
 (87, 'alfie@gmail.com', 1, ''),
 (88, 'carl@gmail.com', 1, ''),
 (89, 'johnpenazo@gmail.com', 1, '09072069351'),
@@ -799,7 +857,11 @@ INSERT INTO `user_role` (`user_role_id`, `email`, `userrole`, `phone_number`) VA
 (114, 'vetvetClinic@gmail.com', 2, '09587939393'),
 (115, 'cerceas12@gmail.com', 1, '09748493934'),
 (118, 'carlos12@gmail.com', 3, '09739399234'),
-(119, 'myvet@gmail.com', 2, '09357498232');
+(119, 'myvet@gmail.com', 2, '09357498232'),
+(120, 'scivetanimal@gmail.com', 2, '09081236547'),
+(121, 'localvet@gmail.com', 2, '09087896541'),
+(122, 'skyline@gmail.com', 2, '09458962657'),
+(123, 'jhocsonvet@gmail.com', 2, '09784548784');
 
 -- --------------------------------------------------------
 
@@ -870,19 +932,59 @@ CREATE TABLE `vet_clinic` (
 --
 
 INSERT INTO `vet_clinic` (`vet_admin_id`, `email`, `password`, `vet_name`, `vet_address`, `vet_contact_number`, `vet_permit`, `vet_picture`, `vet_status`, `scheduleMonday`, `scheduleTuesday`, `scheduleWednesday`, `scheduleThursday`, `scheduleFriday`, `scheduleSaturday`, `scheduleSunday`, `enableProduct`, `enablePharmacy`, `enableServices`, `enableConsultation`, `enableExamination`, `enableGrooming`, `enableVaccination`, `enablePreventiveControls`, `enableInHouseLab`, `vetid`, `isOnline`, `callerId`, `isBusy`, `longitude`, `Latitude`, `isArchived`) VALUES
-(19, 'tricity@gmail.com', '$2b$10$9i2h.drYBR5hqXnv1zgr3evSS3s6Fi/rq97RdxjS/H.Wj1xLmnhbm', 'Tri-City Animal Hospital', '1942 Int. 5 Blk 10 Sta.Mesa, Manila', '09354555893', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'Verified', '06:00 - 20:29', '07:06 - 19:10', '19:06 - 18:07', '06:37 - 18:37', '06:36 - 18:37', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 1, '', 0, 121.006, 14.5993, 0),
+(19, 'tricity@gmail.com', '$2b$10$9i2h.drYBR5hqXnv1zgr3evSS3s6Fi/rq97RdxjS/H.Wj1xLmnhbm', 'Tri City Animal Hospital', '1949 Int. 5 Blk 10 Sta.Mesa, Manila', '09404555899', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'Verified', '06:00 - 20:29', '07:06 - 19:10', '19:06 - 18:07', '06:37 - 18:37', '06:36 - 18:37', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 1, '', 0, 121.006, 14.5993, 0),
 (27, 'animalhouse@gmail.com', '$2b$10$54fDvasYHYzCg65QlFVQmu/EcHS/j3Q4s8eL6z.xycwEVSLddfjyq', 'Animal House Vet Clinic', '1602 int 5 F varona Street, Tondo,Manila', '09558261232', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Screen-Shot-2020-11-19-at-10.39.49-PM.png?alt=media&token=eb67c2d4-80f8-4fd1-bbc4-34961609fa5a', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '', 0, '', 0, 120.996, 14.6031, 0),
-(28, 'westvalley@gmail.com', '$2b$10$L68mQGeYEoFlBAVtYCJBZOKLr08agfMDD0igxzWpaZtByT8rzNdV.', 'West Valley Animal Clinic', '1241 blk. 15 Velasquez Street,Tondo, Manila', '09081052103', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=5b6c9bfc-8c86-472f-a436-3c2b392ecf4b', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/images.png?alt=media&token=a79fd71a-d4d2-4a2f-9a00-e7f9bd24afde', 'Verified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '', 0, 120.988, 14.6066, 0),
+(28, 'westvalley@gmail.com', '$2b$10$L68mQGeYEoFlBAVtYCJBZOKLr08agfMDD0igxzWpaZtByT8rzNdV.', 'West Valley Animal Clinic', '1241 blk. 15 Velasquez Street,Tondo, Manila', '09081052103', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=5b6c9bfc-8c86-472f-a436-3c2b392ecf4b', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/images.png?alt=media&token=a79fd71a-d4d2-4a2f-9a00-e7f9bd24afde', 'Verified', '06:00 - 20:29', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '', 0, 120.988, 14.6066, 0),
 (29, 'cayco_clinic@gmail.com', '$2b$10$pjWTNfzrIXFmSrmHKjE/ReZ9E.G6iBIR4celVJwau9EBgXtBiFDx6', 'Cayco Animal Clinic', '434 Cayco St,Sampaloc, Manila', '09456372342', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/cayco.jpg?alt=media&token=7c994819-1883-4bb6-a42b-e0f426f2273a', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '$2b$10$0CCEKK4oxKnd8idkyaINEOiagaJiiw//ZQmKM7h2MUwbRY5Lxgt52', 0, '', 0, 120.996, 14.6038, 0),
 (30, 'curapet@gmail.com', '$2b$10$s8kcX0EpUas0lLtaWvHQc.S/iHIK1PHAUQMB9v6UESRYVOZoIT51q', 'CuraPet Veterinary Clinic', '1009  Tejeron St,Santa Ana, Manila', '09564837642', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/curapet.jpg?alt=media&token=802deb0a-5e0b-4096-9094-3a2153f7de05', 'Unverified', '', '', '', '', '', '', '', 1, 0, 1, 1, 1, 1, 1, 0, 0, '$2b$10$7xnKUIcrfoLLpUJJtAeH.uJ1yEwfKkOnDjJUY0flkyLhlN4HeGram', 0, '', 0, 120.966, 14.6158, 0),
 (31, 'wt_clinic@gmail.com', '$2b$10$KapEC.Th7JJF/Ev8.J2Ux.DCVcYE.mw0GrojzaOoI.6.cipBW9O6G', 'WT Veterinary Clinic', '1989 Gerardo Tuazon St,Sampaloc, Manila', '09354675835', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/wt.jpg?alt=media&token=c907f290-6be8-4897-a1ac-440364c3576d', 'Unverified', '', '', '', '', '', '', '', 0, 1, 1, 1, 1, 0, 0, 0, 0, '$2b$10$01F/oODEbFFTtyhDFcYs/OMKDRQ8At3ROUudj4CquGW.U1msEKfwC', 0, '', 0, 126.995, 15.9007, 0),
 (32, 'pspca@gmail.com', '$2b$10$S4r9VpD4u7H6r.QD1pyiTuN8ZkXrCYfu7zp0FFht9Rubj2pQH8t/G', 'PSPCA', '2044 Recto Ave,Quiapo, Manila', '09127438382', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/pspca.jpg?alt=media&token=5befad38-6fdc-408c-8cef-56c1250b5431', 'Unverified', '', '', '', '', '', '', '', 0, 0, 1, 1, 1, 0, 1, 0, 0, '$2b$10$oQ7J0h33sHywkcfo.nBY9Or25rqUrqI5ZshmV7u5KOsmSpuakmiF.', 0, '', 0, 120.991, 14.6112, 0),
-(33, 'manila_vet1@gmail.com', '$2b$10$DBoYQ2qwVj8nL/Gg7M87Fukuju6.L5.d7Tn2/pt62QA2vKNbHTMLi', 'ManilaVets Animal Clinic', '683  Manga Ave,Sampaloc, Manila', '09763723846', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/CENTIE-1.pdf?alt=media&token=9c12b1d6-7cf2-4098-9f86-9d2abb89cb9b', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/manila.png?alt=media&token=c4423ffe-75cf-42ef-82d4-3274044f8db8', 'Verified', '', '', '', '', '', '', '', 0, 1, 0, 0, 0, 0, 0, 0, 0, '$2b$10$zor8SCCINsCdzXSSsDQWueRicLReZ/yfHKtPtnVqdeWKGYP6cRkga', 0, '', 0, 120.983, 14.6111, 0),
 (34, 'tumanivetclinic@gmail.com', '$2b$10$XDqigGcyKiIOLJzMoTB/NuluN.UHi3sopFZGGc/5cW3NoCpihU1na', 'Tumani Vet Clinic', '431 Tayuman Street,Manila City', '09073654951', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=2a6bd727-4565-483a-9209-ae4a5418ceb5', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Screen-Shot-2020-11-19-at-10.39.49-PM.png?alt=media&token=3667d389-3e44-4aa5-90f4-26c28d3860c7', 'Pending', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 0, 0, '$2b$10$WWr2zCDq2UTcaVRwue5qje4xGr0Ss2L62ktt3yNFD.72dGlJsaIWu', 0, '', 0, 0, 0, 0),
 (35, 'eastlife@gmail.com', '$2b$10$jUILWZcN9mrYImF7Mk5c1OYGbb8ogTXVQn9N7afLP7zxF1/gUdune', 'east life vet clinic', '1042 Tayuman Street,Tondo Manila', '09558264223', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/DOC%2BFERDS%2BANIMAL%2BWELLNESS%2BCENTER.jpg?alt=media&token=836d5381-b5ee-4538-9093-2e666bb01bb0', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 0, 1, '$2b$10$ob2IFbTBfc0G6/tweyOD.OVNyPSH2hmoxzQPBZIJftaXWC9mQu6Ua', 0, '', 0, 0, 0, 0),
 (37, 'chardVet@gmail.com', '$2b$10$jQw/tzIEdk6eB2pTzjLHeO2hPYOJIuLiGjgoevAwSOeL/pIWAdW9.', 'chardVet Clinic', '008 legarda,Quezon', '09836728223', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/manila.png?alt=media&token=b854aae6-685b-411c-87ba-82df6d21be78', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 0, 0, 0, 0, 0, 0, '$2b$10$.GJFLQbn5eJEvmzuATWJSeU.QG8hl0HbEs1O2DArRUZWRzMNxPbd.', 0, '', 0, 0, 0, 0),
 (38, 'vetvetClinic@gmail.com', '$2b$10$Z14/HAVAqt1o0NEeuKlGUeRV5lzfCCvKZJJfJckC/yCRlbA/rmD1.', 'vetvetClinic', '008 legarda,Quezon', '09587939393', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/carm3.jfif?alt=media&token=907dcdd8-718c-4408-86bc-36fe5aff817b', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 0, 0, 0, 0, 0, 0, '$2b$10$p7zyewBK9Umy9akgNVNUquQR0XNCsX.eFSbBTHs9VxafOvK6t9CCi', 0, '', 0, 0, 0, 0),
-(39, 'myvet@gmail.com', '$2b$10$qJEPI2NqaieUOoHMjf6eQeuyrBEEcFdxALL62HiRS2SMQyaAZb4p2', 'MyVet Clinic', '008 legarda,Quezon', '09357498232', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Consent%20Form.pdf?alt=media&token=38fc1ab5-fe2a-422f-a4d1-b477d9d02ad8', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/cayco.jpg?alt=media&token=67488d75-1c58-4616-b065-ccc35cb868d4', 'Verified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 0, '', 0, 0, 0, 0);
+(39, 'myvet@gmail.com', '$2b$10$qJEPI2NqaieUOoHMjf6eQeuyrBEEcFdxALL62HiRS2SMQyaAZb4p2', 'MyVet Clinic', '008 legarda,Quezon', '09357498232', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Consent%20Form.pdf?alt=media&token=38fc1ab5-fe2a-422f-a4d1-b477d9d02ad8', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/cayco.jpg?alt=media&token=67488d75-1c58-4616-b065-ccc35cb868d4', 'Verified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 0, '', 0, 0, 0, 0),
+(40, 'scivetanimal@gmail.com', '$2b$10$jFsCfOyQbzO63kBWzpJCK.sXq49dpiGN2h30JN3fC4IzEMKKYEqKO', 'Sci Vet Animal Clinic', '1425 Lot. 5 Jhocson Street,Sampaloc Manila', '09081236547', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/images.png?alt=media&token=4c3f3295-9b7c-4f5b-9598-82b6382151e2', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$FWJTPSEKKo7nBLI3nTLCyOnM0M5tqVaye2BAYnwpvAsUasm.NfghW', 0, '', 0, 0, 0, 0),
+(41, 'localvet@gmail.com', '$2b$10$ZIXctmYp18xpkrsvPyxhe.XFDEOATZcAavRqtiQ20F1Dio9sXGQpa', 'Local Vet Animal Clinic', '1226 Jhocson Street,Sampaloc Manila', '09087896541', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/6a1da98614604240bfd0f0c4f563919e.jpg?alt=media&token=25a07cb5-720f-4502-9eee-41b3fba3e204', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$6ijujbsZONeSv0VY7cmq0.m5GNzSWqg7ZOWRWG8aWx64qMPq6AOby', 0, '', 0, 0, 0, 0),
+(42, 'skyline@gmail.com', '$2b$10$oQPhQbk/B2bmFm3qNuy8ae2iIszLpCaORchsPg6gekAjYpfDjHQLG', 'Sky line Vet Clinic', '1245 Jhocson Street,Sampaloc Manila', '09458962657', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/6a1da98614604240bfd0f0c4f563919e.jpg?alt=media&token=196738bb-aebc-4147-9862-bacc734685b4', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$IdYRLkB1a5pVxim9CW8C2eyehCJklWzFMwL8A1WREDeP9I9wIeCw6', 0, '', 0, 0, 0, 0),
+(43, 'jhocsonvet@gmail.com', '$2b$10$XgFl5gSsc1NTm01Ulf8qbuDG0Casx4Qot9WPdxnAI4H6wNyw.oE0m', 'Jhocson Vet Clinic', '2526 Lot. 25 Jhocson Street,Sampaloc Manila', '09784548784', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/6a1da98614604240bfd0f0c4f563919e.jpg?alt=media&token=33e62025-ba9f-4258-8ceb-3d3a765e6356', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$8nPeSU5pHPYwCwW/T09gOOJAe0sonSWA7v6RrTeK7uLGdG9x6mX6G', 0, '', 0, 121.014, 14.674, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vet_doctors`
+--
+
+CREATE TABLE `vet_doctors` (
+  `vet_doc_id` int(11) NOT NULL,
+  `vet_admin_id` int(11) NOT NULL,
+  `vet_doc_fname` varchar(100) NOT NULL,
+  `vet_doc_lname` varchar(100) NOT NULL,
+  `vet_doc_mname` varchar(20) NOT NULL,
+  `vet_doc_contactNumber` varchar(12) NOT NULL,
+  `vet_doc_email` varchar(50) NOT NULL,
+  `vet_doc_profilePic` varchar(250) NOT NULL,
+  `vet_doc_digitalSignature` varchar(100) NOT NULL,
+  `vet_doc_password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vet_staff`
+--
+
+CREATE TABLE `vet_staff` (
+  `vet_staff_id` int(11) NOT NULL,
+  `vet_admin_id` int(11) NOT NULL,
+  `vet_staff_fname` varchar(100) DEFAULT NULL,
+  `vet_staff_lname` varchar(100) DEFAULT NULL,
+  `vet_staff_mname` varchar(20) DEFAULT NULL,
+  `vet_staff_contactNumber` varchar(12) DEFAULT NULL,
+  `vet_staff_email` varchar(250) NOT NULL,
+  `vet_staff_profilePic` varchar(250) NOT NULL,
+  `vet_staff_password` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -929,6 +1031,15 @@ ALTER TABLE `appointment`
   ADD KEY `service_id` (`service_id`);
 
 --
+-- Indexes for table `consultation`
+--
+ALTER TABLE `consultation`
+  ADD PRIMARY KEY (`consultation_id`),
+  ADD KEY `vet_admin_id` (`vet_admin_id`),
+  ADD KEY `vet_doc_id` (`vet_doc_id`),
+  ADD KEY `pet_id` (`pet_id`);
+
+--
 -- Indexes for table `forget_password`
 --
 ALTER TABLE `forget_password`
@@ -955,7 +1066,10 @@ ALTER TABLE `immunization_history`
 --
 ALTER TABLE `medical_history`
   ADD PRIMARY KEY (`medical_history_id`),
-  ADD KEY `pet_id` (`pet_id`);
+  ADD KEY `pet_id` (`pet_id`),
+  ADD KEY `service_id` (`service_id`),
+  ADD KEY `vet_admin_id` (`vet_admin_id`),
+  ADD KEY `vet_doc_id` (`vet_doc_id`);
 
 --
 -- Indexes for table `messages`
@@ -1099,6 +1213,20 @@ ALTER TABLE `vet_clinic`
   ADD UNIQUE KEY `vetid` (`vetid`);
 
 --
+-- Indexes for table `vet_doctors`
+--
+ALTER TABLE `vet_doctors`
+  ADD PRIMARY KEY (`vet_doc_id`),
+  ADD KEY `vet_clinic_ibfk_1` (`vet_admin_id`);
+
+--
+-- Indexes for table `vet_staff`
+--
+ALTER TABLE `vet_staff`
+  ADD PRIMARY KEY (`vet_staff_id`),
+  ADD KEY `vet_admin_id` (`vet_admin_id`);
+
+--
 -- Indexes for table `visitor_monitoring`
 --
 ALTER TABLE `visitor_monitoring`
@@ -1114,7 +1242,13 @@ ALTER TABLE `visitor_monitoring`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+
+--
+-- AUTO_INCREMENT for table `consultation`
+--
+ALTER TABLE `consultation`
+  MODIFY `consultation_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `forget_password`
@@ -1132,31 +1266,31 @@ ALTER TABLE `history`
 -- AUTO_INCREMENT for table `immunization_history`
 --
 ALTER TABLE `immunization_history`
-  MODIFY `immunization_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `immunization_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `medical_history`
 --
 ALTER TABLE `medical_history`
-  MODIFY `medical_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `medical_history_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `notification_reservation`
 --
 ALTER TABLE `notification_reservation`
-  MODIFY `notif_reserve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `notif_reserve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `pets`
@@ -1180,7 +1314,7 @@ ALTER TABLE `pet_registry_for_vet`
 -- AUTO_INCREMENT for table `pharmacy`
 --
 ALTER TABLE `pharmacy`
-  MODIFY `medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `rate_feedback`
@@ -1192,7 +1326,7 @@ ALTER TABLE `rate_feedback`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reserve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `reserve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -1204,13 +1338,13 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `stock_in`
 --
 ALTER TABLE `stock_in`
-  MODIFY `stock_in_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `stock_in_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `stock_used`
 --
 ALTER TABLE `stock_used`
-  MODIFY `stockused_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `stockused_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `system_administrator`
@@ -1222,7 +1356,7 @@ ALTER TABLE `system_administrator`
 -- AUTO_INCREMENT for table `system_logs`
 --
 ALTER TABLE `system_logs`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=347;
 
 --
 -- AUTO_INCREMENT for table `thread`
@@ -1234,7 +1368,7 @@ ALTER TABLE `thread`
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `user_role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `user_role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT for table `vaccination`
@@ -1246,7 +1380,19 @@ ALTER TABLE `vaccination`
 -- AUTO_INCREMENT for table `vet_clinic`
 --
 ALTER TABLE `vet_clinic`
-  MODIFY `vet_admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `vet_admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT for table `vet_doctors`
+--
+ALTER TABLE `vet_doctors`
+  MODIFY `vet_doc_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `vet_staff`
+--
+ALTER TABLE `vet_staff`
+  MODIFY `vet_staff_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `visitor_monitoring`
@@ -1263,6 +1409,14 @@ ALTER TABLE `visitor_monitoring`
 --
 ALTER TABLE `appointment`
   ADD CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`vetid`) REFERENCES `vet_clinic` (`vetid`);
+
+--
+-- Constraints for table `consultation`
+--
+ALTER TABLE `consultation`
+  ADD CONSTRAINT `consultation_ibfk_1` FOREIGN KEY (`vet_admin_id`) REFERENCES `vet_clinic` (`vet_admin_id`),
+  ADD CONSTRAINT `consultation_ibfk_2` FOREIGN KEY (`vet_doc_id`) REFERENCES `vet_doctors` (`vet_doc_id`),
+  ADD CONSTRAINT `consultation_ibfk_3` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`pet_id`);
 
 --
 -- Constraints for table `history`
@@ -1282,7 +1436,13 @@ ALTER TABLE `immunization_history`
 -- Constraints for table `medical_history`
 --
 ALTER TABLE `medical_history`
-  ADD CONSTRAINT `medical_history_ibfk_1` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`pet_id`);
+  ADD CONSTRAINT `medical_history_ibfk_1` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`pet_id`),
+  ADD CONSTRAINT `medical_history_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `services` (`service_id`),
+  ADD CONSTRAINT `medical_history_ibfk_3` FOREIGN KEY (`vet_admin_id`) REFERENCES `vet_clinic` (`vet_admin_id`),
+  ADD CONSTRAINT `medical_history_ibfk_4` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`pet_id`),
+  ADD CONSTRAINT `medical_history_ibfk_5` FOREIGN KEY (`service_id`) REFERENCES `services` (`service_id`),
+  ADD CONSTRAINT `medical_history_ibfk_6` FOREIGN KEY (`vet_admin_id`) REFERENCES `vet_clinic` (`vet_admin_id`),
+  ADD CONSTRAINT `medical_history_ibfk_7` FOREIGN KEY (`vet_doc_id`) REFERENCES `vet_doctors` (`vet_doc_id`);
 
 --
 -- Constraints for table `messages`
@@ -1351,6 +1511,18 @@ ALTER TABLE `vaccination`
   ADD CONSTRAINT `vaccination_ibfk_1` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`pet_id`),
   ADD CONSTRAINT `vaccination_ibfk_2` FOREIGN KEY (`appointment_id`) REFERENCES `appointment` (`appointment_id`),
   ADD CONSTRAINT `vaccination_ibfk_3` FOREIGN KEY (`vet_admin_id`) REFERENCES `vet_clinic` (`vet_admin_id`);
+
+--
+-- Constraints for table `vet_doctors`
+--
+ALTER TABLE `vet_doctors`
+  ADD CONSTRAINT `vet_clinic_ibfk_1` FOREIGN KEY (`vet_admin_id`) REFERENCES `vet_clinic` (`vet_admin_id`);
+
+--
+-- Constraints for table `vet_staff`
+--
+ALTER TABLE `vet_staff`
+  ADD CONSTRAINT `vet_staff_ibfk_1` FOREIGN KEY (`vet_admin_id`) REFERENCES `vet_clinic` (`vet_admin_id`);
 
 --
 -- Constraints for table `visitor_monitoring`
