@@ -3934,10 +3934,10 @@ app.put("/vetclinic/messages/notification/:vetid", (req, res) => {
 
 
 // Verify Email
-
-
-app.post('/verifyEmail', (req, res) => {
+app.post("/verifyEmail", async (req, res) => {
   const email = req.body.email;
+  console.log(email);
+  const verificationCode = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -3948,35 +3948,139 @@ app.post('/verifyEmail', (req, res) => {
 
   var mailOptions = {
     from: 'terravetapp00@gmail.com',
-    to: 'johnllaneta05@gmail.com',
-    subject: 'sample',
-    text: `sample`
+    to: email,
+    subject: 'Verification Code TerraVet Account',
+    text: `Here's your Terravet Verification Code, ${email}! Continue signing up for Terravet by entering this code ${verificationCode}.`,
   };
 
-  transporter.sendMail(mailOptions, function (error, info) {
+  await transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
     } else {
-      console.log('Email sent: ' + info.response);
+
+
+      db.query(
+        "INSERT INTO email_verification (email,verification_code) VALUES(?,?)"
+        ,
+        [email, verificationCode],
+        (err, result) => {
+          // console.log(result.length);
+          if (err == null) {
+            console.log('Email sent: ' + info.response);
+            res.send('Email sent: ' + info.response)
+          } else {
+            console.log(err);
+          }
+        });
     }
   });
+
+})
+
+app.post("/verifyEmail/submit", (req, res) => {
+  const email = req.body.email;
+  const verificationCode = req.body.verificationCode;
+  console.log(verificationCode);
+
+  db.query(
+    'SELECT * FROM email_verification WHERE email = ? AND verification_code = ?',
+    [email, verificationCode],
+    (err, result) => {
+      if (result.length > 0) {
+        res.send('Email Verified');
+      } else {
+        res.send('Wrong verification code');
+      }
+    }
+  )
+
+});
+
+
+app.post("/register/veterinarian", (req, res) => {
+  const vetid = req.body.vetid;
+  const email = req.body.email;
+  const password = req.body.password;
+  const fName = req.body.fName;
+  const mName = req.body.mName;
+  const lName = req.body.lName;
+  const gender = req.body.gender;
+  const contactNumber = req.body.contactNumber;
+  const eSignature = req.body.eSignature;
+
+  db.query(
+    "INSERT INTO user_role (email,userrole,phone_number) VALUES (?,?,?)",
+    [email, 4, contactNumber],
+    (err, result) => {
+      if (err == null) {
+
+        bcrypt.hash(password, saltRounds, (err, hash) => {
+          if (err) {
+            console.log(err);
+          }
+
+
+          if (eSignature != undefined) {
+            db.query(
+              "INSERT INTO vet_doctors (vetid,vet_doc_fname,vet_doc_lname,vet_doc_mname,vet_doc_contactNumber,vet_doc_email, vet_doc_digitalSignature, vet_doc_password ,vet_doc_gender) VALUES (?,?,?,?,?,?,?,?,?)",
+              [vetid, fName, lName, mName, contactNumber, email, eSignature, hash, gender],
+              (err, result) => {
+                if (err == null) {
+                  console.log("vet doctor successfully register");
+                  res.send('Successfully Registered')
+                } else {
+                  console.log(err);
+                  res.send('Not Successfully Registered')
+                }
+              }
+            );
+          } else {
+            db.query(
+              "INSERT INTO vet_doctors (vetid,vet_doc_fname,vet_doc_lname,vet_doc_mname,vet_doc_contactNumber,vet_doc_email, vet_doc_password ,vet_doc_gender	) VALUES (?,?,?,?,?,?,?,?)",
+              [vetid, fName, lName, mName, contactNumber, email, hash, gender],
+              (err, result) => {
+                if (err == null) {
+                  console.log("vet doctor successfully register");
+                  res.send('Successfully Registered')
+                } else {
+                  console.log(err);
+                  res.send('Not Successfully Registered')
+                }
+              }
+            );
+          }
+
+
+        });
+      } else {
+        console.log(err);
+      }
+    }
+  );
+
+
+
+
+
+
+
 })
 
 app.get("/vetclinic/messages/notification/length/:vetid", (req, res) => {
   // console.log(vetAdminId);
-  const vetid = req.params.vetid;
-  // console.log(vetid);
-  const sqlQuery =
-    "SELECT * FROM messages WHERE messages.vetid = ? AND messages.isNewMessageVet = 0 AND messages.user_message = 1";
+  // const vetid = req.params.vetid;
+  // // console.log(vetid);
+  // const sqlQuery =
+  //   "SELECT * FROM messages WHERE messages.vetid = ? AND messages.isNewMessageVet = 0 AND messages.user_message = 1";
 
-  db.query(sqlQuery, vetid, (err, result) => {
-    // console.log(result.length);
-    if (err == null) {
-      res.send({ view: result.length });
-    } else {
-      console.log(err);
-    }
-  });
+  // db.query(sqlQuery, vetid, (err, result) => {
+  //   // console.log(result.length);
+  //   if (err == null) {
+  //     res.send({ view: result.length });
+  //   } else {
+  //     console.log(err);
+  //   }
+  // });
 });
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
