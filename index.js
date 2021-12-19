@@ -3996,7 +3996,7 @@ app.post("/verifyEmail/submit", (req, res) => {
 
 });
 
-
+//registration veterinarian
 app.post("/register/veterinarian", (req, res) => {
   const vetid = req.body.vetid;
   const email = req.body.email;
@@ -4057,14 +4057,54 @@ app.post("/register/veterinarian", (req, res) => {
       }
     }
   );
-
-
-
-
-
-
-
 })
+
+
+// registration vet staff
+app.post("/register/vetStaff", (req, res) => {
+  const vetid = req.body.vetid;
+  const email = req.body.email;
+  const password = req.body.password;
+  const fName = req.body.fName;
+  const mName = req.body.mName;
+  const lName = req.body.lName;
+  const contactNumber = req.body.contactNumber;
+
+
+  db.query(
+    "INSERT INTO user_role (email,userrole,phone_number) VALUES (?,?,?)",
+    [email, 5, contactNumber],
+    (err, result) => {
+      if (err == null) {
+
+        bcrypt.hash(password, saltRounds, (err, hash) => {
+          if (err) {
+            console.log(err);
+          }
+          db.query(
+            "INSERT INTO vet_staff (vetid,vet_staff_fname,vet_staff_lname,vet_staff_mname,vet_staff_contactNumber,vet_staff_email, vet_staff_password) VALUES (?,?,?,?,?,?,?)",
+            [vetid, fName, lName, mName, contactNumber, email, hash],
+            (err, result) => {
+              if (err == null) {
+                console.log("vet doctor successfully register");
+                res.send('Successfully Registered')
+              } else {
+                console.log(err);
+                res.send('Not Successfully Registered')
+              }
+            }
+          );
+
+
+        });
+      } else {
+        console.log(err);
+      }
+    }
+  );
+})
+
+
 
 app.get("/vetclinic/messages/notification/length/:vetid", (req, res) => {
   // console.log(vetAdminId);
