@@ -138,30 +138,37 @@ app.post("/api/login", (req, res) => {
               res.send({ err: err });
             }
 
+
+
+            // -----------------------------------------
             if (result.length > 0) {
               bcrypt.compare(
                 password,
                 result[0].password,
                 (error, response) => {
                   if (response) {
-                    result[0].password = "";
-                    const user = { result };
-                    // console.log(user)
-                    const accessToken = generateAccessToken(user);
-                    const refreshToken = jwt.sign(
-                      user,
-                      process.env.REFRESH_TOKEN_SECRET
-                    );
-                    refreshTokens.push(refreshToken);
-                    let u = JSON.parse(JSON.stringify(user));
-                    // console.log(u.result[0].name)
-                    res.send({
-                      accessToken: accessToken,
-                      refreshToken: refreshToken,
-                      message: "Correct",
-                      role: 1,
-                      user: JSON.parse(JSON.stringify(result[0])),
-                    });
+                    if (result[0].isOnline == true) {
+                      res.send({ message: "Already login with other device" });
+                    } else {
+                      result[0].password = "";
+                      const user = { result };
+                      // console.log(user)
+                      const accessToken = generateAccessToken(user);
+                      const refreshToken = jwt.sign(
+                        user,
+                        process.env.REFRESH_TOKEN_SECRET
+                      );
+                      refreshTokens.push(refreshToken);
+                      let u = JSON.parse(JSON.stringify(user));
+                      // console.log(u.result[0].name)
+                      res.send({
+                        accessToken: accessToken,
+                        refreshToken: refreshToken,
+                        message: "Correct",
+                        role: 1,
+                        user: JSON.parse(JSON.stringify(result[0])),
+                      });
+                    }
                   } else {
                     res.send({ message: "Wrong password!" });
                   }
@@ -170,6 +177,9 @@ app.post("/api/login", (req, res) => {
             } else {
               res.send({ message: "User doesn't exist..." });
             }
+            // --------------------------------------------
+
+
           }
         );
       } else if (result[0].userrole == 2) {
@@ -187,26 +197,30 @@ app.post("/api/login", (req, res) => {
                 result[0].password,
                 (error, response) => {
                   if (response) {
-                    result[0].password = "";
-                    const user = { result };
-                    // console.log(user)
-                    const accessToken = generateAccessToken(user);
-                    const refreshToken = jwt.sign(
-                      user,
-                      process.env.REFRESH_TOKEN_SECRET
-                    );
-                    refreshTokens.push(refreshToken);
-                    let u = JSON.parse(JSON.stringify(user));
-                    // console.log(u.result[0].name)
-                    res.send({
-                      accessToken: accessToken,
-                      refreshToken: refreshToken,
-                      message: "Correct",
-                      role: 2,
-                      vetStatus: result[0].vet_status,
-                      id: result[0].vet_admin_id,
-                      user: JSON.parse(JSON.stringify(result[0])),
-                    });
+                    if (result[0].isOnline == true) {
+                      res.send({ message: "Already login with other device" });
+                    } else {
+                      result[0].password = "";
+                      const user = { result };
+                      // console.log(user)
+                      const accessToken = generateAccessToken(user);
+                      const refreshToken = jwt.sign(
+                        user,
+                        process.env.REFRESH_TOKEN_SECRET
+                      );
+                      refreshTokens.push(refreshToken);
+                      let u = JSON.parse(JSON.stringify(user));
+                      // console.log(u.result[0].name)
+                      res.send({
+                        accessToken: accessToken,
+                        refreshToken: refreshToken,
+                        message: "Correct",
+                        role: 2,
+                        vetStatus: result[0].vet_status,
+                        id: result[0].vet_admin_id,
+                        user: JSON.parse(JSON.stringify(result[0])),
+                      });
+                    }
                   } else {
                     res.send({ message: "Wrong password!" });
                   }
@@ -215,9 +229,14 @@ app.post("/api/login", (req, res) => {
             } else {
               res.send({ message: "User doesn't exist..." });
             }
+
+
+
           }
         );
-      } else if (result[0].userrole == 3) {
+      }
+
+      else if (result[0].userrole == 3) {
         // console.log("system admin");
         db.query(
           "SELECT * FROM system_administrator WHERE email = ? AND isArchived = 'False'",
@@ -233,35 +252,147 @@ app.post("/api/login", (req, res) => {
                 result[0].password,
                 (error, response) => {
                   if (response) {
-                    result[0].password = "";
-                    const user = { result };
-                    // console.log(user)
-                    const accessToken = generateAccessToken(user);
-                    const refreshToken = jwt.sign(
-                      user,
-                      process.env.REFRESH_TOKEN_SECRET
-                    );
-                    refreshTokens.push(refreshToken);
-                    let u = JSON.parse(JSON.stringify(user));
-                    console.log(result[0]);
-                    res.send({
-                      accessToken: accessToken,
-                      refreshToken: refreshToken,
-                      message: "Correct",
-                      role: 3,
-                      user: JSON.parse(JSON.stringify(result[0])),
-                    });
+                    if (result[0].isOnline == true) {
+                      res.send({ message: "Already login with other device" });
+                    } else {
+                      result[0].password = "";
+                      const user = { result };
+                      // console.log(user)
+                      const accessToken = generateAccessToken(user);
+                      const refreshToken = jwt.sign(
+                        user,
+                        process.env.REFRESH_TOKEN_SECRET
+                      );
+                      refreshTokens.push(refreshToken);
+                      let u = JSON.parse(JSON.stringify(user));
+                      console.log(result[0]);
+                      res.send({
+                        accessToken: accessToken,
+                        refreshToken: refreshToken,
+                        message: "Correct",
+                        role: 3,
+                        user: JSON.parse(JSON.stringify(result[0])),
+                      });
+                    }
                   } else {
                     res.send({ message: "Wrong password!" });
                   }
                 }
               );
-            } else {
+            }
+            else {
               res.send({ message: "User doesn't exist..." });
             }
           }
         );
       }
+
+      else if (result[0].userrole == 4) {
+        // console.log("system admin");
+        db.query(
+          "SELECT * FROM vet_doctors WHERE vet_doc_email = ? AND isArchived = 'False'",
+          email,
+          (err, result) => {
+            if (err) {
+              res.send({ err: err });
+            }
+
+            if (result.length > 0) {
+              bcrypt.compare(
+                password,
+                result[0].vet_doc_password,
+                (error, response) => {
+                  if (response) {
+                    if (result[0].isOnline == true) {
+                      res.send({ message: "Already login with other device" });
+                    } else {
+                      result[0].vet_doc_password = "";
+                      const user = { result };
+                      // console.log(user)
+                      const accessToken = generateAccessToken(user);
+                      const refreshToken = jwt.sign(
+                        user,
+                        process.env.REFRESH_TOKEN_SECRET
+                      );
+                      refreshTokens.push(refreshToken);
+                      let u = JSON.parse(JSON.stringify(user));
+                      console.log(result[0]);
+                      res.send({
+                        accessToken: accessToken,
+                        refreshToken: refreshToken,
+                        message: "Correct",
+                        role: 4,
+                        user: JSON.parse(JSON.stringify(result[0])),
+                      });
+                    }
+                  } else {
+                    res.send({ message: "Wrong password!" });
+                  }
+                }
+              );
+            }
+            else {
+              res.send({ message: "User doesn't exist..." });
+            }
+          }
+        );
+      }
+
+
+      else if (result[0].userrole == 5) {
+        // console.log("system admin");
+        db.query(
+          "SELECT * FROM vet_staff WHERE vet_staff_email = ? AND isArchived = 'False'",
+          email,
+          (err, result) => {
+            if (err) {
+              res.send({ err: err });
+            }
+
+            if (result.length > 0) {
+              bcrypt.compare(
+                password,
+                result[0].vet_staff_password,
+                (error, response) => {
+                  if (response) {
+                    if (result[0].isOnline == true) {
+                      res.send({ message: "Already login with other device" });
+                    } else {
+                      result[0].vet_staff_password = "";
+                      const user = { result };
+                      // console.log(user)
+                      const accessToken = generateAccessToken(user);
+                      const refreshToken = jwt.sign(
+                        user,
+                        process.env.REFRESH_TOKEN_SECRET
+                      );
+                      refreshTokens.push(refreshToken);
+                      let u = JSON.parse(JSON.stringify(user));
+                      console.log(result[0]);
+                      res.send({
+                        accessToken: accessToken,
+                        refreshToken: refreshToken,
+                        message: "Correct",
+                        role: 5,
+                        user: JSON.parse(JSON.stringify(result[0])),
+                      });
+                    }
+                  } else {
+                    res.send({ message: "Wrong password!" });
+                  }
+                }
+              );
+            }
+            else {
+              res.send({ message: "User doesn't exist..." });
+            }
+          }
+        );
+      }
+
+
+
+      // ---------- End line
     } else {
       res.send({ message: "User doesn't exist..." });
     }

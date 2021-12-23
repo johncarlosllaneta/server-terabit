@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2021 at 11:16 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.10
+-- Generation Time: Dec 23, 2021 at 04:04 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -71,6 +72,62 @@ CREATE TABLE `consultation` (
   `prescription` int(11) DEFAULT NULL,
   `findings` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `email_verification`
+--
+
+CREATE TABLE `email_verification` (
+  `email_id` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `verification_code` int(11) NOT NULL,
+  `date_created` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `email_verification`
+--
+
+INSERT INTO `email_verification` (`email_id`, `email`, `verification_code`, `date_created`) VALUES
+(2, 'johnllaneta05@gmail.com', 9654, '2021-12-14 22:10:58'),
+(3, 'johnllaneta05@gmail.com', 6223, '2021-12-14 22:23:17'),
+(4, 'johnllaneta05@gmail.com', 8637, '2021-12-14 22:45:36'),
+(5, 'johnllaneta05@gmail.com', 4513, '2021-12-14 22:46:00'),
+(6, 'johnllaneta05@gmail.com', 4867, '2021-12-14 22:46:56'),
+(7, 'johnllaneta05@gmail.com', 3463, '2021-12-14 22:50:22'),
+(8, 'johnllaneta05@gmail.com', 4518, '2021-12-14 22:50:59'),
+(9, 'johnllaneta05@gmail.com', 1721, '2021-12-14 22:59:45'),
+(10, 'johnllaneta05@gmail.com', 4901, '2021-12-14 23:00:01'),
+(11, 'johnllaneta05@gmail.com', 8735, '2021-12-15 12:07:08'),
+(12, 'johnllaneta05@gmail.com', 3020, '2021-12-15 12:14:43'),
+(13, 'johnllaneta05@gmail.com', 6886, '2021-12-17 21:13:07'),
+(14, 'johnllaneta05@gmail.com', 6931, '2021-12-17 21:22:19'),
+(15, 'johnllaneta05@gmail.com', 1130, '2021-12-17 21:25:40'),
+(16, 'johnllaneta05@gmail.com', 5853, '2021-12-17 21:25:40'),
+(17, 'johnllaneta05@gmail.com', 4027, '2021-12-17 22:11:23'),
+(18, 'johnllaneta05@gmail.com', 4273, '2021-12-17 22:14:09'),
+(19, 'johnllaneta05@gmail.com', 3382, '2021-12-17 22:15:32'),
+(20, 'johnllaneta05@gmail.com', 6678, '2021-12-17 22:16:55'),
+(21, 'johnllaneta05@gmail.com', 4731, '2021-12-17 22:33:41'),
+(22, 'johnllaneta05@gmail.com', 7178, '2021-12-17 22:33:41'),
+(23, 'johnllaneta05@gmail.com', 4338, '2021-12-17 22:36:49'),
+(24, 'johnllaneta05@gmail.com', 4614, '2021-12-18 17:32:21'),
+(25, 'johnllaneta05@gmail.com', 8736, '2021-12-18 17:32:59'),
+(26, 'johnllaneta05@gmail.com', 8134, '2021-12-18 17:37:55'),
+(27, 'johnllaneta05@gmail.com', 1312, '2021-12-18 17:42:31'),
+(28, 'johnllaneta05@gmail.com', 5524, '2021-12-18 17:47:07'),
+(29, 'johnllaneta05@gmail.com', 9191, '2021-12-18 22:31:25'),
+(30, 'johnllaneta05@gmail.com', 9320, '2021-12-18 23:05:04'),
+(31, 'johnllaneta05@gmail.com', 5023, '2021-12-19 02:25:37'),
+(32, 'johnllaneta05@gmail.com', 2405, '2021-12-19 02:38:48'),
+(33, 'johnllaneta05@gmail.com', 3794, '2021-12-19 02:42:57'),
+(34, 'johnllaneta05@gmail.com', 4160, '2021-12-19 02:47:03'),
+(35, 'johnllaneta05@gmail.com', 6959, '2021-12-19 02:56:50'),
+(36, 'johnllaneta05@gmail.com', 3723, '2021-12-19 23:52:46'),
+(37, 'johnllaneta05@gmail.com', 7094, '2021-12-19 23:57:25'),
+(38, 'johnllaneta05@gmail.com', 5042, '2021-12-23 22:56:44');
 
 -- --------------------------------------------------------
 
@@ -204,37 +261,6 @@ CREATE TABLE `messages` (
   `message_content` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `messages`
---
-
-INSERT INTO `messages` (`message_id`, `thread_id`, `pet_owner_id`, `vetid`, `user_message`, `created_time_date`, `message_content`) VALUES
-(1, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '2021-08-30 19:00:00', 'asdasdasdasdsda'),
-(2, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, '2021-08-31 16:00:00', 'asdasdasdasdasdasdasdasd'),
-(3, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, '2021-09-18 03:34:24', 'Hello'),
-(4, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '2021-09-18 03:35:02', 'Hiiii'),
-(7, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '2021-09-23 17:52:38', 'POOOOOO'),
-(8, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, '2021-09-23 17:52:38', 'LOOOOO'),
-(9, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 2, '2021-10-10 15:29:00', 'hello'),
-(10, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, '2021-10-15 02:16:23', 'Hello'),
-(11, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, '2021-10-15 02:16:30', 'Kumain ka na ba?'),
-(12, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 1, '2021-10-19 04:04:36', 'Welcome'),
-(13, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 2, '2021-10-19 04:04:47', 'No problem'),
-(14, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 2, '2021-10-19 04:05:00', 'Naoil mabilis magreply'),
-(15, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 1, '2021-10-19 04:05:10', 'Sa simula lang yan'),
-(16, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 1, '2021-10-24 01:31:45', 'Are you available today?'),
-(17, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 2, '2021-10-24 01:33:04', 'Yes, we are available'),
-(18, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 2, '2021-10-24 01:33:23', 'How can I help you?'),
-(19, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, '2021-10-25 12:48:18', 'Video call room number is 43346343. \n Instruction: Click the video conference button located in the upper right corner of your screen, enter the room number to start video call. Thankyou!'),
-(20, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 2, '2021-10-25 14:07:10', 'heloo'),
-(21, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 1, '2021-10-25 14:08:03', 'huiii'),
-(22, 2, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 2, '2021-10-25 14:08:49', 'Video call room number is 84726076. \n Instruction: Click the video conference button located in the upper right corner of your screen, enter the room number to start video call. Thankyou!'),
-(23, 3, 58, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 1, '2021-10-25 14:13:45', 'hello'),
-(24, 3, 58, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 1, '2021-10-25 14:13:48', 'heloo'),
-(25, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '2021-11-09 09:30:19', 'hello po'),
-(26, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '2021-11-09 17:09:29', 'hi po'),
-(27, 1, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '2021-11-09 17:09:34', 'yess po');
-
 -- --------------------------------------------------------
 
 --
@@ -340,7 +366,6 @@ CREATE TABLE `pets` (
 INSERT INTO `pets` (`pet_id`, `pet_owner_id`, `pet_owner_name`, `pet_name`, `type_of_pet`, `breed_of_pet`, `gender`, `birth_day`, `pet_picture`, `isArchived`) VALUES
 (18, 58, 'Jhaycee Llaneta', 'Jake', 'Dog', 'Aspin', 'Male', '2019-07-26', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/elisa-kennemer-0TdrHK0po7I-unsplash.jpg?alt=media&token=0a0d77b3-0d86-44a4-83ea-60168c25bde5', 0),
 (19, 58, 'Jhaycee Llaneta', 'Johnson', 'Dog', 'Aspin', 'Male', '2019-09-05', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/photo-1522276498395-f4f68f7f8454.jpg?alt=media&token=cc600a1d-ada3-4227-bb4a-2e139f33aa8a', 0),
-(20, 75, 'John Carlos Llaneta', 'Sam', 'Cat', 'Persian Cat', 'Female', '2019-06-07', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/res.jpg?alt=media&token=048b0b97-0eb5-458a-b761-3a319de2e638', 0),
 (21, 58, 'Jhaycee Llaneta', 'Yoda', 'Dog', 'Aspin', 'Male', '2021-05-05', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/elisa-kennemer-0TdrHK0po7I-unsplash.jpg?alt=media&token=0a0d77b3-0d86-44a4-83ea-60168c25bde5', 0),
 (22, 58, 'Jhaycee Llaneta', 'Chardeeiii', 'Dog', 'Corgi', 'Male', '2020-12-12', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/International-Corgi-Day-1.jpg?alt=media&token=1f250eb9-25d5-4354-8999-7a6f2a83ea71', 0),
 (23, 58, 'Jhaycee Llaneta', 'Togon', 'Dog', 'Aspin', 'Female', '2021-09-16', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/International-Corgi-Day-1.jpg?alt=media&token=6ecaa530-8479-4ab2-9867-2d3b4d20861e', 0),
@@ -370,6 +395,7 @@ CREATE TABLE `pet_owners` (
   `contact_number` varchar(11) NOT NULL,
   `profilePicture` text NOT NULL,
   `isArchived` tinyint(1) NOT NULL,
+  `isOnline` tinyint(1) NOT NULL,
   `created_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -377,18 +403,17 @@ CREATE TABLE `pet_owners` (
 -- Dumping data for table `pet_owners`
 --
 
-INSERT INTO `pet_owners` (`pet_owner_id`, `email`, `password`, `name`, `address`, `contact_number`, `profilePicture`, `isArchived`, `created_date`) VALUES
-(58, 'john040717@gmail.com', '$2b$10$zxbmiHBi0suCVcCycR0VdOtZdu6qHCj4LYq9hGn6a85QFTKvtmMi6', 'Jhaycee Llaneta', 'Tondo, Manila', '09558264299', 'http://localhost:3001/profile/petowner/profile_petowner_1621987617668.jpg', 0, '2021-06-02 18:53:08'),
-(75, 'johnllaneta05@gmail.com', '$2b$10$sHzWHZBm9Sfg4TcQqs4H/edHSMcgs77eBcvt/VgLLIc752M.oeuPW', 'John Carlos Llaneta', '', '09081052103', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/1IMG_20210709_083300.jpg?alt=media&token=34e0e607-e549-424e-90fc-c09b2fd800e2', 0, '2021-08-07 03:36:53'),
-(76, 'jimuel78@gmail.com', '$2b$10$ftTcuaqcRQXUL2Zo5OJgru17f5PFeTXXiK6KKlndKJzSPoWt8scBe', 'Jimuel Mercado', '', '09873627372', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/jimuel.jpg?alt=media&token=d1767f25-8cfa-4b84-83c7-d03ff8f92832', 1, '2021-09-30 00:33:26'),
-(77, 'richard12@gmail.com', '$2b$10$eElK2PuOplQkkQCR3lHgROZr.pK9sjOEgB7qVIoZvs7sE4CzJV8T6', 'Richard Sasis', '', '09354555893', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/richard.jpg?alt=media&token=8981c0e4-fee4-4e82-aede-fd90783db9db', 0, '2021-09-30 00:41:55'),
-(78, 'carmella08@gmail.com', '$2b$10$FV6o6EL6T5H1RmHuvP0Q2OXdnWREGg8vjy2n8dEZbGCujAQ8TKAwS', 'Carmella Joy Guelas', '', '09364792733', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/carmella.jpg?alt=media&token=feff4ba1-4c98-4589-9aee-10219f59f5c7', 0, '2021-09-30 00:45:08'),
-(82, 'carl@gmail.com', '$2b$10$2dAbtv4S3PL3xPUON7ZVT.YWSq3SHUf6KYIMjufe3VjEhX/2H3J7m', 'Carl Maritana', '1123 Cavite Street,Tondo, Manila', '09473857842', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/carm1.jfif?alt=media&token=fa31314b-05ee-4c0e-a832-394dcca600f4', 0, '2021-10-05 14:22:35'),
-(83, 'johnpenazo@gmail.com', '$2b$10$l15chJ9ByIE1Is8MVm1UHuulhYPQxnKpfnSsK.0ZURBRoyHll0IR.', 'John Penazo', '1601 varona street,tondo manila', '09072069351', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/21369213_1609700262438143_6979360524817941722_n.jpg?alt=media&token=ede1ed8b-3adb-4529-ae3e-f6be9de7db8d', 0, '2021-10-21 02:56:20'),
-(85, 'janella02@gmail.com', '$2b$10$3BIwgv35SWPvgWK2SQplaupsP1XoOlQ1cGdS9QdnSUHLTuQ9cgrKm', 'janella', '004 Sabino Alley, Maysan,Valenzuela City', '09389302032', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/johna.jpg?alt=media&token=245439a6-270d-4cce-a5af-004a69cd22e7', 0, '2021-10-22 10:18:40'),
-(87, 'clarisa098@gmail.com', '$2b$10$3YMHkHcbBFWRNUlbrH..uuUf4e7BfYeHXhkHy5zOE20aThZYfc0g2', 'clarisa', '008 legarda,Quezon', '09789473999', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/carmella.jpg?alt=media&token=fca46a43-afaa-45d9-a445-a9ab394fb17c', 0, '2021-10-22 21:12:33'),
-(88, 'alord10@gmail.com', '$2b$10$F6q.tDGOzfklf5M48x6smeOJsCNCs/NeSbTp9HEAUY8JG53Mgio/2', 'alord', '008 legarda,Quezon', '09776645454', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/carmella.jpg?alt=media&token=ecc47f74-66b9-4d37-8ae6-ec8eb7b05399', 0, '2021-10-22 21:34:30'),
-(89, 'justin24@gmail.com', '$2b$10$9KJBOotE7mAqOo8ZLK6A0Ojf/8Ysr4bZBIz/Ikao1rjrzmJmCdgWW', 'justin', '008 legarda,Quezon', '09487593899', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/chard1.jfif?alt=media&token=2129cedf-ce65-4e72-ab46-16492a78ac01', 0, '2021-10-22 21:38:30');
+INSERT INTO `pet_owners` (`pet_owner_id`, `email`, `password`, `name`, `address`, `contact_number`, `profilePicture`, `isArchived`, `isOnline`, `created_date`) VALUES
+(58, 'john040717@gmail.com', '$2b$10$zxbmiHBi0suCVcCycR0VdOtZdu6qHCj4LYq9hGn6a85QFTKvtmMi6', 'Jhaycee Llaneta', 'Tondo, Manila', '09558264299', 'http://localhost:3001/profile/petowner/profile_petowner_1621987617668.jpg', 0, 0, '2021-06-02 18:53:08'),
+(76, 'jimuel78@gmail.com', '$2b$10$ftTcuaqcRQXUL2Zo5OJgru17f5PFeTXXiK6KKlndKJzSPoWt8scBe', 'Jimuel Mercado', '', '09873627372', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/jimuel.jpg?alt=media&token=d1767f25-8cfa-4b84-83c7-d03ff8f92832', 1, 0, '2021-09-30 00:33:26'),
+(77, 'richard12@gmail.com', '$2b$10$eElK2PuOplQkkQCR3lHgROZr.pK9sjOEgB7qVIoZvs7sE4CzJV8T6', 'Richard Sasis', '', '09354555893', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/richard.jpg?alt=media&token=8981c0e4-fee4-4e82-aede-fd90783db9db', 0, 0, '2021-09-30 00:41:55'),
+(78, 'carmella08@gmail.com', '$2b$10$FV6o6EL6T5H1RmHuvP0Q2OXdnWREGg8vjy2n8dEZbGCujAQ8TKAwS', 'Carmella Joy Guelas', '', '09364792733', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/carmella.jpg?alt=media&token=feff4ba1-4c98-4589-9aee-10219f59f5c7', 0, 0, '2021-09-30 00:45:08'),
+(82, 'carl@gmail.com', '$2b$10$2dAbtv4S3PL3xPUON7ZVT.YWSq3SHUf6KYIMjufe3VjEhX/2H3J7m', 'Carl Maritana', '1123 Cavite Street,Tondo, Manila', '09473857842', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/carm1.jfif?alt=media&token=fa31314b-05ee-4c0e-a832-394dcca600f4', 0, 0, '2021-10-05 14:22:35'),
+(83, 'johnpenazo@gmail.com', '$2b$10$l15chJ9ByIE1Is8MVm1UHuulhYPQxnKpfnSsK.0ZURBRoyHll0IR.', 'John Penazo', '1601 varona street,tondo manila', '09072069351', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/21369213_1609700262438143_6979360524817941722_n.jpg?alt=media&token=ede1ed8b-3adb-4529-ae3e-f6be9de7db8d', 0, 0, '2021-10-21 02:56:20'),
+(85, 'janella02@gmail.com', '$2b$10$3BIwgv35SWPvgWK2SQplaupsP1XoOlQ1cGdS9QdnSUHLTuQ9cgrKm', 'janella', '004 Sabino Alley, Maysan,Valenzuela City', '09389302032', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/johna.jpg?alt=media&token=245439a6-270d-4cce-a5af-004a69cd22e7', 0, 0, '2021-10-22 10:18:40'),
+(87, 'clarisa098@gmail.com', '$2b$10$3YMHkHcbBFWRNUlbrH..uuUf4e7BfYeHXhkHy5zOE20aThZYfc0g2', 'clarisa', '008 legarda,Quezon', '09789473999', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/carmella.jpg?alt=media&token=fca46a43-afaa-45d9-a445-a9ab394fb17c', 0, 0, '2021-10-22 21:12:33'),
+(88, 'alord10@gmail.com', '$2b$10$F6q.tDGOzfklf5M48x6smeOJsCNCs/NeSbTp9HEAUY8JG53Mgio/2', 'alord', '008 legarda,Quezon', '09776645454', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/carmella.jpg?alt=media&token=ecc47f74-66b9-4d37-8ae6-ec8eb7b05399', 0, 0, '2021-10-22 21:34:30'),
+(89, 'justin24@gmail.com', '$2b$10$9KJBOotE7mAqOo8ZLK6A0Ojf/8Ysr4bZBIz/Ikao1rjrzmJmCdgWW', 'justin', '008 legarda,Quezon', '09487593899', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/chard1.jfif?alt=media&token=2129cedf-ce65-4e72-ab46-16492a78ac01', 0, 0, '2021-10-22 21:38:30');
 
 -- --------------------------------------------------------
 
@@ -620,21 +645,22 @@ CREATE TABLE `system_administrator` (
   `name` varchar(50) NOT NULL,
   `profilePicture` text NOT NULL,
   `phone_number` varchar(11) NOT NULL,
-  `isArchived` tinyint(1) NOT NULL
+  `isArchived` tinyint(1) NOT NULL,
+  `isOnline` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `system_administrator`
 --
 
-INSERT INTO `system_administrator` (`admin_id`, `email`, `password`, `name`, `profilePicture`, `phone_number`, `isArchived`) VALUES
-(1, 'admin@gmail.com', '$2b$10$qrfPll4/KDZU1PLePJVKRuQrM7K5sHuPXbKb8Mz3vk8ae2EGNd.n.', 'kingchardddffff', 'http://localhost:3001/profile/petowner/profile_petowner_1621552793508.jpg', '', 0),
-(2, 'walton@gmail.com', '$2b$10$8uBWLrC4T02lDLv5ACFBteT2YROk02xygz56aDGOuwgoP8hdf7KDS', 'Luke walton', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/21369213_1609700262438143_6979360524817941722_n.jpg?alt=media&token=371a4a3b-3458-4150-a269-a676e4727a4a', '09308161836', 0),
-(3, 'smith@gmail.com', '$2b$10$3f/ePFXnqGmV2bDB6VmA1.Rl9/KwdYF5ERBULZGtQvXVDRR9nZy4y', 'Sam Smith', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/21369213_1609700262438143_6979360524817941722_n.jpg?alt=media&token=6a96b25a-1d89-483a-ac73-88c11d65b12c', '09302658794', 0),
-(4, 'samsmith@gmail.com', '$2b$10$5yJtwwsQfE4dOZEtWoy.NOTkQwxH7nZF4bGKKXc2XKvaJaXS72tTW', 'Sam Smith', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/21369213_1609700262438143_6979360524817941722_n.jpg?alt=media&token=ddbbc98a-725f-4308-9dae-7f4120ecb903', '09558264289', 0),
-(7, 'jocylyn14@gmail.com', '$2b$10$j/lRyGsPkyEYaqdubLxUUu.xZkqzma5hmJllqEgld0dgD5s3pTrYe', 'jocylyn', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/go.jfif?alt=media&token=a34d1d73-ffab-4c76-8f56-4ec27097f4e3', '09748394934', 0),
-(8, 'regino123@gmail.com', '$2b$10$PHoZMWP5nIUnnv2RTZo2WO6dpPinztGkGUaci25zOqMTFkjrR/E/G', 'regino', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/go.jfif?alt=media&token=e3f56890-0c5c-403f-baf8-1a4ec69c03c4', '09847836834', 0),
-(9, 'carlos12@gmail.com', '$2b$10$1iULY8iTCGQuqm43zjz89uEMSQ4sFSibSfSu43wfH6QSkaUX1SbsW', 'carlos', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/carm3.jfif?alt=media&token=87b3704a-c8c2-4c58-8656-e8c29e5f6165', '09739399234', 0);
+INSERT INTO `system_administrator` (`admin_id`, `email`, `password`, `name`, `profilePicture`, `phone_number`, `isArchived`, `isOnline`) VALUES
+(1, 'admin@gmail.com', '$2b$10$qrfPll4/KDZU1PLePJVKRuQrM7K5sHuPXbKb8Mz3vk8ae2EGNd.n.', 'kingchardddffff', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/21369213_1609700262438143_6979360524817941722_n.jpg?alt=media&token=371a4a3b-3458-4150-a269-a676e4727a4a', '', 0, 0),
+(2, 'walton@gmail.com', '$2b$10$8uBWLrC4T02lDLv5ACFBteT2YROk02xygz56aDGOuwgoP8hdf7KDS', 'Luke walton', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/21369213_1609700262438143_6979360524817941722_n.jpg?alt=media&token=371a4a3b-3458-4150-a269-a676e4727a4a', '09308161836', 0, 0),
+(3, 'smith@gmail.com', '$2b$10$3f/ePFXnqGmV2bDB6VmA1.Rl9/KwdYF5ERBULZGtQvXVDRR9nZy4y', 'Sam Smith', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/21369213_1609700262438143_6979360524817941722_n.jpg?alt=media&token=6a96b25a-1d89-483a-ac73-88c11d65b12c', '09302658794', 0, 0),
+(4, 'samsmith@gmail.com', '$2b$10$5yJtwwsQfE4dOZEtWoy.NOTkQwxH7nZF4bGKKXc2XKvaJaXS72tTW', 'Sam Smith', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/21369213_1609700262438143_6979360524817941722_n.jpg?alt=media&token=ddbbc98a-725f-4308-9dae-7f4120ecb903', '09558264289', 0, 0),
+(7, 'jocylyn14@gmail.com', '$2b$10$j/lRyGsPkyEYaqdubLxUUu.xZkqzma5hmJllqEgld0dgD5s3pTrYe', 'jocylyn', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/go.jfif?alt=media&token=a34d1d73-ffab-4c76-8f56-4ec27097f4e3', '09748394934', 0, 0),
+(8, 'regino123@gmail.com', '$2b$10$PHoZMWP5nIUnnv2RTZo2WO6dpPinztGkGUaci25zOqMTFkjrR/E/G', 'regino', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/go.jfif?alt=media&token=e3f56890-0c5c-403f-baf8-1a4ec69c03c4', '09847836834', 0, 0),
+(9, 'carlos12@gmail.com', '$2b$10$1iULY8iTCGQuqm43zjz89uEMSQ4sFSibSfSu43wfH6QSkaUX1SbsW', 'carlos', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/carm3.jfif?alt=media&token=87b3704a-c8c2-4c58-8656-e8c29e5f6165', '09739399234', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -782,7 +808,53 @@ INSERT INTO `system_logs` (`logs_id`, `logs_description`, `logs_type`, `date_tim
 (343, 'Sky line Vet Clinic has been logged out as unverified vet clinic', 3, '2021-11-09 20:30:27'),
 (344, 'Jhocson Vet Clinic has been registered as vet clinic', 2, '2021-11-09 20:38:00'),
 (345, 'Jhocson Vet Clinic has been logged in as unverified vet clinic', 1, '2021-11-09 20:38:00'),
-(346, 'Jhocson Vet Clinic has been logged out as unverified vet clinic', 3, '2021-11-09 21:18:30');
+(346, 'Jhocson Vet Clinic has been logged out as unverified vet clinic', 3, '2021-11-09 21:18:30'),
+(347, 'undefined has been logged out as vet clinic', 3, '2021-12-03 11:04:24'),
+(348, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-03 11:04:44'),
+(349, 'undefined has been logged out as vet clinic', 3, '2021-12-06 11:15:07'),
+(350, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-06 11:15:39'),
+(351, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-12-06 13:48:38'),
+(352, 'Tri City Animal Hospital has been logged in as vet clinic', 1, '2021-12-06 13:48:52'),
+(353, 'undefined has been logged out as vet clinic', 3, '2021-12-07 14:15:44'),
+(354, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-07 14:15:58'),
+(355, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-08 09:53:26'),
+(356, 'undefined has been logged out as vet clinic', 3, '2021-12-10 11:01:19'),
+(357, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-10 11:02:15'),
+(358, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-12-10 11:57:30'),
+(359, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-13 01:25:10'),
+(360, 'undefined has been logged out as vet clinic', 3, '2021-12-14 01:30:47'),
+(361, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-14 01:31:02'),
+(362, 'undefined has been logged out as vet clinic', 3, '2021-12-15 03:48:04'),
+(363, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-15 03:48:28'),
+(364, 'undefined has been logged out as vet clinic', 3, '2021-12-17 12:21:47'),
+(365, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-17 12:31:34'),
+(366, 'undefined has been logged out as vet clinic', 3, '2021-12-18 17:12:57'),
+(367, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-18 17:13:16'),
+(368, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-19 15:25:52'),
+(369, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-19 16:05:14'),
+(370, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-19 16:11:17'),
+(371, 'undefined has been logged out as vet clinic', 3, '2021-12-19 16:15:45'),
+(372, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-19 16:17:30'),
+(373, 'undefined has been logged out as vet clinic', 3, '2021-12-19 16:18:13'),
+(374, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-19 16:19:36'),
+(375, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-19 16:31:42'),
+(376, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-19 16:41:17'),
+(377, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-19 16:58:01'),
+(378, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-12-19 16:58:19'),
+(379, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-19 17:01:35'),
+(380, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-19 17:04:24'),
+(381, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-19 17:05:06'),
+(382, 'Jhaycee Llaneta has been logged in as petowner', 1, '2021-12-23 13:50:15'),
+(383, 'Jhaycee Llaneta has been logged out in as petowner', 3, '2021-12-23 13:50:21'),
+(384, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2021-12-23 14:55:32'),
+(385, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2021-12-23 14:58:07'),
+(386, 'undefined has been logged in as system admin', 1, '2021-12-23 14:58:23'),
+(387, 'undefined has been logged out as system admin', 3, '2021-12-23 14:59:37'),
+(388, 'undefined has been logged in as system admin', 1, '2021-12-23 14:59:50'),
+(389, 'undefined has been logged out as system admin', 3, '2021-12-23 15:00:33'),
+(390, 'undefined has been logged in as system admin', 1, '2021-12-23 15:02:04'),
+(391, 'undefined has been logged out as system admin', 3, '2021-12-23 15:02:18'),
+(392, 'undefined has been logged in as system admin', 1, '2021-12-23 15:03:23');
 
 -- --------------------------------------------------------
 
@@ -828,7 +900,6 @@ INSERT INTO `user_role` (`user_role_id`, `email`, `userrole`, `phone_number`) VA
 (4, 'john040717@gmail.com', 1, '09558264299'),
 (48, 'tricity@gmail.com', 2, '09404555899'),
 (74, 'animalhouse@gmail.com', 2, ''),
-(75, 'johnllaneta05@gmail.com', 1, ''),
 (76, 'westvalley@gmail.com', 2, ''),
 (77, 'jimuel78@gmail.com', 1, ''),
 (78, 'richard12@gmail.com', 1, '09354555893'),
@@ -861,7 +932,8 @@ INSERT INTO `user_role` (`user_role_id`, `email`, `userrole`, `phone_number`) VA
 (120, 'scivetanimal@gmail.com', 2, '09081236547'),
 (121, 'localvet@gmail.com', 2, '09087896541'),
 (122, 'skyline@gmail.com', 2, '09458962657'),
-(123, 'jhocsonvet@gmail.com', 2, '09784548784');
+(123, 'jhocsonvet@gmail.com', 2, '09784548784'),
+(135, 'johnllaneta05@gmail.com', 4, '09081052103');
 
 -- --------------------------------------------------------
 
@@ -932,17 +1004,8 @@ CREATE TABLE `vet_clinic` (
 --
 
 INSERT INTO `vet_clinic` (`vet_admin_id`, `email`, `password`, `vet_name`, `vet_address`, `vet_contact_number`, `vet_permit`, `vet_picture`, `vet_status`, `scheduleMonday`, `scheduleTuesday`, `scheduleWednesday`, `scheduleThursday`, `scheduleFriday`, `scheduleSaturday`, `scheduleSunday`, `enableProduct`, `enablePharmacy`, `enableServices`, `enableConsultation`, `enableExamination`, `enableGrooming`, `enableVaccination`, `enablePreventiveControls`, `enableInHouseLab`, `vetid`, `isOnline`, `callerId`, `isBusy`, `longitude`, `Latitude`, `isArchived`) VALUES
-(19, 'tricity@gmail.com', '$2b$10$9i2h.drYBR5hqXnv1zgr3evSS3s6Fi/rq97RdxjS/H.Wj1xLmnhbm', 'Tri City Animal Hospital', '1949 Int. 5 Blk 10 Sta.Mesa, Manila', '09404555899', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'Verified', '06:00 - 20:29', '07:06 - 19:10', '19:06 - 18:07', '06:37 - 18:37', '06:36 - 18:37', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 1, '', 0, 121.006, 14.5993, 0),
-(27, 'animalhouse@gmail.com', '$2b$10$54fDvasYHYzCg65QlFVQmu/EcHS/j3Q4s8eL6z.xycwEVSLddfjyq', 'Animal House Vet Clinic', '1602 int 5 F varona Street, Tondo,Manila', '09558261232', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Screen-Shot-2020-11-19-at-10.39.49-PM.png?alt=media&token=eb67c2d4-80f8-4fd1-bbc4-34961609fa5a', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '', 0, '', 0, 120.996, 14.6031, 0),
-(28, 'westvalley@gmail.com', '$2b$10$L68mQGeYEoFlBAVtYCJBZOKLr08agfMDD0igxzWpaZtByT8rzNdV.', 'West Valley Animal Clinic', '1241 blk. 15 Velasquez Street,Tondo, Manila', '09081052103', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=5b6c9bfc-8c86-472f-a436-3c2b392ecf4b', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/images.png?alt=media&token=a79fd71a-d4d2-4a2f-9a00-e7f9bd24afde', 'Verified', '06:00 - 20:29', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '', 0, 120.988, 14.6066, 0),
-(29, 'cayco_clinic@gmail.com', '$2b$10$pjWTNfzrIXFmSrmHKjE/ReZ9E.G6iBIR4celVJwau9EBgXtBiFDx6', 'Cayco Animal Clinic', '434 Cayco St,Sampaloc, Manila', '09456372342', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/cayco.jpg?alt=media&token=7c994819-1883-4bb6-a42b-e0f426f2273a', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '$2b$10$0CCEKK4oxKnd8idkyaINEOiagaJiiw//ZQmKM7h2MUwbRY5Lxgt52', 0, '', 0, 120.996, 14.6038, 0),
-(30, 'curapet@gmail.com', '$2b$10$s8kcX0EpUas0lLtaWvHQc.S/iHIK1PHAUQMB9v6UESRYVOZoIT51q', 'CuraPet Veterinary Clinic', '1009  Tejeron St,Santa Ana, Manila', '09564837642', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/curapet.jpg?alt=media&token=802deb0a-5e0b-4096-9094-3a2153f7de05', 'Unverified', '', '', '', '', '', '', '', 1, 0, 1, 1, 1, 1, 1, 0, 0, '$2b$10$7xnKUIcrfoLLpUJJtAeH.uJ1yEwfKkOnDjJUY0flkyLhlN4HeGram', 0, '', 0, 120.966, 14.6158, 0),
-(31, 'wt_clinic@gmail.com', '$2b$10$KapEC.Th7JJF/Ev8.J2Ux.DCVcYE.mw0GrojzaOoI.6.cipBW9O6G', 'WT Veterinary Clinic', '1989 Gerardo Tuazon St,Sampaloc, Manila', '09354675835', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/wt.jpg?alt=media&token=c907f290-6be8-4897-a1ac-440364c3576d', 'Unverified', '', '', '', '', '', '', '', 0, 1, 1, 1, 1, 0, 0, 0, 0, '$2b$10$01F/oODEbFFTtyhDFcYs/OMKDRQ8At3ROUudj4CquGW.U1msEKfwC', 0, '', 0, 126.995, 15.9007, 0),
-(32, 'pspca@gmail.com', '$2b$10$S4r9VpD4u7H6r.QD1pyiTuN8ZkXrCYfu7zp0FFht9Rubj2pQH8t/G', 'PSPCA', '2044 Recto Ave,Quiapo, Manila', '09127438382', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/pspca.jpg?alt=media&token=5befad38-6fdc-408c-8cef-56c1250b5431', 'Unverified', '', '', '', '', '', '', '', 0, 0, 1, 1, 1, 0, 1, 0, 0, '$2b$10$oQ7J0h33sHywkcfo.nBY9Or25rqUrqI5ZshmV7u5KOsmSpuakmiF.', 0, '', 0, 120.991, 14.6112, 0),
-(34, 'tumanivetclinic@gmail.com', '$2b$10$XDqigGcyKiIOLJzMoTB/NuluN.UHi3sopFZGGc/5cW3NoCpihU1na', 'Tumani Vet Clinic', '431 Tayuman Street,Manila City', '09073654951', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=2a6bd727-4565-483a-9209-ae4a5418ceb5', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Screen-Shot-2020-11-19-at-10.39.49-PM.png?alt=media&token=3667d389-3e44-4aa5-90f4-26c28d3860c7', 'Pending', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 0, 0, '$2b$10$WWr2zCDq2UTcaVRwue5qje4xGr0Ss2L62ktt3yNFD.72dGlJsaIWu', 0, '', 0, 0, 0, 0),
-(35, 'eastlife@gmail.com', '$2b$10$jUILWZcN9mrYImF7Mk5c1OYGbb8ogTXVQn9N7afLP7zxF1/gUdune', 'east life vet clinic', '1042 Tayuman Street,Tondo Manila', '09558264223', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/DOC%2BFERDS%2BANIMAL%2BWELLNESS%2BCENTER.jpg?alt=media&token=836d5381-b5ee-4538-9093-2e666bb01bb0', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 0, 1, '$2b$10$ob2IFbTBfc0G6/tweyOD.OVNyPSH2hmoxzQPBZIJftaXWC9mQu6Ua', 0, '', 0, 0, 0, 0),
-(37, 'chardVet@gmail.com', '$2b$10$jQw/tzIEdk6eB2pTzjLHeO2hPYOJIuLiGjgoevAwSOeL/pIWAdW9.', 'chardVet Clinic', '008 legarda,Quezon', '09836728223', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/manila.png?alt=media&token=b854aae6-685b-411c-87ba-82df6d21be78', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 0, 0, 0, 0, 0, 0, '$2b$10$.GJFLQbn5eJEvmzuATWJSeU.QG8hl0HbEs1O2DArRUZWRzMNxPbd.', 0, '', 0, 0, 0, 0),
-(38, 'vetvetClinic@gmail.com', '$2b$10$Z14/HAVAqt1o0NEeuKlGUeRV5lzfCCvKZJJfJckC/yCRlbA/rmD1.', 'vetvetClinic', '008 legarda,Quezon', '09587939393', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/carm3.jfif?alt=media&token=907dcdd8-718c-4408-86bc-36fe5aff817b', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 0, 0, 0, 0, 0, 0, '$2b$10$p7zyewBK9Umy9akgNVNUquQR0XNCsX.eFSbBTHs9VxafOvK6t9CCi', 0, '', 0, 0, 0, 0),
+(19, 'tricity@gmail.com', '$2b$10$9i2h.drYBR5hqXnv1zgr3evSS3s6Fi/rq97RdxjS/H.Wj1xLmnhbm', 'Tri City Animal Hospital', '1949 Int. 5 Blk 10 Sta.Mesa, Manila', '09404555899', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'Verified', '06:00 - 20:29', '07:06 - 19:10', '19:06 - 18:07', '06:37 - 18:37', '06:36 - 18:37', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 0, '', 0, 121.006, 14.5993, 0),
+(28, 'westvalley@gmail.com', '$2b$10$L68mQGeYEoFlBAVtYCJBZOKLr08agfMDD0igxzWpaZtByT8rzNdV.', 'West Valley Animal Clinic', '1241 blk. 15 Velasquez Street,Tondo, Manila', '09081052103', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=5b6c9bfc-8c86-472f-a436-3c2b392ecf4b', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/images.png?alt=media&token=a79fd71a-d4d2-4a2f-9a00-e7f9bd24afde', 'Verified', '06:00 - 20:29', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 0, '', 0, 120.988, 14.6066, 0),
 (39, 'myvet@gmail.com', '$2b$10$qJEPI2NqaieUOoHMjf6eQeuyrBEEcFdxALL62HiRS2SMQyaAZb4p2', 'MyVet Clinic', '008 legarda,Quezon', '09357498232', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Consent%20Form.pdf?alt=media&token=38fc1ab5-fe2a-422f-a4d1-b477d9d02ad8', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/cayco.jpg?alt=media&token=67488d75-1c58-4616-b065-ccc35cb868d4', 'Verified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '$2b$10$Mb3CCA1C9F1UMR0FIc3LAujtXoUuVQiAIoZJ28ILLZsf9byONGZ3i', 0, '', 0, 0, 0, 0),
 (40, 'scivetanimal@gmail.com', '$2b$10$jFsCfOyQbzO63kBWzpJCK.sXq49dpiGN2h30JN3fC4IzEMKKYEqKO', 'Sci Vet Animal Clinic', '1425 Lot. 5 Jhocson Street,Sampaloc Manila', '09081236547', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/images.png?alt=media&token=4c3f3295-9b7c-4f5b-9598-82b6382151e2', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$FWJTPSEKKo7nBLI3nTLCyOnM0M5tqVaye2BAYnwpvAsUasm.NfghW', 0, '', 0, 0, 0, 0),
 (41, 'localvet@gmail.com', '$2b$10$ZIXctmYp18xpkrsvPyxhe.XFDEOATZcAavRqtiQ20F1Dio9sXGQpa', 'Local Vet Animal Clinic', '1226 Jhocson Street,Sampaloc Manila', '09087896541', '', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/6a1da98614604240bfd0f0c4f563919e.jpg?alt=media&token=25a07cb5-720f-4502-9eee-41b3fba3e204', 'Unverified', '', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$6ijujbsZONeSv0VY7cmq0.m5GNzSWqg7ZOWRWG8aWx64qMPq6AOby', 0, '', 0, 0, 0, 0),
@@ -957,16 +1020,26 @@ INSERT INTO `vet_clinic` (`vet_admin_id`, `email`, `password`, `vet_name`, `vet_
 
 CREATE TABLE `vet_doctors` (
   `vet_doc_id` int(11) NOT NULL,
-  `vet_admin_id` int(11) NOT NULL,
+  `vetid` varchar(70) NOT NULL,
   `vet_doc_fname` varchar(100) NOT NULL,
   `vet_doc_lname` varchar(100) NOT NULL,
   `vet_doc_mname` varchar(20) NOT NULL,
   `vet_doc_contactNumber` varchar(12) NOT NULL,
   `vet_doc_email` varchar(50) NOT NULL,
-  `vet_doc_profilePic` varchar(250) NOT NULL,
+  `vet_doc_profilePic` varchar(250) DEFAULT NULL,
   `vet_doc_digitalSignature` varchar(100) NOT NULL,
-  `vet_doc_password` varchar(100) NOT NULL
+  `vet_doc_password` varchar(100) NOT NULL,
+  `vet_doc_gender` varchar(20) NOT NULL,
+  `isOnline` tinyint(1) NOT NULL,
+  `isArchived` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `vet_doctors`
+--
+
+INSERT INTO `vet_doctors` (`vet_doc_id`, `vetid`, `vet_doc_fname`, `vet_doc_lname`, `vet_doc_mname`, `vet_doc_contactNumber`, `vet_doc_email`, `vet_doc_profilePic`, `vet_doc_digitalSignature`, `vet_doc_password`, `vet_doc_gender`, `isOnline`, `isArchived`) VALUES
+(6, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 'Jhaycee', 'Llaneta', 'Enriquez', '09081052103', 'johnllaneta05@gmail.com', NULL, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Presentation1.jpg?alt=med', '$2b$10$xbAw3madurA4p7ncLdI2F.8y000QUQOwlSmQFWiqas3ubWZFibwFy', 'Male', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -976,14 +1049,16 @@ CREATE TABLE `vet_doctors` (
 
 CREATE TABLE `vet_staff` (
   `vet_staff_id` int(11) NOT NULL,
-  `vet_admin_id` int(11) NOT NULL,
+  `vetid` varchar(70) NOT NULL,
   `vet_staff_fname` varchar(100) DEFAULT NULL,
   `vet_staff_lname` varchar(100) DEFAULT NULL,
   `vet_staff_mname` varchar(20) DEFAULT NULL,
   `vet_staff_contactNumber` varchar(12) DEFAULT NULL,
   `vet_staff_email` varchar(250) NOT NULL,
   `vet_staff_profilePic` varchar(250) NOT NULL,
-  `vet_staff_password` varchar(250) NOT NULL
+  `vet_staff_password` varchar(250) NOT NULL,
+  `isOnline` tinyint(1) NOT NULL,
+  `isArchived` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -1038,6 +1113,12 @@ ALTER TABLE `consultation`
   ADD KEY `vet_admin_id` (`vet_admin_id`),
   ADD KEY `vet_doc_id` (`vet_doc_id`),
   ADD KEY `pet_id` (`pet_id`);
+
+--
+-- Indexes for table `email_verification`
+--
+ALTER TABLE `email_verification`
+  ADD PRIMARY KEY (`email_id`);
 
 --
 -- Indexes for table `forget_password`
@@ -1217,14 +1298,14 @@ ALTER TABLE `vet_clinic`
 --
 ALTER TABLE `vet_doctors`
   ADD PRIMARY KEY (`vet_doc_id`),
-  ADD KEY `vet_clinic_ibfk_1` (`vet_admin_id`);
+  ADD KEY `vet_clinic_ibfk_1` (`vetid`);
 
 --
 -- Indexes for table `vet_staff`
 --
 ALTER TABLE `vet_staff`
   ADD PRIMARY KEY (`vet_staff_id`),
-  ADD KEY `vet_admin_id` (`vet_admin_id`);
+  ADD KEY `vet_admin_id` (`vetid`);
 
 --
 -- Indexes for table `visitor_monitoring`
@@ -1249,6 +1330,12 @@ ALTER TABLE `appointment`
 --
 ALTER TABLE `consultation`
   MODIFY `consultation_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `email_verification`
+--
+ALTER TABLE `email_verification`
+  MODIFY `email_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `forget_password`
@@ -1278,7 +1365,7 @@ ALTER TABLE `medical_history`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -1356,7 +1443,7 @@ ALTER TABLE `system_administrator`
 -- AUTO_INCREMENT for table `system_logs`
 --
 ALTER TABLE `system_logs`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=347;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=393;
 
 --
 -- AUTO_INCREMENT for table `thread`
@@ -1368,7 +1455,7 @@ ALTER TABLE `thread`
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `user_role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `user_role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
 
 --
 -- AUTO_INCREMENT for table `vaccination`
@@ -1386,13 +1473,13 @@ ALTER TABLE `vet_clinic`
 -- AUTO_INCREMENT for table `vet_doctors`
 --
 ALTER TABLE `vet_doctors`
-  MODIFY `vet_doc_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `vet_doc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `vet_staff`
 --
 ALTER TABLE `vet_staff`
-  MODIFY `vet_staff_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `vet_staff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `visitor_monitoring`
@@ -1516,13 +1603,13 @@ ALTER TABLE `vaccination`
 -- Constraints for table `vet_doctors`
 --
 ALTER TABLE `vet_doctors`
-  ADD CONSTRAINT `vet_clinic_ibfk_1` FOREIGN KEY (`vet_admin_id`) REFERENCES `vet_clinic` (`vet_admin_id`);
+  ADD CONSTRAINT `vet_doctors_ibfk_1` FOREIGN KEY (`vetid`) REFERENCES `vet_clinic` (`vetid`);
 
 --
 -- Constraints for table `vet_staff`
 --
 ALTER TABLE `vet_staff`
-  ADD CONSTRAINT `vet_staff_ibfk_1` FOREIGN KEY (`vet_admin_id`) REFERENCES `vet_clinic` (`vet_admin_id`);
+  ADD CONSTRAINT `vet_staff_ibfk_1` FOREIGN KEY (`vetid`) REFERENCES `vet_clinic` (`vetid`);
 
 --
 -- Constraints for table `visitor_monitoring`
