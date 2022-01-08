@@ -2354,12 +2354,12 @@ app.get("/appointments/history/record/:pet_owner_id", (req, res) => {
 });
 
 //API for Pending Appointments
-app.get("/pending/appointment/:vet_admin_id", (req, res) => {
-  const vet_admin_id = req.params.vet_admin_id;
-  // console.log(vet_admin_id)
+app.get("/pending/appointment/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  // console.log(vetid)
   const sqlQuery =
     "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Pending' ORDER BY appointment.appointment_id DESC";
-  db.query(sqlQuery, vet_admin_id, (err, result) => {
+  db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
   });
@@ -2637,7 +2637,7 @@ app.get("/pets/vetclinic/length/:vetid", (req, res) => {
   const sqlQuery =
     "SELECT DISTINCT pet_id FROM appointment where vetid=? && appointment.appointment_status = 'Done'";
   db.query(sqlQuery, vetid, (err, result) => {
-    console.log(result.length);
+    // console.log(result.length);
     res.send({
       pets: result.length,
       // pets: 4,
