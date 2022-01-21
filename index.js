@@ -1143,6 +1143,26 @@ app.put("/vetclinic/offers/update/:vet_admin_id", (req, res) => {
   );
 });
 
+
+// api update profile picture of vet clinic
+app.post("/vetclinic/update/profile", (req, res) => {
+  const imageUrl = req.body.imageUrl;
+  const vetid = req.body.vetid;
+
+  db.query(
+    "UPDATE vet_clinic SET vet_picture = ? WHERE vetid = ?",
+    [imageUrl, vetid],
+    (err, result) => {
+      if (err === null) {
+        res.send({ message: "Update Successfully" });
+      } else {
+        console.log(err);
+      }
+    }
+  )
+
+})
+
 //api of system admin if they need to approved a vet clinic
 app.put("/vetclinic/confirm/:vet_admin_id", (req, res) => {
   const vet_admin_id = req.params.vet_admin_id;
@@ -2627,6 +2647,8 @@ function authenticateToken(req, res, next) {
 function generateAccessToken(user) {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1d" });
 }
+
+
 
 //--------------------------------------------------------------------------//
 
