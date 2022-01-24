@@ -4261,19 +4261,20 @@ app.post("/register/vetStaff", (req, res) => {
 
 app.get("/vetclinic/messages/notification/length/:vetid", (req, res) => {
   // console.log(vetAdminId);
-  // const vetid = req.params.vetid;
-  // // console.log(vetid);
-  // const sqlQuery =
-  //   "SELECT * FROM messages WHERE messages.vetid = ? AND messages.isNewMessageVet = 0 AND messages.user_message = 1";
+  const vetid = req.params.vetid;
+  // console.log(vetid);
+  const sqlQuery = "SELECT * FROM messages WHERE messages.vetid = ? AND messages.user_message = 1";
 
-  // db.query(sqlQuery, vetid, (err, result) => {
-  //   // console.log(result.length);
-  //   if (err == null) {
-  //     res.send({ view: result.length });
-  //   } else {
-  //     console.log(err);
-  //   }
-  // });
+  // "SELECT * FROM messages WHERE messages.vetid = ? AND messages.isNewMessageVet = 0 AND messages.user_message = 1";
+
+  db.query(sqlQuery, vetid, (err, result) => {
+    // console.log(result.length);
+    if (err == null) {
+      res.send({ view: result.length });
+    } else {
+      console.log(err);
+    }
+  });
 });
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
