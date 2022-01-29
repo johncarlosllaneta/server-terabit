@@ -1822,10 +1822,10 @@ app.delete("/service/delete/:service_id", (req, res) => {
 
   const sqlQuery = "DELETE FROM services WHERE service_id = ?";
   db.query(sqlQuery, service_id.substring(1), (err, result) => {
-    console.log(result);
-    if (err === null) {
+    console.log(err);
+    if (err == null) {
       res.send({
-        message: "success",
+        message: "Success",
       });
     }
   });
@@ -1853,7 +1853,7 @@ app.put("/service/update/:service_id", (req, res) => {
       console.log(err);
       if (err === null) {
         res.send({
-          message: "success",
+          message: "Success",
         });
       }
     }
