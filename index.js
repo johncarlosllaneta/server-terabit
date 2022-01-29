@@ -211,6 +211,7 @@ app.post("/api/login", (req, res) => {
                       refreshTokens.push(refreshToken);
                       let u = JSON.parse(JSON.stringify(user));
                       // console.log(u.result[0].name)
+                      db.query('UPDATE vet_clinic SET isOnline = ? WHERE vet_admin_id = ?', [true, result[0].vet_admin_id]);
                       res.send({
                         accessToken: accessToken,
                         refreshToken: refreshToken,
@@ -4109,6 +4110,7 @@ app.post("/verifyEmail", async (req, res) => {
   await transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
+      res.send('Invalid Email');
     } else {
 
 
@@ -4239,7 +4241,7 @@ app.post("/register/vetStaff", (req, res) => {
             [vetid, fName, lName, mName, contactNumber, email, hash],
             (err, result) => {
               if (err == null) {
-                console.log("vet doctor successfully register");
+                console.log("vet staff successfully register");
                 res.send('Successfully Registered')
               } else {
                 console.log(err);
@@ -4276,6 +4278,40 @@ app.get("/vetclinic/messages/notification/length/:vetid", (req, res) => {
     }
   });
 });
+
+
+app.get("/vetclinic/get/veterinarian/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+
+  db.query("SELECT * FROM vet_doctors WHERE vetid = ?",
+    vetid,
+    (err, result) => {
+      if (err == null) {
+        res.send(result);
+      } else {
+        console.log(err);
+      }
+    }
+  )
+});
+
+
+app.get("/vetclinic/get/vetStaff/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+
+  db.query("SELECT * FROM vet_staff WHERE vetid = ?",
+    vetid,
+    (err, result) => {
+      if (err == null) {
+        res.send(result);
+      } else {
+        console.log(err);
+      }
+    }
+  )
+});
+
+
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
