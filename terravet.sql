@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 23, 2022 at 06:09 PM
+-- Generation Time: Jan 29, 2022 at 05:48 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -86,7 +86,10 @@ INSERT INTO `email_verification` (`email_id`, `email`, `verification_code`, `dat
 (35, 'johnllaneta05@gmail.com', 6959, '2021-12-19 02:56:50'),
 (36, 'johnllaneta05@gmail.com', 3723, '2021-12-19 23:52:46'),
 (37, 'johnllaneta05@gmail.com', 7094, '2021-12-19 23:57:25'),
-(38, 'johnllaneta05@gmail.com', 5042, '2021-12-23 22:56:44');
+(38, 'johnllaneta05@gmail.com', 5042, '2021-12-23 22:56:44'),
+(39, 'johnllaneta05@gmail.com', 9653, '2022-01-24 15:24:59'),
+(40, 'terravetapp00@gmail.com', 6222, '2022-01-24 15:30:43'),
+(41, 'terravetapp00@gmail.com', 9978, '2022-01-29 20:13:32');
 
 -- --------------------------------------------------------
 
@@ -166,6 +169,15 @@ CREATE TABLE `messages` (
   `created_time_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `message_content` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`message_id`, `thread_id`, `pet_owner_id`, `vetid`, `user_message`, `created_time_date`, `message_content`) VALUES
+(1, 5, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '2022-01-23 17:38:26', 'Hello Sir are you available?'),
+(2, 5, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, '2022-01-23 17:58:30', 'Yes sir'),
+(3, 5, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 2, '2022-01-23 17:58:30', 'Yes sir');
 
 -- --------------------------------------------------------
 
@@ -338,6 +350,16 @@ CREATE TABLE `services` (
   `vetid` varchar(70) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`service_id`, `service_name`, `service_description`, `category`, `service_fee`, `vetid`) VALUES
+(33, 'Plea and Tick Control', 'Removing plea and tick controls', 'Preventive Controls', 500, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai'),
+(38, 'Urine Testing', 'Testing Urine', 'Pet Examination', 300, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai'),
+(40, 'Nail Trimming', 'Trimming Nails for cats and dogs', 'Pet Grooming', 250, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai'),
+(42, 'SinoVac', 'SinoVac vaccine', 'Vaccination', 300, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai');
+
 -- --------------------------------------------------------
 
 --
@@ -403,6 +425,21 @@ CREATE TABLE `system_logs` (
   `date_time_created` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `system_logs`
+--
+
+INSERT INTO `system_logs` (`logs_id`, `logs_description`, `logs_type`, `date_time_created`) VALUES
+(401, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-01-23 17:10:56'),
+(402, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-01-23 18:53:43'),
+(403, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-01-24 06:06:59'),
+(404, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-01-24 07:53:43'),
+(405, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-01-25 08:10:11'),
+(406, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-01-25 09:14:50'),
+(407, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-01-29 11:59:58'),
+(408, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-01-29 12:03:54'),
+(409, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-01-29 12:04:13');
+
 -- --------------------------------------------------------
 
 --
@@ -415,6 +452,13 @@ CREATE TABLE `thread` (
   `vetid` varchar(70) NOT NULL,
   `created_time_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `thread`
+--
+
+INSERT INTO `thread` (`thread_id`, `pet_owner_id`, `vetid`, `created_time_date`) VALUES
+(5, 58, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', '2022-01-23 17:37:51');
 
 -- --------------------------------------------------------
 
@@ -437,7 +481,9 @@ INSERT INTO `user_role` (`user_role_id`, `email`, `userrole`, `phone_number`) VA
 (136, 'tricity@gmail.com', 2, '09072069351'),
 (137, 'westvalley@gmail.com', 2, '09558264298'),
 (138, 'john040717@gmail.com', 1, '09558264299'),
-(139, 'admin@gmail.com', 3, '09081052103');
+(139, 'admin@gmail.com', 3, '09081052103'),
+(140, 'johnllaneta05@gmail.com', 4, '09081052104'),
+(142, 'terravetapp00@gmail.com', 5, '09668264989');
 
 -- --------------------------------------------------------
 
@@ -509,7 +555,7 @@ CREATE TABLE `vet_clinic` (
 
 INSERT INTO `vet_clinic` (`vet_admin_id`, `email`, `password`, `vet_name`, `vet_address`, `vet_contact_number`, `vet_permit`, `vet_picture`, `vet_status`, `scheduleMonday`, `scheduleTuesday`, `scheduleWednesday`, `scheduleThursday`, `scheduleFriday`, `scheduleSaturday`, `scheduleSunday`, `enableProduct`, `enablePharmacy`, `enableServices`, `enableConsultation`, `enableExamination`, `enableGrooming`, `enableVaccination`, `enablePreventiveControls`, `enableInHouseLab`, `vetid`, `isOnline`, `callerId`, `isBusy`, `longitude`, `Latitude`, `isArchived`) VALUES
 (19, 'tricity@gmail.com', '$2b$10$9i2h.drYBR5hqXnv1zgr3evSS3s6Fi/rq97RdxjS/H.Wj1xLmnhbm', 'Tri City Animal Hospital', '1949 Int. 5 Blk 10 Sta.Mesa, Manila', '09404555898', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'Verified', '06:00 - 20:29', '07:06 - 19:10', '19:06 - 18:07', '06:37 - 18:37', '06:36 - 18:37', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 0, '', 0, 121.006, 14.5993, 0),
-(28, 'westvalley@gmail.com', '$2b$10$L68mQGeYEoFlBAVtYCJBZOKLr08agfMDD0igxzWpaZtByT8rzNdV.', 'West Valley Animal Clinic', '1241 blk. 15 Velasquez Street,Tondo, Manila', '09081052103', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=5b6c9bfc-8c86-472f-a436-3c2b392ecf4b', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/undefined?alt=media&token=c9f1cfb1-1062-4d9e-a1e6-5a0c28e8b87b', 'Verified', '06:00 - 20:29', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 0, '', 0, 120.988, 14.6066, 0);
+(28, 'westvalley@gmail.com', '$2b$10$L68mQGeYEoFlBAVtYCJBZOKLr08agfMDD0igxzWpaZtByT8rzNdV.', 'West Valley Animal Clinic', '1241 blk. 15 Velasquez Street,Tondo, Manila', '09081052103', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=5b6c9bfc-8c86-472f-a436-3c2b392ecf4b', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/725587077143004400?alt=media&token=01befdca-df14-4d7c-a61c-dfa78a3558fa', 'Verified', '06:00 - 20:29', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '', 0, 120.988, 14.6066, 0);
 
 -- --------------------------------------------------------
 
@@ -538,7 +584,8 @@ CREATE TABLE `vet_doctors` (
 --
 
 INSERT INTO `vet_doctors` (`vet_doc_id`, `vetid`, `vet_doc_fname`, `vet_doc_lname`, `vet_doc_mname`, `vet_doc_contactNumber`, `vet_doc_email`, `vet_doc_profilePic`, `vet_doc_digitalSignature`, `vet_doc_password`, `vet_doc_gender`, `isOnline`, `isArchived`) VALUES
-(6, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 'Jhaycee', 'Llaneta', 'Enriquez', '09081052103', 'johnllaneta05@gmail.com', NULL, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Presentation1.jpg?alt=med', '$2b$10$xbAw3madurA4p7ncLdI2F.8y000QUQOwlSmQFWiqas3ubWZFibwFy', 'Male', 0, 0);
+(6, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 'Jhaycee', 'Llaneta', 'Enriquez', '09081052103', 'johnllaneta05@gmail.com', NULL, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Presentation1.jpg?alt=med', '$2b$10$xbAw3madurA4p7ncLdI2F.8y000QUQOwlSmQFWiqas3ubWZFibwFy', 'Male', 0, 0),
+(7, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 'James', 'Llaneta', 'Enriquez', '09081052104', 'johnllaneta05@gmail.com', NULL, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/payment-wallet.png?alt=me', '$2b$10$vsdwQyDvSnoUCnvLtC2EO.hYSfWw7j.Qm7wYmj7g2aKA4oafSDYda', 'Male', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -559,6 +606,13 @@ CREATE TABLE `vet_staff` (
   `isOnline` tinyint(1) NOT NULL,
   `isArchived` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `vet_staff`
+--
+
+INSERT INTO `vet_staff` (`vet_staff_id`, `vetid`, `vet_staff_fname`, `vet_staff_lname`, `vet_staff_mname`, `vet_staff_contactNumber`, `vet_staff_email`, `vet_staff_profilePic`, `vet_staff_password`, `isOnline`, `isArchived`) VALUES
+(3, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 'James', 'Llaneta', 'Johan', '09668264989', 'terravetapp00@gmail.com', '', '$2b$10$MVJPlErIWLvbsthdGsefQOh5XA.AwyHpmqutcEHwJZOYVN5BV9/VW', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -822,7 +876,7 @@ ALTER TABLE `consultation`
 -- AUTO_INCREMENT for table `email_verification`
 --
 ALTER TABLE `email_verification`
-  MODIFY `email_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `email_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `forget_password`
@@ -852,7 +906,7 @@ ALTER TABLE `medical_history`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -906,7 +960,7 @@ ALTER TABLE `reservation`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `stock_in`
@@ -930,19 +984,19 @@ ALTER TABLE `system_administrator`
 -- AUTO_INCREMENT for table `system_logs`
 --
 ALTER TABLE `system_logs`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=401;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=410;
 
 --
 -- AUTO_INCREMENT for table `thread`
 --
 ALTER TABLE `thread`
-  MODIFY `thread_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `thread_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `user_role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+  MODIFY `user_role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 
 --
 -- AUTO_INCREMENT for table `vaccination`
@@ -960,13 +1014,13 @@ ALTER TABLE `vet_clinic`
 -- AUTO_INCREMENT for table `vet_doctors`
 --
 ALTER TABLE `vet_doctors`
-  MODIFY `vet_doc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `vet_doc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `vet_staff`
 --
 ALTER TABLE `vet_staff`
-  MODIFY `vet_staff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `vet_staff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `visitor_monitoring`
