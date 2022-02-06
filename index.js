@@ -1331,6 +1331,23 @@ app.delete("/logout", (req, res) => {
   res.sendStatus(204);
 });
 
+// logout vet clinic admin
+app.put("/logout/user/vetclinic/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+
+  db.query(
+    'UPDATE vet_clinic SET isOnline = false WHERE vetid = ?',
+    vetid,
+    (err, result) => {
+      if (err == null) {
+        res.send({ message: 'Success' });
+      } else {
+        console.log('Logout Error');
+      }
+    }
+  )
+});
+
 app.post("/register/petowner", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -1384,10 +1401,21 @@ app.get("/product", (req, res) => {
 
 //this api is for products per vet clinic
 app.get("/products/:vetid", (req, res) => {
-  const vet_admin_id = req.params.vetid;
+  const vetid = req.params.vetid;
   // console.log(vet_admin_id);
   const sqlQuery = "SELECT * FROM products WHERE vetid = ?";
-  db.query(sqlQuery, vet_admin_id, (err, result) => {
+  db.query(sqlQuery, vetid, (err, result) => {
+    console.log(result);
+    res.send(result);
+  });
+});
+
+//this api is for products count per vet clinic
+app.get("/products/count/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  // console.log(vet_admin_id);
+  const sqlQuery = "SELECT * FROM products WHERE vetid = ?";
+  db.query(sqlQuery, vetid, (err, result) => {
     console.log(result);
     res.send(result);
   });
@@ -1420,7 +1448,12 @@ app.post("/product/insert/:vetid", (req, res) => {
       insertProductPetType,
     ],
     (err, result) => {
-      console.log(err);
+      if (err === null) {
+        res.send({ message: 'Success' });
+      } else {
+        console.log(err);
+      }
+
     }
   );
 });
@@ -1434,6 +1467,11 @@ app.post("/product/delete/:product_id", (req, res) => {
   const sqlQuery = "DELETE FROM products WHERE product_id = ? AND vetid = ?";
   db.query(sqlQuery, [product_id, vetid], (err, result) => {
     console.log(result);
+    if (err == null) {
+      res.send({ message: 'Success' });
+    } else {
+      console.log('Error deleting product');
+    }
   });
 });
 
@@ -1465,7 +1503,11 @@ app.put("/product/update/:productUpdateId", (req, res) => {
       vetid,
     ],
     (err, result) => {
-      console.log(err);
+      if (err == null) {
+        res.send({ message: 'Success' });
+      } else {
+        console.log('Error updating product');
+      }
     }
   );
 });
