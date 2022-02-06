@@ -207,6 +207,10 @@ app.post("/api/login", (req, res) => {
                       refreshTokens.push(refreshToken);
                       let u = JSON.parse(JSON.stringify(user));
                       // console.log(u.result[0].name)
+                      db.query(
+                        "UPDATE vet_clinic SET isOnline = ? WHERE vet_admin_id = ?",
+                        [true, result[0].vet_admin_id]
+                      );
                       res.send({
                         accessToken: accessToken,
                         refreshToken: refreshToken,
@@ -1800,10 +1804,10 @@ app.delete("/service/delete/:service_id", (req, res) => {
 
   const sqlQuery = "DELETE FROM services WHERE service_id = ?";
   db.query(sqlQuery, service_id.substring(1), (err, result) => {
-    console.log(result);
-    if (err === null) {
+    console.log(err);
+    if (err == null) {
       res.send({
-        message: "success",
+        message: "Success",
       });
     }
   });
@@ -1831,7 +1835,7 @@ app.put("/service/update/:service_id", (req, res) => {
       console.log(err);
       if (err === null) {
         res.send({
-          message: "success",
+          message: "Success",
         });
       }
     }
@@ -4085,6 +4089,7 @@ app.post("/verifyEmail", async (req, res) => {
   await transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
+      res.send("Invalid Email");
     } else {
       db.query(
         "INSERT INTO email_verification (email,verification_code) VALUES(?,?)",
@@ -4214,7 +4219,7 @@ app.post("/register/vetStaff", (req, res) => {
             [vetid, fName, lName, mName, contactNumber, email, hash],
             (err, result) => {
               if (err == null) {
-                console.log("vet doctor successfully register");
+                console.log("vet staff successfully register");
                 res.send("Successfully Registered");
               } else {
                 console.log(err);
@@ -4305,6 +4310,50 @@ app.get("/visitor/staff/:vet_staff_id", (req, res) => {
   });
 });
 //vet doctor
+const vetid = req.params.vetid;
+// console.log(vetid);
+const sqlQuery =
+  "SELECT * FROM messages WHERE messages.vetid = ? AND messages.user_message = 1";
+
+// "SELECT * FROM messages WHERE messages.vetid = ? AND messages.isNewMessageVet = 0 AND messages.user_message = 1";
+
+db.query(sqlQuery, vetid, (err, result) => {
+  // console.log(result.length);
+  if (err == null) {
+    res.send({ view: result.length });
+  } else {
+    console.log(err);
+  }
+});
+
+app.get("/vetclinic/get/veterinarian/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+
+  db.query(
+    "SELECT * FROM vet_doctors WHERE vetid = ?",
+    vetid,
+    (err, result) => {
+      if (err == null) {
+        res.send(result);
+      } else {
+        console.log(err);
+      }
+    }
+  );
+});
+
+app.get("/vetclinic/get/vetStaff/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+
+  db.query("SELECT * FROM vet_staff WHERE vetid = ?", vetid, (err, result) => {
+    if (err == null) {
+      res.send(result);
+    } else {
+      console.log(err);
+    }
+  });
+});
+
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
