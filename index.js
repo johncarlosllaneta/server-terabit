@@ -10,7 +10,7 @@ const saltRounds = 10;
 const multer = require("multer");
 const path = require("path");
 const config = require("./config");
-var nodemailer = require('nodemailer');
+var nodemailer = require("nodemailer");
 // const pino = require('express-pino-logger')();
 const { videoToken } = require("./tokens");
 app.use(express.json());
@@ -138,8 +138,6 @@ app.post("/api/login", (req, res) => {
               res.send({ err: err });
             }
 
-
-
             // -----------------------------------------
             if (result.length > 0) {
               bcrypt.compare(
@@ -178,8 +176,6 @@ app.post("/api/login", (req, res) => {
               res.send({ message: "User doesn't exist..." });
             }
             // --------------------------------------------
-
-
           }
         );
       } else if (result[0].userrole == 2) {
@@ -229,14 +225,9 @@ app.post("/api/login", (req, res) => {
             } else {
               res.send({ message: "User doesn't exist..." });
             }
-
-
-
           }
         );
-      }
-
-      else if (result[0].userrole == 3) {
+      } else if (result[0].userrole == 3) {
         // console.log("system admin");
         db.query(
           "SELECT * FROM system_administrator WHERE email = ? AND isArchived = 'False'",
@@ -279,15 +270,12 @@ app.post("/api/login", (req, res) => {
                   }
                 }
               );
-            }
-            else {
+            } else {
               res.send({ message: "User doesn't exist..." });
             }
           }
         );
-      }
-
-      else if (result[0].userrole == 4) {
+      } else if (result[0].userrole == 4) {
         // console.log("system admin");
         db.query(
           "SELECT * FROM vet_doctors WHERE vet_doc_email = ? AND isArchived = 'False'",
@@ -330,16 +318,12 @@ app.post("/api/login", (req, res) => {
                   }
                 }
               );
-            }
-            else {
+            } else {
               res.send({ message: "User doesn't exist..." });
             }
           }
         );
-      }
-
-
-      else if (result[0].userrole == 5) {
+      } else if (result[0].userrole == 5) {
         // console.log("system admin");
         db.query(
           "SELECT * FROM vet_staff WHERE vet_staff_email = ? AND isArchived = 'False'",
@@ -382,15 +366,12 @@ app.post("/api/login", (req, res) => {
                   }
                 }
               );
-            }
-            else {
+            } else {
               res.send({ message: "User doesn't exist..." });
             }
           }
         );
       }
-
-
 
       // ---------- End line
     } else {
@@ -853,9 +834,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-    Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1143,7 +1124,6 @@ app.put("/vetclinic/offers/update/:vet_admin_id", (req, res) => {
   );
 });
 
-
 // api update profile picture of vet clinic
 app.post("/vetclinic/update/profile", (req, res) => {
   const imageUrl = req.body.imageUrl;
@@ -1159,9 +1139,8 @@ app.post("/vetclinic/update/profile", (req, res) => {
         console.log(err);
       }
     }
-  )
-
-})
+  );
+});
 
 //api of system admin if they need to approved a vet clinic
 app.put("/vetclinic/confirm/:vet_admin_id", (req, res) => {
@@ -1877,7 +1856,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => { });
+      db.query(updateProduct, [deduced, product_id], (err, result) => {});
     });
 
     console.log(err);
@@ -2648,8 +2627,6 @@ function generateAccessToken(user) {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1d" });
 }
 
-
-
 //--------------------------------------------------------------------------//
 
 //API for dashboard in vet clinic
@@ -3014,7 +2991,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => { }
+          (err, result) => {}
         );
       } else {
         console.log("invalid number");
@@ -4085,24 +4062,23 @@ app.put("/vetclinic/messages/notification/:vetid", (req, res) => {
   });
 });
 
-
 // Verify Email
 app.post("/verifyEmail", async (req, res) => {
   const email = req.body.email;
   console.log(email);
   const verificationCode = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
   var transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
     auth: {
-      user: 'terravetapp00@gmail.com',
-      pass: 'Tv00@4040'
-    }
+      user: "terravetapp00@gmail.com",
+      pass: "Tv00@4040",
+    },
   });
 
   var mailOptions = {
-    from: 'terravetapp00@gmail.com',
+    from: "terravetapp00@gmail.com",
     to: email,
-    subject: 'Verification Code TerraVet Account',
+    subject: "Verification Code TerraVet Account",
     text: `Here's your Terravet Verification Code, ${email}! Continue signing up for Terravet by entering this code ${verificationCode}.`,
   };
 
@@ -4110,25 +4086,22 @@ app.post("/verifyEmail", async (req, res) => {
     if (error) {
       console.log(error);
     } else {
-
-
       db.query(
-        "INSERT INTO email_verification (email,verification_code) VALUES(?,?)"
-        ,
+        "INSERT INTO email_verification (email,verification_code) VALUES(?,?)",
         [email, verificationCode],
         (err, result) => {
           // console.log(result.length);
           if (err == null) {
-            console.log('Email sent: ' + info.response);
-            res.send('Email sent: ' + info.response)
+            console.log("Email sent: " + info.response);
+            res.send("Email sent: " + info.response);
           } else {
             console.log(err);
           }
-        });
+        }
+      );
     }
   });
-
-})
+});
 
 app.post("/verifyEmail/submit", (req, res) => {
   const email = req.body.email;
@@ -4136,17 +4109,16 @@ app.post("/verifyEmail/submit", (req, res) => {
   console.log(verificationCode);
 
   db.query(
-    'SELECT * FROM email_verification WHERE email = ? AND verification_code = ?',
+    "SELECT * FROM email_verification WHERE email = ? AND verification_code = ?",
     [email, verificationCode],
     (err, result) => {
       if (result.length > 0) {
-        res.send('Email Verified');
+        res.send("Email Verified");
       } else {
-        res.send('Wrong verification code');
+        res.send("Wrong verification code");
       }
     }
-  )
-
+  );
 });
 
 //registration veterinarian
@@ -4166,24 +4138,32 @@ app.post("/register/veterinarian", (req, res) => {
     [email, 4, contactNumber],
     (err, result) => {
       if (err == null) {
-
         bcrypt.hash(password, saltRounds, (err, hash) => {
           if (err) {
             console.log(err);
           }
 
-
           if (eSignature != undefined) {
             db.query(
               "INSERT INTO vet_doctors (vetid,vet_doc_fname,vet_doc_lname,vet_doc_mname,vet_doc_contactNumber,vet_doc_email, vet_doc_digitalSignature, vet_doc_password ,vet_doc_gender) VALUES (?,?,?,?,?,?,?,?,?)",
-              [vetid, fName, lName, mName, contactNumber, email, eSignature, hash, gender],
+              [
+                vetid,
+                fName,
+                lName,
+                mName,
+                contactNumber,
+                email,
+                eSignature,
+                hash,
+                gender,
+              ],
               (err, result) => {
                 if (err == null) {
                   console.log("vet doctor successfully register");
-                  res.send('Successfully Registered')
+                  res.send("Successfully Registered");
                 } else {
                   console.log(err);
-                  res.send('Not Successfully Registered')
+                  res.send("Not Successfully Registered");
                 }
               }
             );
@@ -4194,24 +4174,21 @@ app.post("/register/veterinarian", (req, res) => {
               (err, result) => {
                 if (err == null) {
                   console.log("vet doctor successfully register");
-                  res.send('Successfully Registered')
+                  res.send("Successfully Registered");
                 } else {
                   console.log(err);
-                  res.send('Not Successfully Registered')
+                  res.send("Not Successfully Registered");
                 }
               }
             );
           }
-
-
         });
       } else {
         console.log(err);
       }
     }
   );
-})
-
+});
 
 // registration vet staff
 app.post("/register/vetStaff", (req, res) => {
@@ -4223,13 +4200,11 @@ app.post("/register/vetStaff", (req, res) => {
   const lName = req.body.lName;
   const contactNumber = req.body.contactNumber;
 
-
   db.query(
     "INSERT INTO user_role (email,userrole,phone_number) VALUES (?,?,?)",
     [email, 5, contactNumber],
     (err, result) => {
       if (err == null) {
-
         bcrypt.hash(password, saltRounds, (err, hash) => {
           if (err) {
             console.log(err);
@@ -4240,24 +4215,20 @@ app.post("/register/vetStaff", (req, res) => {
             (err, result) => {
               if (err == null) {
                 console.log("vet doctor successfully register");
-                res.send('Successfully Registered')
+                res.send("Successfully Registered");
               } else {
                 console.log(err);
-                res.send('Not Successfully Registered')
+                res.send("Not Successfully Registered");
               }
             }
           );
-
-
         });
       } else {
         console.log(err);
       }
     }
   );
-})
-
-
+});
 
 app.get("/vetclinic/messages/notification/length/:vetid", (req, res) => {
   // console.log(vetAdminId);
@@ -4265,7 +4236,6 @@ app.get("/vetclinic/messages/notification/length/:vetid", (req, res) => {
   // // console.log(vetid);
   // const sqlQuery =
   //   "SELECT * FROM messages WHERE messages.vetid = ? AND messages.isNewMessageVet = 0 AND messages.user_message = 1";
-
   // db.query(sqlQuery, vetid, (err, result) => {
   //   // console.log(result.length);
   //   if (err == null) {
@@ -4275,6 +4245,66 @@ app.get("/vetclinic/messages/notification/length/:vetid", (req, res) => {
   //   }
   // });
 });
+
+//vet staff
+//Product
+app.get("/products/staff/:vet_staff_id", (req, res) => {
+  const vet_staff_id = req.params.vet_staff_id;
+  // console.log(vet_admin_id);
+  const sqlQuery =
+    "SELECT * FROM products INNER JOIN vet_clinic ON products.vetid = vet_clinic.vetid INNER JOIN vet_staff ON vet_staff.vetid = vet_clinic.vetid WHERE vet_staff_id = ?";
+  db.query(sqlQuery, vet_staff_id, (err, result) => {
+    console.log(result);
+    res.send(result);
+  });
+});
+
+//Reservation
+app.get("/pending/reservation/staff/:vet_staff_id", (req, res) => {
+  const vet_staff_id = req.params.vet_staff_id;
+  // console.log(pet_owner_id);
+  const sqlQuery =
+    "SELECT * FROM vet_staff JOIN vet_clinic ON vet_staff.vetid = vet_clinic.vetid JOIN products ON vet_clinic.vetid = products.vetid JOIN reservation ON reservation.product_id= products.product_id JOIN pet_owners ON pet_owners.pet_owner_id = reservation.pet_owner_id WHERE vet_staff.vet_staff_id = ? AND reservation.reservation_status='Pending' ORDER BY reservation.reserve_id DESC";
+  db.query(sqlQuery, vet_staff_id, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+app.get("/history/reservation/staff/:vet_staff_id", (req, res) => {
+  const vet_staff_id = req.params.vet_staff_id;
+  // console.log(pet_owner_id);
+  const sqlQuery =
+    "SELECT * FROM vet_staff JOIN vet_clinic ON vet_staff.vetid = vet_clinic.vetid JOIN products ON vet_clinic.vetid = products.vetid JOIN reservation ON reservation.product_id= products.product_id JOIN pet_owners ON pet_owners.pet_owner_id = reservation.pet_owner_id WHERE vet_staff.vet_staff_id = ? AND NOT reservation.reservation_status='Pending' ORDER BY reservation.reserve_id DESC";
+  db.query(sqlQuery, vet_staff_id, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+//pharmacy
+app.get("/pharmacy/staff/:vet_staff_id", (req, res) => {
+  const vet_staff_id = req.params.vet_staff_id;
+  const sqlQuery =
+    "SELECT * FROM vet_staff JOIN vet_clinic ON vet_staff.vetid = vet_clinic.vetid  JOIN pharmacy ON pharmacy.vetid = vet_clinic.vetid WHERE vet_staff.vet_staff_id = ?";
+  db.query(sqlQuery, vet_staff_id, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+//visitor monitoring
+app.get("/visitor/staff/:vet_staff_id", (req, res) => {
+  const vet_staff_id = req.params.vet_staff_id;
+  // console.log(service_id)
+  const sqlQuery =
+    "SELECT * FROM pet_owners JOIN visitor_monitoring ON pet_owners.pet_owner_id = visitor_monitoring.pet_owner_id JOIN vet_clinic ON vet_clinic.vetid = visitor_monitoring.vetid JOIN vet_staff ON vet_staff.vetid = vet_clinic.vetid WHERE vet_staff.vet_staff_id = ? ";
+  db.query(sqlQuery, vet_staff_id, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+//vet doctor
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
