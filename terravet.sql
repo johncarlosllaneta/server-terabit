@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2022 at 05:48 PM
+-- Generation Time: Feb 20, 2022 at 07:35 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -282,9 +282,15 @@ CREATE TABLE `pharmacy` (
   `price` int(11) NOT NULL,
   `vetid` varchar(100) NOT NULL,
   `medicine_image` varchar(200) NOT NULL,
-  `med_id` varchar(100) NOT NULL,
-  `medicine_number` varchar(100) NOT NULL
+  `lot_id` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pharmacy`
+--
+
+INSERT INTO `pharmacy` (`medicine_id`, `medicine_name`, `medicine_description`, `status`, `price`, `vetid`, `medicine_image`, `lot_id`) VALUES
+(24, 'heartgard', 'chewables 6', 1, 250, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Web%20capture_15-6-2021_234216_www.1800petmeds.com.jpeg?alt=media&token=e3a098c2-ed05-416c-b179-50ef57582ca9', '123456789');
 
 -- --------------------------------------------------------
 
@@ -303,6 +309,18 @@ CREATE TABLE `products` (
   `category` varchar(50) NOT NULL,
   `pet_type` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `product_name`, `product_desc`, `vetid`, `quantity`, `price`, `product_image`, `category`, `pet_type`) VALUES
+('21265134', 'Pet bed', 'pet bed for dogs', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 50, 500, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/221406245091125820?alt=media&token=0ebb420e-b56a-4345-8d79-b7929446e2a1', 'Merchandise', 'Dogs'),
+('27675781', 'Dog bed', 'beds for dogs', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 20, 611, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/177096012507373950?alt=media&token=d2154eb4-dfb2-4d79-abf7-f674b7a82a92', 'Merchandise', 'Dogs'),
+('31634188', 'Dog can', 'can for dog', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 50, 350, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/41854690632238790?alt=media&token=b854e4fa-aa27-48b4-b82f-30bbbe20fbd7', 'Food', 'Dogs'),
+('60798523', 'Poop bag', 'Poop bag for dogs and cat', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 200, 499, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/670083399747242400?alt=media&token=3dcc2af9-2a8c-4b66-a6ee-2e640e6a1e70', 'Merchandise', 'Cat'),
+('61848732', 'Cat Food', 'Cat Foods for cats', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 500, 198, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/781026826956475500?alt=media&token=f1156dd5-ebb7-4d54-814e-4e98313cb473', 'Food', 'Cat'),
+('69798868', 'Bone toy', 'toy for dogs', '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 50, 300, 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/166108208346230400?alt=media&token=5868c025-1dfb-4afe-a2d6-b3398cbf96c4', 'Toys', 'Dogs');
 
 -- --------------------------------------------------------
 
@@ -438,7 +456,23 @@ INSERT INTO `system_logs` (`logs_id`, `logs_description`, `logs_type`, `date_tim
 (406, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-01-25 09:14:50'),
 (407, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-01-29 11:59:58'),
 (408, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-01-29 12:03:54'),
-(409, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-01-29 12:04:13');
+(409, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-01-29 12:04:13'),
+(410, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-02-01 10:53:27'),
+(411, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-02-01 19:02:30'),
+(412, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-02-01 19:03:12'),
+(413, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-02-01 19:03:21'),
+(414, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-02-05 15:12:53'),
+(415, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-02-05 18:37:53'),
+(416, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-02-06 16:22:02'),
+(417, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-02-06 18:49:00'),
+(418, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-02-14 09:40:13'),
+(419, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-02-14 10:11:46'),
+(420, 'Tri City Animal Hospital has been logged in as vet clinic', 1, '2022-02-14 10:12:36'),
+(421, 'Tri City Animal Hospital has been logged out as vet clinic', 3, '2022-02-14 10:13:04'),
+(422, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-02-14 10:13:18'),
+(423, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-02-14 11:15:49'),
+(424, 'West Valley Animal Clinic has been logged in as vet clinic', 1, '2022-02-20 16:48:32'),
+(425, 'West Valley Animal Clinic has been logged out as vet clinic', 3, '2022-02-20 18:34:17');
 
 -- --------------------------------------------------------
 
@@ -555,7 +589,7 @@ CREATE TABLE `vet_clinic` (
 
 INSERT INTO `vet_clinic` (`vet_admin_id`, `email`, `password`, `vet_name`, `vet_address`, `vet_contact_number`, `vet_permit`, `vet_picture`, `vet_status`, `scheduleMonday`, `scheduleTuesday`, `scheduleWednesday`, `scheduleThursday`, `scheduleFriday`, `scheduleSaturday`, `scheduleSunday`, `enableProduct`, `enablePharmacy`, `enableServices`, `enableConsultation`, `enableExamination`, `enableGrooming`, `enableVaccination`, `enablePreventiveControls`, `enableInHouseLab`, `vetid`, `isOnline`, `callerId`, `isBusy`, `longitude`, `Latitude`, `isArchived`) VALUES
 (19, 'tricity@gmail.com', '$2b$10$9i2h.drYBR5hqXnv1zgr3evSS3s6Fi/rq97RdxjS/H.Wj1xLmnhbm', 'Tri City Animal Hospital', '1949 Int. 5 Blk 10 Sta.Mesa, Manila', '09404555898', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=b8e535fc-b41d-4aa9-9334-6a23c4fc351a', 'Verified', '06:00 - 20:29', '07:06 - 19:10', '19:06 - 18:07', '06:37 - 18:37', '06:36 - 18:37', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 0, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhbc', 0, '', 0, 121.006, 14.5993, 0),
-(28, 'westvalley@gmail.com', '$2b$10$L68mQGeYEoFlBAVtYCJBZOKLr08agfMDD0igxzWpaZtByT8rzNdV.', 'West Valley Animal Clinic', '1241 blk. 15 Velasquez Street,Tondo, Manila', '09081052103', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=5b6c9bfc-8c86-472f-a436-3c2b392ecf4b', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/725587077143004400?alt=media&token=01befdca-df14-4d7c-a61c-dfa78a3558fa', 'Verified', '06:00 - 20:29', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 1, '', 0, 120.988, 14.6066, 0);
+(28, 'westvalley@gmail.com', '$2b$10$L68mQGeYEoFlBAVtYCJBZOKLr08agfMDD0igxzWpaZtByT8rzNdV.', 'West Valley Animal Clinic', '1241 blk. 15 Velasquez Street,Tondo, Manila', '09081052103', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/Letter-to-the-Client-Signed.pdf?alt=media&token=5b6c9bfc-8c86-472f-a436-3c2b392ecf4b', 'https://firebasestorage.googleapis.com/v0/b/terravet-website.appspot.com/o/867179326322626200?alt=media&token=8f83e09d-e86a-4e7c-9354-51c1d75b378e', 'Verified', '06:00 - 20:29', '', '', '', '', '', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, '$2b$10$4RujGwsxeIvMLoeOjX6PYOShX5Xl5sA5A72yHDYdjBLjRWLyhLhai', 0, '', 0, 120.988, 14.6066, 0);
 
 -- --------------------------------------------------------
 
@@ -745,7 +779,7 @@ ALTER TABLE `pet_registry_for_vet`
 --
 ALTER TABLE `pharmacy`
   ADD PRIMARY KEY (`medicine_id`),
-  ADD UNIQUE KEY `med_id` (`med_id`),
+  ADD UNIQUE KEY `med_id` (`lot_id`),
   ADD KEY `vetid` (`vetid`);
 
 --
@@ -942,7 +976,7 @@ ALTER TABLE `pet_registry_for_vet`
 -- AUTO_INCREMENT for table `pharmacy`
 --
 ALTER TABLE `pharmacy`
-  MODIFY `medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `rate_feedback`
@@ -984,7 +1018,7 @@ ALTER TABLE `system_administrator`
 -- AUTO_INCREMENT for table `system_logs`
 --
 ALTER TABLE `system_logs`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=410;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=426;
 
 --
 -- AUTO_INCREMENT for table `thread`

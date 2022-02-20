@@ -838,9 +838,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-      Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1902,7 +1902,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => {});
+      db.query(updateProduct, [deduced, product_id], (err, result) => { });
     });
 
     console.log(err);
@@ -1950,10 +1950,11 @@ app.post("/pharmacy/insert/:vetid", (req, res) => {
   const insertMedicineDescription = req.body.insertMedicineDescription;
 
   const insertMedicinePrice = req.body.insertMedicinePrice;
-  const id = Math.floor(Math.random() * 100000000);
+  const lotId = req.body.lotid;
+
 
   const sqlQuery =
-    "INSERT INTO pharmacy (medicine_name,medicine_description,status,price,vetid,medicine_image,med_id) VALUES (?,?,?,?,?,?,?)";
+    "INSERT INTO pharmacy (medicine_name,medicine_description,status,price,vetid,medicine_image,lot_id) VALUES (?,?,?,?,?,?,?)";
   db.query(
     sqlQuery,
     [
@@ -1963,10 +1964,14 @@ app.post("/pharmacy/insert/:vetid", (req, res) => {
       insertMedicinePrice,
       vetid,
       insertMedicineImage,
-      id,
+      lotId,
     ],
     (err, result) => {
-      console.log(err);
+      if (err == null) {
+        res.send({ message: 'Success' })
+      } else {
+        console.log(err);
+      }
     }
   );
 });
@@ -1978,7 +1983,12 @@ app.post("/pharmacy/delete/:medicine_id", (req, res) => {
   // console.log(vetid);
   const sqlQuery = "DELETE FROM pharmacy WHERE med_id = ? AND vetid = ?";
   db.query(sqlQuery, [medicine_id, vetid], (err, result) => {
-    console.log(err);
+    if (err == null) {
+      res.send({ message: 'Success' })
+    } else {
+      console.log(err);
+    }
+
   });
 });
 
@@ -2013,7 +2023,11 @@ app.put("/pharmacy/update/:pharmacyUpdateId", (req, res) => {
       vetid,
     ],
     (err, result) => {
-      console.log(err);
+      if (err == null) {
+        res.send({ message: 'Success' })
+      } else {
+        console.log(err);
+      }
     }
   );
 });
@@ -3037,7 +3051,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => {}
+          (err, result) => { }
         );
       } else {
         console.log("invalid number");
@@ -4351,22 +4365,23 @@ app.get("/visitor/staff/:vet_staff_id", (req, res) => {
     res.send(result);
   });
 });
+
 //vet doctor
-const vetid = req.params.vetid;
-// console.log(vetid);
-const sqlQuery =
-  "SELECT * FROM messages WHERE messages.vetid = ? AND messages.user_message = 1";
+// const vetid = req.params.vetid;
+// // console.log(vetid);
+// const sqlQuery =
+//   "SELECT * FROM messages WHERE messages.vetid = ? AND messages.user_message = 1";
 
-// "SELECT * FROM messages WHERE messages.vetid = ? AND messages.isNewMessageVet = 0 AND messages.user_message = 1";
+// // "SELECT * FROM messages WHERE messages.vetid = ? AND messages.isNewMessageVet = 0 AND messages.user_message = 1";
 
-db.query(sqlQuery, vetid, (err, result) => {
-  // console.log(result.length);
-  if (err == null) {
-    res.send({ view: result.length });
-  } else {
-    console.log(err);
-  }
-});
+// db.query(sqlQuery, vetid, (err, result) => {
+//   // console.log(result.length);
+//   if (err == null) {
+//     res.send({ view: result.length });
+//   } else {
+//     console.log(err);
+//   }
+// });
 
 app.get("/vetclinic/get/veterinarian/:vetid", (req, res) => {
   const vetid = req.params.vetid;
