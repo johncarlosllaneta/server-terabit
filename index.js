@@ -2561,8 +2561,8 @@ app.post("/talktovet/thread/creating", (req, res) => {
 });
 
 // Get Thread Vet Clinic
-app.post("/talktovet/vetclinic/thread", (req, res) => {
-  const vetid = req.body.vetid;
+app.get("/talktovet/vetclinic/thread/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
 
   // console.log(vetid);
   const sqlQuery = `SELECT * FROM pet_owners JOIN thread ON pet_owners.pet_owner_id = thread.pet_owner_id JOIN vet_clinic ON vet_clinic.vetid = thread.vetid WHERE vet_clinic.vetid = ? ORDER BY thread.thread_id ASC`;
