@@ -1949,10 +1949,10 @@ app.post("/pharmacy/insert/:vetid", (req, res) => {
   const insertMedicineDescription = req.body.insertMedicineDescription;
 
   const insertMedicinePrice = req.body.insertMedicinePrice;
-  const id = Math.floor(Math.random() * 100000000);
+  const lotId = req.body.lotid;
 
   const sqlQuery =
-    "INSERT INTO pharmacy (medicine_name,medicine_description,status,price,vetid,medicine_image,med_id) VALUES (?,?,?,?,?,?,?)";
+    "INSERT INTO pharmacy (medicine_name,medicine_description,status,price,vetid,medicine_image,lot_id) VALUES (?,?,?,?,?,?,?)";
   db.query(
     sqlQuery,
     [
@@ -1962,10 +1962,14 @@ app.post("/pharmacy/insert/:vetid", (req, res) => {
       insertMedicinePrice,
       vetid,
       insertMedicineImage,
-      id,
+      lotId,
     ],
     (err, result) => {
-      console.log(err);
+      if (err == null) {
+        res.send({ message: "Success" });
+      } else {
+        console.log(err);
+      }
     }
   );
 });
@@ -1977,7 +1981,11 @@ app.post("/pharmacy/delete/:medicine_id", (req, res) => {
   // console.log(vetid);
   const sqlQuery = "DELETE FROM pharmacy WHERE med_id = ? AND vetid = ?";
   db.query(sqlQuery, [medicine_id, vetid], (err, result) => {
-    console.log(err);
+    if (err == null) {
+      res.send({ message: "Success" });
+    } else {
+      console.log(err);
+    }
   });
 });
 
@@ -2012,7 +2020,11 @@ app.put("/pharmacy/update/:pharmacyUpdateId", (req, res) => {
       vetid,
     ],
     (err, result) => {
-      console.log(err);
+      if (err == null) {
+        res.send({ message: "Success" });
+      } else {
+        console.log(err);
+      }
     }
   );
 });
@@ -4350,9 +4362,10 @@ app.get("/visitor/staff/:vet_staff_id", (req, res) => {
     res.send(result);
   });
 });
+
 //vet doctor
 // const vetid = req.params.vetid;
-// console.log(vetid);
+// // console.log(vetid);
 // const sqlQuery =
 //   "SELECT * FROM messages WHERE messages.vetid = ? AND messages.user_message = 1";
 
