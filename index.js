@@ -838,9 +838,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-    Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1318,16 +1318,16 @@ app.put("/logout/user/vetclinic/:vetid", (req, res) => {
   const vetid = req.params.vetid;
 
   db.query(
-    'UPDATE vet_clinic SET isOnline = false WHERE vetid = ?',
+    "UPDATE vet_clinic SET isOnline = false WHERE vetid = ?",
     vetid,
     (err, result) => {
       if (err == null) {
-        res.send({ message: 'Success' });
+        res.send({ message: "Success" });
       } else {
-        console.log('Logout Error');
+        console.log("Logout Error");
       }
     }
-  )
+  );
 });
 
 app.post("/register/petowner", (req, res) => {
@@ -1431,11 +1431,10 @@ app.post("/product/insert/:vetid", (req, res) => {
     ],
     (err, result) => {
       if (err === null) {
-        res.send({ message: 'Success' });
+        res.send({ message: "Success" });
       } else {
         console.log(err);
       }
-
     }
   );
 });
@@ -1450,9 +1449,9 @@ app.post("/product/delete/:product_id", (req, res) => {
   db.query(sqlQuery, [product_id, vetid], (err, result) => {
     console.log(result);
     if (err == null) {
-      res.send({ message: 'Success' });
+      res.send({ message: "Success" });
     } else {
-      console.log('Error deleting product');
+      console.log("Error deleting product");
     }
   });
 });
@@ -1486,9 +1485,9 @@ app.put("/product/update/:productUpdateId", (req, res) => {
     ],
     (err, result) => {
       if (err == null) {
-        res.send({ message: 'Success' });
+        res.send({ message: "Success" });
       } else {
-        console.log('Error updating product');
+        console.log("Error updating product");
       }
     }
   );
@@ -1902,7 +1901,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => { });
+      db.query(updateProduct, [deduced, product_id], (err, result) => {});
     });
 
     console.log(err);
@@ -1952,7 +1951,6 @@ app.post("/pharmacy/insert/:vetid", (req, res) => {
   const insertMedicinePrice = req.body.insertMedicinePrice;
   const lotId = req.body.lotid;
 
-
   const sqlQuery =
     "INSERT INTO pharmacy (medicine_name,medicine_description,status,price,vetid,medicine_image,lot_id) VALUES (?,?,?,?,?,?,?)";
   db.query(
@@ -1968,7 +1966,7 @@ app.post("/pharmacy/insert/:vetid", (req, res) => {
     ],
     (err, result) => {
       if (err == null) {
-        res.send({ message: 'Success' })
+        res.send({ message: "Success" });
       } else {
         console.log(err);
       }
@@ -1984,11 +1982,10 @@ app.post("/pharmacy/delete/:medicine_id", (req, res) => {
   const sqlQuery = "DELETE FROM pharmacy WHERE med_id = ? AND vetid = ?";
   db.query(sqlQuery, [medicine_id, vetid], (err, result) => {
     if (err == null) {
-      res.send({ message: 'Success' })
+      res.send({ message: "Success" });
     } else {
       console.log(err);
     }
-
   });
 });
 
@@ -2001,7 +1998,7 @@ app.put("/pharmacy/update/:pharmacyUpdateId", (req, res) => {
   const medicine_price = req.body.medicine_price;
   const status = req.body.status;
 
-  // console.log(medicine_id);
+  console.log(medicine_id);
   // console.log(vetid);
   // console.log(medicine_image);
   // console.log(medicine_name);
@@ -2024,7 +2021,7 @@ app.put("/pharmacy/update/:pharmacyUpdateId", (req, res) => {
     ],
     (err, result) => {
       if (err == null) {
-        res.send({ message: 'Success' })
+        res.send({ message: "Success" });
       } else {
         console.log(err);
       }
@@ -3051,7 +3048,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => { }
+          (err, result) => {}
         );
       } else {
         console.log("invalid number");
@@ -4345,10 +4342,10 @@ app.get("/history/reservation/staff/:vet_staff_id", (req, res) => {
 
 //pharmacy
 app.get("/pharmacy/staff/:vet_staff_id", (req, res) => {
-  const vet_staff_id = req.params.vet_staff_id;
+  const vet_id = req.params.vetid;
   const sqlQuery =
-    "SELECT * FROM vet_staff JOIN vet_clinic ON vet_staff.vetid = vet_clinic.vetid  JOIN pharmacy ON pharmacy.vetid = vet_clinic.vetid WHERE vet_staff.vet_staff_id = ?";
-  db.query(sqlQuery, vet_staff_id, (err, result) => {
+    "SELECT * FROM vet_staff JOIN vet_clinic ON vet_staff.vetid = vet_clinic.vetid  JOIN pharmacy ON pharmacy.vetid = vet_clinic.vetid WHERE vet_staff.vetid = ?";
+  db.query(sqlQuery, vet_id, (err, result) => {
     // console.log(result);
     res.send(result);
   });
@@ -4411,6 +4408,52 @@ app.get("/vetclinic/get/vetStaff/:vetid", (req, res) => {
   });
 });
 
+//vet staff join vet clinic
+app.get("/staff/:vet_staff_id", (req, res) => {
+  const vet_staff_id = req.params.vet_staff_id;
+  // console.log(pet_owner_id);
+  const sqlQuery =
+    "SELECT * FROM vet_staff JOIN vet_clinic ON vet_staff.vetid = vet_clinic.vetid WHERE vet_staff.vet_staff_id = ?";
+  db.query(sqlQuery, vet_staff_id, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+//vet doctor join vetclinic
+app.get("/doc/:vet_doc_id", (req, res) => {
+  const vet_doc_id = req.params.vet_doc_id;
+  // console.log(vet_doc_id);
+  const sqlQuery =
+    "SELECT * FROM vet_doctors JOIN vet_clinic ON vet_doctors.vetid = vet_clinic.vetid WHERE vet_doctors.vet_doc_id = ?";
+  db.query(sqlQuery, vet_doc_id, (err, result) => {
+    console.log(result);
+    res.send(result);
+  });
+});
+
+//consultation pending
+app.get("/doc/pending/appointment/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  // console.log(vetid)
+  const sqlQuery =
+    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Pending' AND services.category = 'Consultation' ORDER BY appointment.appointment_id DESC";
+  db.query(sqlQuery, vetid, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+app.get("/doc/history/appointment/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  // console.log(vetid)
+  const sqlQuery =
+    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Done' AND services.category = 'Consultation' ORDER BY appointment.appointment_id DESC";
+  db.query(sqlQuery, vetid, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
