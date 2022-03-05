@@ -838,9 +838,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-      Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1901,7 +1901,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => {});
+      db.query(updateProduct, [deduced, product_id], (err, result) => { });
     });
 
     console.log(err);
@@ -2582,8 +2582,8 @@ app.post("/talktovet/vetclinic/thread/refresh", (req, res) => {
 });
 
 // Get Thread Pet Owner
-app.post("/talktovet/petOwner/thread", (req, res) => {
-  const petOwnerId = req.body.petOwnerId;
+app.get("/talktovet/petOwner/thread/:petOwnerId", (req, res) => {
+  const petOwnerId = req.params.petOwnerId;
 
   const sqlQuery = `SELECT * FROM pet_owners JOIN thread ON pet_owners.pet_owner_id = thread.pet_owner_id JOIN vet_clinic ON vet_clinic.vetid = thread.vetid WHERE pet_owners.pet_owner_id = ? ORDER BY thread.thread_id ASC`;
   db.query(sqlQuery, petOwnerId, (err, result) => {
@@ -2615,8 +2615,8 @@ app.post("/talktovet/petOwner/thread/refresh", (req, res) => {
 });
 
 // Get Thread and message for Vet Clinic
-app.post("/talktovet/vetclinic/messages", (req, res) => {
-  const thread_id = req.body.thread_id;
+app.get("/talktovet/vetclinic/messages/:thread_id", (req, res) => {
+  const thread_id = req.params.thread_id;
 
   // console.log(thread_id);
   const sqlQuery = `SELECT thread.thread_id, vet_clinic.vet_name,vet_clinic.vet_picture,pet_owners.name,pet_owners.profilePicture,messages.user_message,messages.message_content,messages.created_time_date FROM pet_owners JOIN messages ON pet_owners.pet_owner_id = messages.pet_owner_id JOIN thread ON thread.thread_id = messages.thread_id JOIN vet_clinic ON vet_clinic.vetid = thread.vetid WHERE thread.thread_id= ? ORDER BY messages.created_time_date ASC`;
@@ -2639,8 +2639,13 @@ app.post("/talktovet/vetclinic/messages/sent", (req, res) => {
     sqlQuery,
     [thread_id, pet_owner_id, vetid, user, message],
     (err, result) => {
-      console.log(err);
-      res.send(result);
+      // console.log(err);
+      if (err == null) {
+        res.send({ result: 'Success' });
+      } else {
+        console.log(err);
+      }
+
     }
   );
 });
@@ -3048,7 +3053,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => {}
+          (err, result) => { }
         );
       } else {
         console.log("invalid number");
