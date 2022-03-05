@@ -4318,12 +4318,12 @@ app.get("/products/staff/:vet_staff_id", (req, res) => {
 });
 
 //Reservation
-app.get("/pending/reservation/staff/:vet_staff_id", (req, res) => {
-  const vet_staff_id = req.params.vet_staff_id;
+app.get("/pending/reservation/staff/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
   // console.log(pet_owner_id);
   const sqlQuery =
-    "SELECT * FROM vet_staff JOIN vet_clinic ON vet_staff.vetid = vet_clinic.vetid JOIN products ON vet_clinic.vetid = products.vetid JOIN reservation ON reservation.product_id= products.product_id JOIN pet_owners ON pet_owners.pet_owner_id = reservation.pet_owner_id WHERE vet_staff.vet_staff_id = ? AND reservation.reservation_status='Pending' ORDER BY reservation.reserve_id DESC";
-  db.query(sqlQuery, vet_staff_id, (err, result) => {
+    "SELECT * FROM vet_clinic JOIN products ON vet_clinic.vetid = products.vetid JOIN reservation ON reservation.product_id= products.product_id JOIN pet_owners ON pet_owners.pet_owner_id = reservation.pet_owner_id JOIN pets ON pets.pet_owner_id = pet_owners.pet_owner_id WHERE reservation.vetid = ? AND reservation.reservation_status='Pending' ORDER BY reservation.reserve_id DESC";
+  db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
   });
