@@ -1527,7 +1527,7 @@ app.post("/products/reserve/:productId", (req, res) => {
   const quantity = req.body.quantity;
 
   var date = new Date();
-  date.setHours(date.getHours() + 8);
+  date.setHours(date.getHours()+8);
 
   // now you can get the string
   var isodate = date.toISOString();
@@ -2124,6 +2124,38 @@ app.get("/pet/length", (req, res) => {
   });
 });
 
+//for pet vaccination record #new
+app.get("/petowner/vaccination/:pet_id", (req, res) => {
+  const pet_id = req.params.pet_id;
+  const sqlQuery =
+    "SELECT * FROM vet_doctors JOIN vet_clinic ON vet_doctors.vetid = vet_clinic.vetid JOIN appointment ON appointment.vetid = vet_clinic.vetid JOIN immunization_history ON immunization_history.appointment_id = appointment.appointment_id JOIN pets ON pets.pet_id = immunization_history.pet_id WHERE pets.pet_id = ?";
+  db.query(sqlQuery, pet_id, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  }); 
+});
+
+//for pet consultation record
+app.get("/petowner/consultation/:pet_id", (req, res) => {
+  const pet_id = req.params.pet_id;
+  const sqlQuery =
+    "SELECT * FROM vet_clinic JOIN vet_doctors ON vet_clinic.vet_admin_id = vet_doctors.vet_admin_id JOIN consultation ON consultation.vet_admin_id = vet_clinic.vet_admin_id JOIN pets ON pets.pet_id = consultation.pet_id JOIN pet_owners ON pet_owners.pet_owner_id = pets.pet_owner_id WHERE pets.pet_id =?";
+  db.query(sqlQuery, pet_id, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});	
+
+//for pet appointment record 
+app.get("/petowner/apppointment/:pet_id", (req, res) => {
+  const pet_id = req.params.pet_id;
+  const sqlQuery =
+  "SELECT * FROM vet_clinic JOIN vet_doctors ON vet_clinic.vetid = vet_doctors.vetid JOIN consultation ON consultation.vetid = vet_clinic.vetid JOIN pets ON pets.pet_id = consultation.pet_id JOIN pet_owners ON pet_owners.pet_owner_id = pets.pet_owner_id WHERE pets.pet_id =?";
+  db.query(sqlQuery, pet_id, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});	
 app.get("/vetclinic/length", (req, res) => {
   const sqlQuery =
     "SELECT * FROM vet_clinic WHERE vet_status = 'Verified' AND isArchived = 0";
