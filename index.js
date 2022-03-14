@@ -74,23 +74,23 @@ app.post("/video/token", (req, res) => {
 // Email Verification
 
 //--------------------------------------------------------------------------//
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "terravet",
-});
-
-// const db = mysql.createPool({
-//   connectionLimit: 1000,
-//   connectTimeout: 60 * 60 * 1000,
-//   acquireTimeout: 60 * 60 * 1000,
-//   timeout: 60 * 60 * 1000,
-//   host: "us-cdbr-east-04.cleardb.com",
-//   user: "be6527b0b7c051",
-//   password: "412951dd",
-//   database: "heroku_8275da6060fa8d2",
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "terravet",
 // });
+
+const db = mysql.createPool({
+  connectionLimit: 1000,
+  connectTimeout: 60 * 60 * 1000,
+  acquireTimeout: 60 * 60 * 1000,
+  timeout: 60 * 60 * 1000,
+  host: " us-cdbr-east-05.cleardb.net",
+  user: "bdb2dd6ba41ba9",
+  password: "9542972d",
+  database: "heroku_9d423aff4dc7247",
+});
 
 // console.log(db);
 
@@ -838,9 +838,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-    Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1527,7 +1527,7 @@ app.post("/products/reserve/:productId", (req, res) => {
   const quantity = req.body.quantity;
 
   var date = new Date();
-  date.setHours(date.getHours()+8);
+  date.setHours(date.getHours() + 8);
 
   // now you can get the string
   var isodate = date.toISOString();
@@ -1901,7 +1901,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => { });
+      db.query(updateProduct, [deduced, product_id], (err, result) => {});
     });
 
     console.log(err);
@@ -2132,7 +2132,7 @@ app.get("/petowner/vaccination/:pet_id", (req, res) => {
   db.query(sqlQuery, pet_id, (err, result) => {
     // console.log(result);
     res.send(result);
-  }); 
+  });
 });
 
 //for pet consultation record
@@ -2144,18 +2144,18 @@ app.get("/petowner/consultation/:pet_id", (req, res) => {
     // console.log(result);
     res.send(result);
   });
-});	
+});
 
-//for pet appointment record 
+//for pet appointment record
 app.get("/petowner/apppointment/:pet_id", (req, res) => {
   const pet_id = req.params.pet_id;
   const sqlQuery =
-  "SELECT * FROM vet_clinic JOIN vet_doctors ON vet_clinic.vetid = vet_doctors.vetid JOIN consultation ON consultation.vetid = vet_clinic.vetid JOIN pets ON pets.pet_id = consultation.pet_id JOIN pet_owners ON pet_owners.pet_owner_id = pets.pet_owner_id WHERE pets.pet_id =?";
+    "SELECT * FROM vet_clinic JOIN vet_doctors ON vet_clinic.vetid = vet_doctors.vetid JOIN consultation ON consultation.vetid = vet_clinic.vetid JOIN pets ON pets.pet_id = consultation.pet_id JOIN pet_owners ON pet_owners.pet_owner_id = pets.pet_owner_id WHERE pets.pet_id =?";
   db.query(sqlQuery, pet_id, (err, result) => {
     // console.log(result);
     res.send(result);
   });
-});	
+});
 app.get("/vetclinic/length", (req, res) => {
   const sqlQuery =
     "SELECT * FROM vet_clinic WHERE vet_status = 'Verified' AND isArchived = 0";
@@ -2673,11 +2673,10 @@ app.post("/talktovet/vetclinic/messages/sent", (req, res) => {
     (err, result) => {
       // console.log(err);
       if (err == null) {
-        res.send({ result: 'Success' });
+        res.send({ result: "Success" });
       } else {
         console.log(err);
       }
-
     }
   );
 });
@@ -3085,7 +3084,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => { }
+          (err, result) => {}
         );
       } else {
         console.log("invalid number");
@@ -4486,6 +4485,39 @@ app.get("/doc/history/appointment/:vetid", (req, res) => {
   // console.log(vetid)
   const sqlQuery =
     "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Done' AND services.category = 'Consultation' ORDER BY appointment.appointment_id DESC";
+  db.query(sqlQuery, vetid, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+app.get("/doc/pets/appointment/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  // console.log(vetid)
+  const sqlQuery =
+    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id=pets.pet_owner_id JOIN appointment ON appointment.pet_id=pets.pet_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Done' AND services.category= 'Pet Grooming' ORDER BY appointment.appointment_id DESC";
+  db.query(sqlQuery, vetid, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+app.get("/doc/pets/vaccination/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  // console.log(vetid)
+  const sqlQuery =
+    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id=pets.pet_owner_id JOIN appointment ON appointment.pet_id=pets.pet_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Done' AND services.category= 'Vaccination' ORDER BY appointment.appointment_id DESC";
+  db.query(sqlQuery, vetid, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+app.get("/doc/pets/examination/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  // console.log(vetid);
+  const sqlQuery =
+    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id=pets.pet_owner_id JOIN appointment ON appointment.pet_id=pets.pet_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Done' AND services.category= 'Pet Examination' ORDER BY appointment.appointment_id DESC";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
