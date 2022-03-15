@@ -4161,15 +4161,15 @@ app.post("/verifyEmail", async (req, res) => {
   console.log(email);
   const verificationCode = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
   var transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: "yahoo",
     auth: {
-      user: "terravetapp00@gmail.com",
-      pass: "Tv00@4040",
+      user: "terravetinc@yahoo.com",
+      pass: "yxftzwvsmltbnmii",
     },
   });
 
   var mailOptions = {
-    from: "terravetapp00@gmail.com",
+    from: "terravetinc@yahoo.com",
     to: email,
     subject: "Verification Code TerraVet Account",
     text: `Here's your Terravet Verification Code, ${email}! Continue signing up for Terravet by entering this code ${verificationCode}.`,
