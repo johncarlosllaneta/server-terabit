@@ -4178,7 +4178,7 @@ app.post("/verifyEmail", async (req, res) => {
   await transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
-      res.send(error.message);
+      res.send('error');
     } else {
       db.query(
         "INSERT INTO email_verification (email,verification_code) VALUES(?,?)",
