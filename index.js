@@ -1316,7 +1316,7 @@ app.delete("/logout", (req, res) => {
 // logout vet clinic admin
 app.put("/logout/user/vetclinic/:vetid", (req, res) => {
   const vetid = req.params.vetid;
-  console.log(vetid);
+
   db.query(
     "UPDATE vet_clinic SET isOnline = 0 WHERE vetid = ?",
     vetid,
@@ -4178,7 +4178,7 @@ app.post("/verifyEmail", async (req, res) => {
   await transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
-      res.send("Invalid Email");
+      res.send(error.message);
     } else {
       db.query(
         "INSERT INTO email_verification (email,verification_code) VALUES(?,?)",
