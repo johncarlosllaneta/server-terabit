@@ -1316,9 +1316,9 @@ app.delete("/logout", (req, res) => {
 // logout vet clinic admin
 app.put("/logout/user/vetclinic/:vetid", (req, res) => {
   const vetid = req.params.vetid;
-
+  console.log(vetid);
   db.query(
-    "UPDATE vet_clinic SET isOnline = false WHERE vetid = ?",
+    "UPDATE vet_clinic SET isOnline = 0 WHERE vetid = ?",
     vetid,
     (err, result) => {
       if (err == null) {
