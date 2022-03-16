@@ -4527,5 +4527,6 @@ app.get("/doc/pets/examination/:vetid", (req, res) => {
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
+  console.log('Im here');
   console.log(`Running  Server ${PORT}`);
 });
