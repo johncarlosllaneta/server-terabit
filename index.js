@@ -4156,7 +4156,45 @@ app.put("/vetclinic/messages/notification/:vetid", (req, res) => {
 });
 
 // Verify Email
+app.post("/emailChecker", (req, res) => {
+  const email = req.body.email;
+
+  db.query("SELECT * from user_role WHERE email = ?",
+    email,
+    (err, result) => {
+      if (err == null) {
+        if (result.length != 0) {
+          res.send(true);
+        } else {
+          res.send(false);
+        }
+      } else {
+        console.log(err);
+      }
+
+    })
+})
+
+
+// Email verification veterinarian
+app.get(`/verify/veterinarian/:email`, (req, res) => {
+  db.query(
+    'UPDATE vet_doctors SET isVerified = true where vet_doc_email = ?',
+    req.params.email,
+    (err, result) => {
+      if (err == null) {
+        res.send('Email Verified');
+      } else {
+        console.log(err);
+      }
+    }
+  )
+})
+
+
+// Send email 
 app.post("/verifyEmail", async (req, res) => {
+  const hostUrl = req.body.hostUrl;
   const email = req.body.email;
   console.log(email);
   const verificationCode = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
@@ -4171,8 +4209,8 @@ app.post("/verifyEmail", async (req, res) => {
   var mailOptions = {
     from: "terravetinc@yahoo.com",
     to: email,
-    subject: "Verification Code TerraVet Account",
-    text: `Here's your Terravet Verification Code, ${email}! Continue signing up for Terravet by entering this code ${verificationCode}.`,
+    subject: " TerraVet Account Verification",
+    text: `Thank you for choosing terravet, ${email}! To verify your account, kindly click the link within this email ${`${hostUrl}/verify/veterinarian/${email}`}.`,
   };
 
   await transporter.sendMail(mailOptions, function (error, info) {
@@ -4180,40 +4218,29 @@ app.post("/verifyEmail", async (req, res) => {
       console.log(error);
       res.send('error');
     } else {
-      db.query(
-        "INSERT INTO email_verification (email,verification_code) VALUES(?,?)",
-        [email, verificationCode],
-        (err, result) => {
-          // console.log(result.length);
-          if (err == null) {
-            console.log("Email sent: " + info.response);
-            res.send("Email sent: " + info.response);
-          } else {
-            console.log(err);
-          }
-        }
-      );
+      res.send('Success');
     }
   });
 });
 
-app.post("/verifyEmail/submit", (req, res) => {
-  const email = req.body.email;
-  const verificationCode = req.body.verificationCode;
-  console.log(verificationCode);
 
-  db.query(
-    "SELECT * FROM email_verification WHERE email = ? AND verification_code = ?",
-    [email, verificationCode],
-    (err, result) => {
-      if (result.length > 0) {
-        res.send("Email Verified");
-      } else {
-        res.send("Wrong verification code");
-      }
-    }
-  );
-});
+// app.post("/verifyEmail/submit", (req, res) => {
+//   const email = req.body.email;
+//   const verificationCode = req.body.verificationCode;
+//   console.log(verificationCode);
+
+//   db.query(
+//     "SELECT * FROM email_verification WHERE email = ? AND verification_code = ?",
+//     [email, verificationCode],
+//     (err, result) => {
+//       if (result.length > 0) {
+//         res.send("Email Verified");
+//       } else {
+//         res.send("Wrong verification code");
+//       }
+//     }
+//   );
+// });
 
 //registration veterinarian
 app.post("/register/veterinarian", (req, res) => {
@@ -4221,11 +4248,9 @@ app.post("/register/veterinarian", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const fName = req.body.fName;
-  const mName = req.body.mName;
   const lName = req.body.lName;
   const gender = req.body.gender;
   const contactNumber = req.body.contactNumber;
-  const eSignature = req.body.eSignature;
 
   db.query(
     "INSERT INTO user_role (email,userrole,phone_number) VALUES (?,?,?)",
@@ -4237,45 +4262,29 @@ app.post("/register/veterinarian", (req, res) => {
             console.log(err);
           }
 
-          if (eSignature != undefined) {
-            db.query(
-              "INSERT INTO vet_doctors (vetid,vet_doc_fname,vet_doc_lname,vet_doc_mname,vet_doc_contactNumber,vet_doc_email, vet_doc_digitalSignature, vet_doc_password ,vet_doc_gender) VALUES (?,?,?,?,?,?,?,?,?)",
-              [
-                vetid,
-                fName,
-                lName,
-                mName,
-                contactNumber,
-                email,
-                eSignature,
-                hash,
-                gender,
-              ],
-              (err, result) => {
-                if (err == null) {
-                  console.log("vet doctor successfully register");
-                  res.send("Successfully Registered");
-                } else {
-                  console.log(err);
-                  res.send("Not Successfully Registered");
-                }
+
+          db.query(
+            "INSERT INTO vet_doctors (vetid,vet_doc_fname,vet_doc_lname,vet_doc_contactNumber,vet_doc_email, vet_doc_password ,vet_doc_gender) VALUES (?,?,?,?,?,?,?)",
+            [
+              vetid,
+              fName,
+              lName,
+              contactNumber,
+              email,
+              hash,
+              gender,
+            ],
+            (err, result) => {
+              if (err == null) {
+                console.log("vet doctor successfully register");
+                res.send("Successfully Registered");
+              } else {
+                console.log(err);
+                res.send("Not Successfully Registered");
               }
-            );
-          } else {
-            db.query(
-              "INSERT INTO vet_doctors (vetid,vet_doc_fname,vet_doc_lname,vet_doc_mname,vet_doc_contactNumber,vet_doc_email, vet_doc_password ,vet_doc_gender	) VALUES (?,?,?,?,?,?,?,?)",
-              [vetid, fName, lName, mName, contactNumber, email, hash, gender],
-              (err, result) => {
-                if (err == null) {
-                  console.log("vet doctor successfully register");
-                  res.send("Successfully Registered");
-                } else {
-                  console.log(err);
-                  res.send("Not Successfully Registered");
-                }
-              }
-            );
-          }
+            }
+          );
+
         });
       } else {
         console.log(err);
@@ -4527,6 +4536,5 @@ app.get("/doc/pets/examination/:vetid", (req, res) => {
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log('Im here');
   console.log(`Running  Server ${PORT}`);
 });
