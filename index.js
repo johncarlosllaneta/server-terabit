@@ -2898,7 +2898,6 @@ app.put("/admin/update/password/:admin_id", (req, res) => {
 //Visitor monitoring for vet_clinic
 app.get("/vetclinic/visitor/:vetid", (req, res) => {
   const vetid = req.params.vetid;
-  // console.log(service_id)
   const sqlQuery =
     "SELECT * FROM pet_owners JOIN visitor_monitoring ON pet_owners.pet_owner_id = visitor_monitoring.pet_owner_id JOIN vet_clinic ON vet_clinic.vetid = visitor_monitoring.vetid WHERE vet_clinic.vetid = ? ";
   db.query(sqlQuery, vetid, (err, result) => {
@@ -4191,8 +4190,23 @@ app.get(`/verify/veterinarian/:email`, (req, res) => {
   )
 })
 
+// Email verification vet staff
+app.get(`/verify/vetStaff/:email`, (req, res) => {
+  db.query(
+    'UPDATE vet_staff SET isVerified = true where vet_staff_email = ?',
+    req.params.email,
+    (err, result) => {
+      if (err == null) {
+        res.send('Email Verified');
+      } else {
+        console.log(err);
+      }
+    }
+  )
+})
 
-// Send email 
+
+// Send email veterinarian
 app.post("/verifyEmail", async (req, res) => {
   const hostUrl = req.body.hostUrl;
   const email = req.body.email;
@@ -4211,6 +4225,37 @@ app.post("/verifyEmail", async (req, res) => {
     to: email,
     subject: " TerraVet Account Verification",
     text: `Thank you for choosing terravet, ${email}! To verify your account, kindly click the link within this email ${`${hostUrl}/verify/veterinarian/${email}`}.`,
+  };
+
+  await transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      res.send('error');
+    } else {
+      res.send('Success');
+    }
+  });
+});
+
+
+// Send email vet staff
+app.post("/verifyEmail/vetStaff", async (req, res) => {
+  const hostUrl = req.body.hostUrl;
+  const email = req.body.email;
+  console.log(email);
+  var transporter = nodemailer.createTransport({
+    service: "yahoo",
+    auth: {
+      user: "terravetinc@yahoo.com",
+      pass: "yxftzwvsmltbnmii",
+    },
+  });
+
+  var mailOptions = {
+    from: "terravetinc@yahoo.com",
+    to: email,
+    subject: " TerraVet Account Verification",
+    text: `Thank you for choosing terravet, ${email}! To verify your account, kindly click the link within this email ${`${hostUrl}/verify/vetStaff/${email}`}.`,
   };
 
   await transporter.sendMail(mailOptions, function (error, info) {
@@ -4299,7 +4344,6 @@ app.post("/register/vetStaff", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const fName = req.body.fName;
-  const mName = req.body.mName;
   const lName = req.body.lName;
   const contactNumber = req.body.contactNumber;
 
@@ -4313,8 +4357,8 @@ app.post("/register/vetStaff", (req, res) => {
             console.log(err);
           }
           db.query(
-            "INSERT INTO vet_staff (vetid,vet_staff_fname,vet_staff_lname,vet_staff_mname,vet_staff_contactNumber,vet_staff_email, vet_staff_password) VALUES (?,?,?,?,?,?,?)",
-            [vetid, fName, lName, mName, contactNumber, email, hash],
+            "INSERT INTO vet_staff (vetid,vet_staff_fname,vet_staff_lname,vet_staff_contactNumber,vet_staff_email, vet_staff_password) VALUES (?,?,?,?,?,?)",
+            [vetid, fName, lName, contactNumber, email, hash],
             (err, result) => {
               if (err == null) {
                 console.log("vet staff successfully register");
