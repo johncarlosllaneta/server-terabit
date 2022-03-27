@@ -1949,10 +1949,10 @@ app.post("/pharmacy/insert/:vetid", (req, res) => {
   const insertMedicineDescription = req.body.insertMedicineDescription;
 
   const insertMedicinePrice = req.body.insertMedicinePrice;
-  const lotId = req.body.lotid;
+  const insertMedicineNumber = req.body.insertMedicineNumber;
 
   const sqlQuery =
-    "INSERT INTO pharmacy (medicine_name,medicine_description,status,price,vetid,medicine_image,lot_id) VALUES (?,?,?,?,?,?,?)";
+    "INSERT INTO pharmacy (medicine_name,medicine_description,status,price,vetid,medicine_image,medicine_number) VALUES (?,?,?,?,?,?,?)";
   db.query(
     sqlQuery,
     [
@@ -1962,11 +1962,12 @@ app.post("/pharmacy/insert/:vetid", (req, res) => {
       insertMedicinePrice,
       vetid,
       insertMedicineImage,
-      lotId,
+      insertMedicineNumber,
     ],
     (err, result) => {
       if (err == null) {
         res.send({ message: "Success" });
+        console.log(message);
       } else {
         console.log(err);
       }
@@ -1997,6 +1998,7 @@ app.put("/pharmacy/update/:pharmacyUpdateId", (req, res) => {
   const medicine_description = req.body.medicine_description;
   const medicine_price = req.body.medicine_price;
   const status = req.body.status;
+  const medicine_number = req.body.medicine_number;
 
   console.log(medicine_id);
   // console.log(vetid);
@@ -2007,7 +2009,7 @@ app.put("/pharmacy/update/:pharmacyUpdateId", (req, res) => {
   // console.log(status);
 
   const sqlQuery =
-    "UPDATE pharmacy SET medicine_name = ?,medicine_description = ?,status = ? ,price = ?,medicine_image = ? WHERE med_id = ? AND vetid = ?";
+    "UPDATE pharmacy SET medicine_name = ?,medicine_description = ?,status = ? ,price = ?,medicine_image = ?, medicine_number = ?  WHERE med_id = ? AND vetid = ?";
   db.query(
     sqlQuery,
     [
@@ -2016,6 +2018,7 @@ app.put("/pharmacy/update/:pharmacyUpdateId", (req, res) => {
       status,
       medicine_price,
       medicine_image,
+      medicine_number,
       medicine_id,
       vetid,
     ],
