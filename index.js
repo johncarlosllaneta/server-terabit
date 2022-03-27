@@ -840,9 +840,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-    Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1922,7 +1922,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => { });
+      db.query(updateProduct, [deduced, product_id], (err, result) => {});
     });
 
     console.log(err);
@@ -2920,10 +2920,11 @@ app.put("/admin/update/password/:admin_id", (req, res) => {
 //Visitor monitoring for vet_clinic
 app.get("/vetclinic/visitor/:vetid", (req, res) => {
   const vetid = req.params.vetid;
+  // console.log(vetid);
   const sqlQuery =
     "SELECT * FROM pet_owners JOIN visitor_monitoring ON pet_owners.pet_owner_id = visitor_monitoring.pet_owner_id JOIN vet_clinic ON vet_clinic.vetid = visitor_monitoring.vetid WHERE vet_clinic.vetid = ? ";
   db.query(sqlQuery, vetid, (err, result) => {
-    // console.log(result);
+    console.log(result);
     res.send(result);
   });
 });
@@ -3105,7 +3106,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => { }
+          (err, result) => {}
         );
       } else {
         console.log("invalid number");
@@ -4119,7 +4120,7 @@ app.get("/petOwner/services/health/card/:pet_id", (req, res) => {
     "SELECT pet_owners.name, pets.pet_name, services.service_name, services.service_description, vet_clinic.vet_name, services.category, appointment.date_accomplished FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id = appointment.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE pets.pet_id = ? AND appointment.appointment_status= 'Done'";
 
   db.query(sqlQuery, pet_id, (err, result) => {
-    // console.log(result.length);
+    // console.log(result);
     if (err == null) {
       res.send(result);
     } else {
@@ -4180,22 +4181,18 @@ app.put("/vetclinic/messages/notification/:vetid", (req, res) => {
 app.post("/emailChecker", (req, res) => {
   const email = req.body.email;
 
-  db.query("SELECT * from user_role WHERE email = ?",
-    email,
-    (err, result) => {
-      if (err == null) {
-        if (result.length != 0) {
-          res.send(true);
-        } else {
-          res.send(false);
-        }
+  db.query("SELECT * from user_role WHERE email = ?", email, (err, result) => {
+    if (err == null) {
+      if (result.length != 0) {
+        res.send(true);
       } else {
-        console.log(err);
+        res.send(false);
       }
-
-    })
-})
-
+    } else {
+      console.log(err);
+    }
+  });
+});
 
 // Email verification vet administrator
 app.get(`/verify/vetadmin/:email`, (req, res) => {
@@ -4215,33 +4212,32 @@ app.get(`/verify/vetadmin/:email`, (req, res) => {
 // Email verification veterinarian
 app.get(`/verify/veterinarian/:email`, (req, res) => {
   db.query(
-    'UPDATE vet_doctors SET isVerified = true where vet_doc_email = ?',
+    "UPDATE vet_doctors SET isVerified = true where vet_doc_email = ?",
     req.params.email,
     (err, result) => {
       if (err == null) {
-        res.send('Email Verified');
+        res.send("Email Verified");
       } else {
         console.log(err);
       }
     }
-  )
-})
+  );
+});
 
 // Email verification vet staff
 app.get(`/verify/vetStaff/:email`, (req, res) => {
   db.query(
-    'UPDATE vet_staff SET isVerified = true where vet_staff_email = ?',
+    "UPDATE vet_staff SET isVerified = true where vet_staff_email = ?",
     req.params.email,
     (err, result) => {
       if (err == null) {
-        res.send('Email Verified');
+        res.send("Email Verified");
       } else {
         console.log(err);
       }
     }
-  )
-})
-
+  );
+});
 
 // Send email vet administrator
 app.post("/verifyEmail/vetadmin", async (req, res) => {
@@ -4299,13 +4295,12 @@ app.post("/verifyEmail", async (req, res) => {
   await transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
-      res.send('error');
+      res.send("error");
     } else {
-      res.send('Success');
+      res.send("Success");
     }
   });
 });
-
 
 // Send email vet staff
 app.post("/verifyEmail/vetStaff", async (req, res) => {
@@ -4330,13 +4325,12 @@ app.post("/verifyEmail/vetStaff", async (req, res) => {
   await transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
-      res.send('error');
+      res.send("error");
     } else {
-      res.send('Success');
+      res.send("Success");
     }
   });
 });
-
 
 // app.post("/verifyEmail/submit", (req, res) => {
 //   const email = req.body.email;
@@ -4376,18 +4370,9 @@ app.post("/register/veterinarian", (req, res) => {
             console.log(err);
           }
 
-
           db.query(
             "INSERT INTO vet_doctors (vetid,vet_doc_fname,vet_doc_lname,vet_doc_contactNumber,vet_doc_email, vet_doc_password ,vet_doc_gender) VALUES (?,?,?,?,?,?,?)",
-            [
-              vetid,
-              fName,
-              lName,
-              contactNumber,
-              email,
-              hash,
-              gender,
-            ],
+            [vetid, fName, lName, contactNumber, email, hash, gender],
             (err, result) => {
               if (err == null) {
                 console.log("vet doctor successfully register");
@@ -4398,7 +4383,6 @@ app.post("/register/veterinarian", (req, res) => {
               }
             }
           );
-
         });
       } else {
         console.log(err);
@@ -4646,8 +4630,19 @@ app.get("/doc/pets/examination/:vetid", (req, res) => {
   });
 });
 
+app.get("/doc/pets/:petid", (req, res) => {
+  const petid = req.params.petid;
+  // console.log(petid);
+  const sqlQuery = "SELECT * FROM `pets` WHERE pet_id = ?";
+  db.query(sqlQuery, petid, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
+  console.log("Im here");
   console.log(`Running  Server ${PORT}`);
 });
