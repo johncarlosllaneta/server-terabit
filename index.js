@@ -63,7 +63,6 @@ app.post("/video/token", (req, res) => {
 //Get, Add, Delete, and Update Services
 //Get, Add, Delete, and Update Pharmacy
 //Get and Add History
-//Get, Add, Delete, and Update Posts
 //dashboard get data system admin
 //dashboard get data vet clinic admin
 //Appointment Get, Add, Delete, Update
@@ -186,8 +185,9 @@ app.post("/api/login", (req, res) => {
             if (err) {
               res.send({ err: err });
             }
-
+            console.log('here');
             if (result.length > 0) {
+
               bcrypt.compare(
                 password,
                 result[0].password,
@@ -462,6 +462,8 @@ app.post("/register/systemAdmin", (req, res) => {
   });
 });
 
+
+// --------------------------------------------------------------------------------------------------- Get, Delete, Update Pet Owner
 //this api is for petowner
 //get petowner data
 app.get("/petowner", (req, res) => {
@@ -598,7 +600,7 @@ app.get("/phone_number", (req, res) => {
   });
 });
 
-//--------------------------------------------------------------------------//
+//---------------------------------------------Get, Delete, Update Pets-----------------------------------------------//
 
 //this api is for pets
 app.get("/pets", (req, res) => {
@@ -807,7 +809,7 @@ app.post("/pets/vaccination/record/:pet_id", (req, res) => {
   );
 });
 
-//--------------------------------------------------------------------------//
+//---------------------------------------------------------------Get Verified & Pending, Add, Delete, Update, Approved Vet Clinic----------------------------------------//
 
 //this api is for vet clinic
 //api for verified vet clinic
@@ -930,61 +932,42 @@ app.get("/vetclinic/verified/appointment/:vetid", (req, res) => {
 });
 
 app.post("/vetclinic/insert", (req, res) => {
-  console.log("here");
   const email = req.body.email;
   const password = req.body.password;
   const name = req.body.name;
-  const address = req.body.address;
-  const contactNumber = req.body.contactNumber;
-  const vetPicture = req.body.vetPicture;
-  const enableProduct = req.body.enableProduct;
-  const enablePharmacy = req.body.enablePharmacy;
-  const enableService = req.body.enableService;
-  const enableConsultation = req.body.enableConsultation;
-  const enableExamination = req.body.enableExamination;
-  const enableGrooming = req.body.enableGrooming;
-  const enableVaccination = req.body.enableVaccination;
-  const enablePreventiveControls = req.body.enablePreventiveControls;
-  const enableInHouseLab = req.body.enableInHouseLab;
 
-  console.log(email);
+
   bcrypt.hash(password, saltRounds, (err, hash) => {
     bcrypt.hash(name, saltRounds, (err, hashId) => {
       const sqlQuery =
-        "INSERT INTO vet_clinic (email,password,vet_name,vet_address,vet_contact_number,vet_picture,vet_status,enableProduct,enablePharmacy,enableServices,enableConsultation,enableExamination,enableGrooming,enableVaccination,enablePreventiveControls,enableInHouseLab,vetid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        "INSERT INTO vet_clinic (email,password,vet_name,vet_status,vetid,isOnline) VALUES (?,?,?,?,?,?)";
       db.query(
         sqlQuery,
         [
           email,
           hash,
           name,
-          address,
-          contactNumber,
-          vetPicture,
           "Unverified",
-          enableProduct,
-          enablePharmacy,
-          enableService,
-          enableConsultation,
-          enableExamination,
-          enableGrooming,
-          enableVaccination,
-          enablePreventiveControls,
-          enableInHouseLab,
           hashId.replace("/", "5"),
+          0
         ],
         (err, result) => {
           if (err !== null) {
             console.log(err);
           } else {
             db.query(
-              "INSERT INTO user_role (email,userrole,phone_number) VALUES (?,?,?)",
-              [email, 2, contactNumber],
+              "INSERT INTO user_role (email,userrole) VALUES (?,?)",
+              [email, 2],
               (err, result) => {
-                console.log("no error registering");
-                res.send({
-                  message: "Registered",
-                });
+                if (err == null) {
+                  console.log("no error registering");
+                  res.send({
+                    message: "Registered",
+                  });
+                } else {
+                  console.log(err);
+                }
+
               }
             );
           }
@@ -1369,7 +1352,45 @@ app.post("/register/petowner", (req, res) => {
   });
 });
 
-//--------------------------------------------------------------------------//
+
+
+// api for inserting vet clinic information
+app.post('/vetclinic/credentials/insert', (req, res) => {
+  const contactNumber = req.body.contactNumber;
+  const address = req.body.address;
+  const vetid = req.body.vetid;
+  const email = req.body.email;
+
+  db.query(
+    "UPDATE vet_clinic SET vet_contact_number = ? , vet_address = ?  WHERE vetid = ?",
+    [contactNumber, address, vetid],
+    (err, result) => {
+      if (err == null) {
+
+        db.query(
+          "UPDATE user_role SET phone_number = ?  WHERE email = ?",
+          [contactNumber, email],
+          (err, result) => {
+            if (err == null) {
+              res.send('Success');
+            } else {
+              console.log(err);
+            }
+          })
+
+
+      } else {
+        console.log(err);
+      }
+    }
+  )
+
+})
+
+
+
+
+//---------------------------------------------------------------Get, Add, Delete, and Update Products----------------------------------------//
 
 //this api is for products
 
@@ -1701,7 +1722,7 @@ app.post("/vetclinic/product/filtered/category", (req, res) => {
   );
 });
 
-//--------------------------------------------------------------------------//
+//---------------------------------------------------------------Get, Add, Delete, and Update Services-----------------------------------------//
 
 //this api is for services
 
@@ -1921,7 +1942,7 @@ app.put("/expiration/pending/appointment/:vetid", (req, res) => {
   });
 });
 
-//--------------------------------------------------------------------------//
+//-----------------------------------------------------------Get, Add, Delete, and Update Pharmacy---------------------------------------//
 
 //this api is for pharmacy
 
@@ -2032,7 +2053,7 @@ app.put("/pharmacy/update/:pharmacyUpdateId", (req, res) => {
   );
 });
 
-//--------------------------------------------------------------------------//
+//--------------------------------------------Get and Add History-------------------------------------------//
 
 //this api is for History
 
@@ -2083,7 +2104,7 @@ app.post("/history/vetclinic/insert/:vet_admin_id", (req, res) => {
   );
 });
 
-//--------------------------------------------------------------------------//
+//------------------------------------------------dashboard get data system admin---------------------------------------//
 
 //this api is for dashboard of system admin
 app.get("/petowner/length", (req, res) => {
@@ -2262,7 +2283,7 @@ app.get("/pets/gender/female", (req, res) => {
   });
 });
 
-//--------------------------------------------------------------------------//
+//------------------------------- ------------dashboard get data vet clinic admin-------------------------------------------//
 //this api is for dashboard of vet admin
 
 app.get("/pets/:id", (req, res) => {
@@ -2320,7 +2341,7 @@ app.get("/vetclinic/cat/length/:vetid", (req, res) => {
   });
 });
 
-//--------------------------------------------------------------------------//
+//--------------------------------------------------------Appointment Get, Add, Delete, Update---------------------------------------------//
 //Appointments API
 app.post("/appointment/set", (req, res) => {
   const vet_admin_id = req.body.vet_admin_id;
@@ -2577,7 +2598,7 @@ app.put("/vetclinic/appointment/done/:appointment_id", (req, res) => {
   });
 });
 
-//--------------------------------------------------------------------------//
+//----------------------------------------------------Talk to Vet---------------------------------------//
 // Talk to vet
 
 //add thread
@@ -2704,7 +2725,7 @@ app.post("/talktovet/thread/exist", (req, res) => {
   );
 });
 
-//--------------------------------------------------------------------------//
+//-----------------------------------------------Authenticate Token-----------------------------------------//
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
@@ -2719,6 +2740,7 @@ function authenticateToken(req, res, next) {
   });
 }
 
+// --------------------------------------------------GenerateAccessToken ------------------------------//
 function generateAccessToken(user) {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1d" });
 }
@@ -4175,6 +4197,21 @@ app.post("/emailChecker", (req, res) => {
   });
 });
 
+// Email verification vet administrator
+app.get(`/verify/vetadmin/:email`, (req, res) => {
+  db.query(
+    'UPDATE vet_clinic SET isEmailVerify = true where email = ?',
+    req.params.email,
+    (err, result) => {
+      if (err == null) {
+        res.send('Email Verified');
+      } else {
+        console.log(err);
+      }
+    }
+  )
+})
+
 // Email verification veterinarian
 app.get(`/verify/veterinarian/:email`, (req, res) => {
   db.query(
@@ -4204,6 +4241,38 @@ app.get(`/verify/vetStaff/:email`, (req, res) => {
     }
   );
 });
+
+// Send email vet administrator
+app.post("/verifyEmail/vetadmin", async (req, res) => {
+  const hostUrl = req.body.hostUrl;
+  const email = req.body.email;
+  console.log(email);
+  const verificationCode = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
+  var transporter = nodemailer.createTransport({
+    service: "yahoo",
+    auth: {
+      user: "terravetinc@yahoo.com",
+      pass: "yxftzwvsmltbnmii",
+    },
+  });
+
+  var mailOptions = {
+    from: "terravetinc@yahoo.com",
+    to: email,
+    subject: " TerraVet Account Verification",
+    text: `Thank you for choosing terravet, ${email}! To verify your account, kindly click the link within this email ${`${hostUrl}/verify/vetadmin/${email}`}.`,
+  };
+
+  await transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      res.send('error');
+    } else {
+      res.send('Success');
+    }
+  });
+});
+
 
 // Send email veterinarian
 app.post("/verifyEmail", async (req, res) => {
