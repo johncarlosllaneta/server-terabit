@@ -73,23 +73,23 @@ app.post("/video/token", (req, res) => {
 // Email Verification
 
 //--------------------------------------------------------------------------//
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "terravet",
-// });
-
-const db = mysql.createPool({
-  connectionLimit: 1000,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host: "us-cdbr-east-05.cleardb.net",
-  user: "bdb2dd6ba41ba9",
-  password: "9542972d",
-  database: "heroku_9d423aff4dc7247",
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "terravet",
 });
+
+// const db = mysql.createPool({
+//   connectionLimit: 1000,
+//   connectTimeout: 60 * 60 * 1000,
+//   acquireTimeout: 60 * 60 * 1000,
+//   timeout: 60 * 60 * 1000,
+//   host: "us-cdbr-east-05.cleardb.net",
+//   user: "bdb2dd6ba41ba9",
+//   password: "9542972d",
+//   database: "heroku_9d423aff4dc7247",
+// });
 
 // console.log(db);
 
@@ -185,9 +185,8 @@ app.post("/api/login", (req, res) => {
             if (err) {
               res.send({ err: err });
             }
-            console.log('here');
+            console.log("here");
             if (result.length > 0) {
-
               bcrypt.compare(
                 password,
                 result[0].password,
@@ -461,7 +460,6 @@ app.post("/register/systemAdmin", (req, res) => {
     );
   });
 });
-
 
 // --------------------------------------------------------------------------------------------------- Get, Delete, Update Pet Owner
 //this api is for petowner
@@ -936,21 +934,13 @@ app.post("/vetclinic/insert", (req, res) => {
   const password = req.body.password;
   const name = req.body.name;
 
-
   bcrypt.hash(password, saltRounds, (err, hash) => {
     bcrypt.hash(name, saltRounds, (err, hashId) => {
       const sqlQuery =
         "INSERT INTO vet_clinic (email,password,vet_name,vet_status,vetid,isOnline) VALUES (?,?,?,?,?,?)";
       db.query(
         sqlQuery,
-        [
-          email,
-          hash,
-          name,
-          "Unverified",
-          hashId.replace("/", "5"),
-          0
-        ],
+        [email, hash, name, "Unverified", hashId.replace("/", "5"), 0],
         (err, result) => {
           if (err !== null) {
             console.log(err);
@@ -967,7 +957,6 @@ app.post("/vetclinic/insert", (req, res) => {
                 } else {
                   console.log(err);
                 }
-
               }
             );
           }
@@ -1352,10 +1341,8 @@ app.post("/register/petowner", (req, res) => {
   });
 });
 
-
-
 // api for inserting vet clinic information
-app.post('/vetclinic/credentials/insert', (req, res) => {
+app.post("/vetclinic/credentials/insert", (req, res) => {
   const contactNumber = req.body.contactNumber;
   const address = req.body.address;
   const vetid = req.body.vetid;
@@ -1366,29 +1353,23 @@ app.post('/vetclinic/credentials/insert', (req, res) => {
     [contactNumber, address, vetid],
     (err, result) => {
       if (err == null) {
-
         db.query(
           "UPDATE user_role SET phone_number = ?  WHERE email = ?",
           [contactNumber, email],
           (err, result) => {
             if (err == null) {
-              res.send('Success');
+              res.send("Success");
             } else {
               console.log(err);
             }
-          })
-
-
+          }
+        );
       } else {
         console.log(err);
       }
     }
-  )
-
-})
-
-
-
+  );
+});
 
 //---------------------------------------------------------------Get, Add, Delete, and Update Products----------------------------------------//
 
@@ -1542,10 +1523,11 @@ app.post("/product/update/stockused/:productUpdateId", (req, res) => {
 
 //Reservation API
 app.post("/products/reserve/:productId", (req, res) => {
-  const product_id = req.params.productId;
+  const order_id = req.params.orderId;
   const vetid = req.body.vetid;
   const pet_owner_id = req.body.pet_owner_id;
   const quantity = req.body.quantity;
+  const product_id = req.body.productId;
 
   var date = new Date();
   date.setHours(date.getHours() + 8);
@@ -1554,36 +1536,47 @@ app.post("/products/reserve/:productId", (req, res) => {
   var isodate = date.toISOString();
   // console.log(product_id);
   const sqlQuery =
-    "INSERT INTO reservation (product_id,pet_owner_id,vetid,reserve_quantity,reservation_status, date_reserve) VALUES (?,?,?,?,?,?)";
+    "INSERT INTO reservation (pet_owner_id,vetid,reservation_status, date_reserve,order_id) VALUES (?,?,?,?,?)";
   db.query(
     sqlQuery,
-    [product_id, pet_owner_id, vetid, quantity, "Pending", isodate],
+    [pet_owner_id, vetid, "Pending", isodate, order_id],
     (err, result) => {
-      // console.log(err);
+      const arrProducts = [];
+      if (err == null) {
+        for (var i = 0; i < arrProducts.length; i++) {
+          const sqlQuery =
+            "INSERT INTO reservation_products(order_id,product_id,quantity) VALUES (?,?,?)";
 
-      res.send({ message: "Success" });
-      // console.log(result);
+          db.query(
+            sqlQuery,
+            [order_id, product_id, quantity],
+            (err, result) => {
+              res.send("Success");
+            }
+          );
+        }
+      }
     }
   );
 
-  var product = [];
-  const selectProduct = "SELECT * FROM products WHERE product_id = ?";
-  db.query(selectProduct, product_id, (err, result) => {
-    product.push(JSON.parse(JSON.stringify(result[0])));
-    // console.log(product[0].quantity);
-    var deduced = product[0].quantity - quantity;
-    // console.log(deduced);
+  // var product = [];
+  // const selectProduct = "SELECT * FROM products WHERE product_id = ?";
+  // db.query(selectProduct, product_id, (err, result) => {
+  //   product.push(JSON.parse(JSON.stringify(result[0])));
+  //   // console.log(product[0].quantity);
+  //   var deduced = product[0].quantity - quantity;
+  //   // console.log(deduced);
 
-    const updateProduct =
-      "UPDATE products SET quantity = ? WHERE product_id = ?";
-    db.query(updateProduct, [deduced, product_id], (err, result) => {
-      if (err == null) {
-        console.log(err);
-      } else {
-        res.send("success");
-      }
-    });
-  });
+  //   const updateProduct =
+  //     "UPDATE products SET quantity = ? WHERE product_id = ?";
+  //   db.query(updateProduct, [deduced, product_id], (err, result) => {
+  //     if (err == null) {
+  //       console.log(err);
+  //     } else {
+  //       res.send("success");
+  //     }
+  //   });
+  // });
 });
 
 //this api is for expired reservation products per vet clinic
@@ -1605,7 +1598,7 @@ app.get("/pending/reservation/:vetid", (req, res) => {
   const sqlQuery =
     "SELECT * FROM vet_clinic JOIN products ON vet_clinic.vetid = products.vetid JOIN reservation ON reservation.product_id= products.product_id JOIN pet_owners ON pet_owners.pet_owner_id = reservation.pet_owner_id WHERE vet_clinic.vetid = ? AND reservation.reservation_status='Pending' ORDER BY reservation.reserve_id DESC";
   db.query(sqlQuery, vetid, (err, result) => {
-    // console.log(result);
+    console.log(result);
     res.send(result);
   });
 });
@@ -4200,17 +4193,17 @@ app.post("/emailChecker", (req, res) => {
 // Email verification vet administrator
 app.get(`/verify/vetadmin/:email`, (req, res) => {
   db.query(
-    'UPDATE vet_clinic SET isEmailVerify = true where email = ?',
+    "UPDATE vet_clinic SET isEmailVerify = true where email = ?",
     req.params.email,
     (err, result) => {
       if (err == null) {
-        res.send('Email Verified');
+        res.send("Email Verified");
       } else {
         console.log(err);
       }
     }
-  )
-})
+  );
+});
 
 // Email verification veterinarian
 app.get(`/verify/veterinarian/:email`, (req, res) => {
@@ -4266,13 +4259,12 @@ app.post("/verifyEmail/vetadmin", async (req, res) => {
   await transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
-      res.send('error');
+      res.send("error");
     } else {
-      res.send('Success');
+      res.send("Success");
     }
   });
 });
-
 
 // Send email veterinarian
 app.post("/verifyEmail", async (req, res) => {
@@ -4636,13 +4628,139 @@ app.get("/doc/pets/examination/:vetid", (req, res) => {
 app.get("/doc/pets/:petid", (req, res) => {
   const petid = req.params.petid;
   // console.log(petid);
-  const sqlQuery = "SELECT * FROM `pets` WHERE pet_id = ?";
+  const sqlQuery = "SELECT * FROM pets WHERE pet_id = ?";
   db.query(sqlQuery, petid, (err, result) => {
     // console.log(result);
     res.send(result);
   });
 });
 
+//new petwoner checkout api
+app.get("/petowner/check/reservedid/orderid", (req, res) => {
+  const orderid = req.params.orderid;
+  // console.log(petid);
+  const sqlQuery = "SELECT order_id FROM reservation WHERE order_id = ? ";
+  db.query(sqlQuery, orderid, (err, result) => {
+    // console.log(result);
+    // res.send(result);
+    if (result > 0) {
+      res.send("Order id exist");
+    } else {
+      res.send("Order id not exist");
+    }
+  });
+});
+
+app.get("/petowner/order/:pet_owner_id", (req, res) => {
+  const pet_owner_id = req.params.pet_owner_id;
+  // console.log(petid);
+  const sqlQuery =
+    "SELECT order_id FROM reservation WHERE pet_owner_id = ? AND reservation_status = ?";
+  db.query(sqlQuery, pet_owner_id, "Pending", (err, result) => {
+    // console.log(result);
+    // res.send(result);
+  });
+});
+
+app.get("/petowner/order/products/:order_id", (req, res) => {
+  const order_id = req.params.orderId;
+  // console.log(petid);
+  const sqlQuery =
+    "SELECT * FROM reservation_product JOIN products ON reservation_products.product_id = products.product_id WHERE order_id = ?";
+  db.query(sqlQuery, order_id, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+//cancelled
+app.put("/petowner/reservation/cancelled/reservationId", (req, res) => {
+  const reservation_id = req.params.reservationId;
+  var date = new Date();
+  date.setHours(date.getHours() + 8);
+  var isodate = date.toISOString();
+  // console.log(isodate);
+  const sqlQuery =
+    "UPDATE reservation SET reservation_status = ? , date_accomplished = ? WHERE reserve_id = ?";
+  db.query(sqlQuery, ["Cancelled", isodate, reservation_id], (err, result) => {
+    if (err == null) {
+      res.send("Success");
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+app.get("/petowner/order/history/pet_owner_id", (req, res) => {
+  const petownerid = req.params.pet_owner_id;
+  // console.log(petid);
+  const sqlQuery =
+    "SELECT * FROM reservation WHERE pet_owner_id = ? AND reservation_status = ?";
+  db.query(sqlQuery, petownerid, "Done", (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+//staff new reservation api
+app.get("staff/pending/order/reservation/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  // console.log(pet_owner_id);
+  const sqlQuery =
+    "SELECT * FROM reservation WHERE reservation.vetid = ? AND reservation.reservation_status='Pending' ORDER BY reservation.reserve_id DESC";
+  db.query(sqlQuery, vetid, (err, result) => {
+    console.log(result);
+    res.send(result);
+  });
+});
+
+app.put("/petowner/reservation/cancelled/reservationId", (req, res) => {
+  const reservation_id = req.params.reservationId;
+  const modeOfPayment = req.body.mop;
+  const claimBy = req.body.claimBy;
+  var date = new Date();
+  date.setHours(date.getHours() + 8);
+  var isodate = date.toISOString();
+  // console.log(isodate);
+  const sqlQuery =
+    "UPDATE reservation SET reservation_status = ? , date_accomplished = ?, mop = ?, claimBy = ? WHERE reserve_id = ?";
+  db.query(
+    sqlQuery,
+    ["Done", isodate, reservation_id, modeOfPayment, claimBy],
+    (err, result) => {
+      if (err == null) {
+        res.send("Success");
+      } else {
+        console.log(err);
+      }
+    }
+  );
+});
+
+app.get("/staff/order/:vetid", (req, res) => {
+  const vetid = req.params.pvetid;
+  // console.log(petid);
+  const sqlQuery =
+    "SELECT order_id FROM reservation WHERE vetid = ? AND reservation_status = ?";
+  db.query(sqlQuery, vetid, "Done", (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+app.put("/staff/expiration/reservation/:orderid", (req, res) => {
+  const orderid = req.params.orderid;
+  var date = new Date();
+  date.setHours(date.getHours() + 8);
+  var isodate = date.toISOString();
+  // console.log(vetid);
+  const sqlQuery =
+    "UPDATE reservation SET reservation_status = 'Expired',date_accomplished = ? WHERE order_id = ? ";
+  db.query(sqlQuery, isodate, orderid, (err, result) => {
+    // console.log(result);
+    res.send("Sucessfully updated");
+  });
+});
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
