@@ -73,23 +73,23 @@ app.post("/video/token", (req, res) => {
 // Email Verification
 
 //--------------------------------------------------------------------------//
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "terravet",
-});
-
-// const db = mysql.createPool({
-//   connectionLimit: 1000,
-//   connectTimeout: 60 * 60 * 1000,
-//   acquireTimeout: 60 * 60 * 1000,
-//   timeout: 60 * 60 * 1000,
-//   host: "us-cdbr-east-05.cleardb.net",
-//   user: "bdb2dd6ba41ba9",
-//   password: "9542972d",
-//   database: "heroku_9d423aff4dc7247",
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "terravet",
 // });
+
+const db = mysql.createPool({
+  connectionLimit: 1000,
+  connectTimeout: 60 * 60 * 1000,
+  acquireTimeout: 60 * 60 * 1000,
+  timeout: 60 * 60 * 1000,
+  host: "us-cdbr-east-05.cleardb.net",
+  user: "bdb2dd6ba41ba9",
+  password: "9542972d",
+  database: "heroku_9d423aff4dc7247",
+});
 
 // console.log(db);
 
@@ -296,7 +296,11 @@ app.post("/api/login", (req, res) => {
                   if (response) {
                     if (result[0].isOnline == true) {
                       res.send({ message: "Already login with other device" });
-                    } else {
+                    }
+                    else if (result[0].isVerified == false) {
+                      res.send({ message: "Your account is not verified" });
+                    }
+                    else {
                       result[0].vet_doc_password = "";
                       const user = { result };
                       // console.log(user)
@@ -344,7 +348,11 @@ app.post("/api/login", (req, res) => {
                   if (response) {
                     if (result[0].isOnline == true) {
                       res.send({ message: "Already login with other device" });
-                    } else {
+                    }
+                    else if (result[0].isVerified == false) {
+                      res.send({ message: "Your account is not verified" });
+                    }
+                    else {
                       result[0].vet_staff_password = "";
                       const user = { result };
                       // console.log(user)
@@ -838,9 +846,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-      Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1034,7 +1042,7 @@ app.put("/vetclinic/schedule/update/:vet_admin_id", (req, res) => {
   const scheduleFriday = req.body.scheduleFriday;
   const scheduleSaturday = req.body.scheduleSaturday;
   const scheduleSunday = req.body.scheduleSunday;
-  // console.log(scheduleMonday);
+
   const sqlQuery = `UPDATE vet_clinic SET scheduleMonday = ? , scheduleTuesday = ?, scheduleWednesday = ? , scheduleThursday = ?,
     scheduleFriday = ? , scheduleSaturday = ? ,scheduleSunday = ?
     WHERE	vet_admin_id = ?`;
@@ -1072,9 +1080,11 @@ app.put("/vetclinic/offers/update/:vet_admin_id", (req, res) => {
   const enableVaccination = req.body.enableVaccination;
   const enableGrooming = req.body.enableGrooming;
   const enablePreventiveControls = req.body.enablePreventiveControls;
-  // console.log(scheduleMonday);
+  const enableConsultationPhysical = req.body.enableConsultationPhysical;
+  const enableOnlineConsultation = req.body.enableOnlineConsultation;
+
   const sqlQuery = `UPDATE vet_clinic SET enableProduct = ? , enablePharmacy = ?,  enableServices = ? , enableConsultation = ?,
-  enableExamination = ? , enableVaccination = ? , enableGrooming = ? ,enablePreventiveControls = ?
+  enableExamination = ? , enableVaccination = ? , enableGrooming = ? ,enablePreventiveControls = ? , enableOnlineConsultation = ? , enablePhysicalConsultation = ?
     WHERE	vet_admin_id = ?`;
   db.query(
     sqlQuery,
@@ -1087,6 +1097,8 @@ app.put("/vetclinic/offers/update/:vet_admin_id", (req, res) => {
       enableVaccination,
       enableGrooming,
       enablePreventiveControls,
+      enableOnlineConsultation,
+      enableConsultationPhysical,
       vet_admin_id,
     ],
     (err, result) => {
@@ -1915,7 +1927,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => {});
+      db.query(updateProduct, [deduced, product_id], (err, result) => { });
     });
 
     console.log(err);
@@ -3102,7 +3114,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => {}
+          (err, result) => { }
         );
       } else {
         console.log("invalid number");
