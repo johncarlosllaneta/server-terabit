@@ -814,6 +814,9 @@ app.post("/pets/vaccination/record/:pet_id", (req, res) => {
   );
 });
 
+
+
+
 //---------------------------------------------------------------Get Verified & Pending, Add, Delete, Update, Approved Vet Clinic----------------------------------------//
 
 //this api is for vet clinic
@@ -1381,6 +1384,47 @@ app.post("/vetclinic/credentials/insert", (req, res) => {
     }
   );
 });
+
+// api for updating subscription
+app.put("/vetclinic/subscribe/:vetid/:subscriptionType", (req, res) => {
+  const vetid = req.params.vetid;
+  const subscriptionType = req.params.subscriptionType;
+
+  db.query(
+    "UPDATE vet_clinic SET subscriptionType = ? WHERE vetid = ?",
+    [subscriptionType, vetid],
+    (err, result) => {
+      if (err == null) {
+        res.send("Success");
+      } else {
+        console.log(err);
+      }
+    }
+  )
+
+})
+
+
+// api for reset subscription 
+app.put("/vetclinic/reset/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+
+
+  db.query(
+    "UPDATE vet_clinic SET subscriptionType = NULL WHERE vetid = ?",
+    [vetid],
+    (err, result) => {
+      if (err == null) {
+        res.send("Success");
+      } else {
+        console.log(err);
+      }
+    }
+  )
+
+})
+
+
 
 //---------------------------------------------------------------Get, Add, Delete, and Update Products----------------------------------------//
 
