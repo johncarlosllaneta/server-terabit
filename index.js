@@ -73,23 +73,23 @@ app.post("/video/token", (req, res) => {
 // Email Verification
 
 //--------------------------------------------------------------------------//
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "terravet",
-// });
-
-const db = mysql.createPool({
-  connectionLimit: 1000,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host: "us-cdbr-east-05.cleardb.net",
-  user: "bdb2dd6ba41ba9",
-  password: "9542972d",
-  database: "heroku_9d423aff4dc7247",
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "terravet",
 });
+
+// const db = mysql.createPool({
+//   connectionLimit: 1000,
+//   connectTimeout: 60 * 60 * 1000,
+//   acquireTimeout: 60 * 60 * 1000,
+//   timeout: 60 * 60 * 1000,
+//   host: "us-cdbr-east-05.cleardb.net",
+//   user: "bdb2dd6ba41ba9",
+//   password: "9542972d",
+//   database: "heroku_9d423aff4dc7247",
+// });
 
 // console.log(db);
 
@@ -296,11 +296,9 @@ app.post("/api/login", (req, res) => {
                   if (response) {
                     if (result[0].isOnline == true) {
                       res.send({ message: "Already login with other device" });
-                    }
-                    else if (result[0].isVerified == false) {
+                    } else if (result[0].isVerified == false) {
                       res.send({ message: "Your account is not verified" });
-                    }
-                    else {
+                    } else {
                       result[0].vet_doc_password = "";
                       const user = { result };
                       // console.log(user)
@@ -348,11 +346,9 @@ app.post("/api/login", (req, res) => {
                   if (response) {
                     if (result[0].isOnline == true) {
                       res.send({ message: "Already login with other device" });
-                    }
-                    else if (result[0].isVerified == false) {
+                    } else if (result[0].isVerified == false) {
                       res.send({ message: "Your account is not verified" });
-                    }
-                    else {
+                    } else {
                       result[0].vet_staff_password = "";
                       const user = { result };
                       // console.log(user)
@@ -814,9 +810,6 @@ app.post("/pets/vaccination/record/:pet_id", (req, res) => {
   );
 });
 
-
-
-
 //---------------------------------------------------------------Get Verified & Pending, Add, Delete, Update, Approved Vet Clinic----------------------------------------//
 
 //this api is for vet clinic
@@ -848,9 +841,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-    Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1400,15 +1393,12 @@ app.put("/vetclinic/subscribe/:vetid/:subscriptionType", (req, res) => {
         console.log(err);
       }
     }
-  )
+  );
+});
 
-})
-
-
-// api for reset subscription 
+// api for reset subscription
 app.put("/vetclinic/reset/:vetid", (req, res) => {
   const vetid = req.params.vetid;
-
 
   db.query(
     "UPDATE vet_clinic SET subscriptionType = NULL WHERE vetid = ?",
@@ -1420,11 +1410,8 @@ app.put("/vetclinic/reset/:vetid", (req, res) => {
         console.log(err);
       }
     }
-  )
-
-})
-
-
+  );
+});
 
 //---------------------------------------------------------------Get, Add, Delete, and Update Products----------------------------------------//
 
@@ -1498,9 +1485,8 @@ app.post("/product/insert/:vetid", (req, res) => {
 
 app.post("/product/delete/:product_id", (req, res) => {
   const product_id = req.params.product_id;
-  const vetid = req.body.vetid;
+  const vetid = req.body.vet_id;
 
-  // console.log(product_id);
   // console.log(vetid);
   const sqlQuery = "DELETE FROM products WHERE product_id = ? AND vetid = ?";
   db.query(sqlQuery, [product_id, vetid], (err, result) => {
@@ -1515,13 +1501,15 @@ app.post("/product/delete/:product_id", (req, res) => {
 
 app.put("/product/update/:productUpdateId", (req, res) => {
   const product_id = req.params.productUpdateId;
-  const vetid = req.body.vetid;
   const product_name = req.body.updateProductName;
   const product_description = req.body.updateProductDescription;
   const product_quantity = req.body.updateProductQuantity;
   const product_price = req.body.updateProductPrice;
+  const product_image = req.body.updateProductImage;
+  const product_categ = req.body.updateProductCategory;
+  const product_petType = req.body.updateProductType;
 
-  // console.log(product_id);
+  console.log("updateeeee products");
   // console.log(vetid);
   // console.log(product_name);
   // console.log(product_description);
@@ -1529,7 +1517,7 @@ app.put("/product/update/:productUpdateId", (req, res) => {
   // console.log(product_quantity);
 
   const sqlQuery =
-    "UPDATE products SET product_name = ?,product_desc = ?,quantity = ?,price = ?  WHERE product_id = ? AND vetid = ?";
+    "UPDATE products SET product_name = ?,product_desc = ?,quantity = ?,price = ?, product_image = ?, category = ?, pet_type = ? WHERE product_id = ?";
   db.query(
     sqlQuery,
     [
@@ -1537,8 +1525,10 @@ app.put("/product/update/:productUpdateId", (req, res) => {
       product_description,
       product_quantity,
       product_price,
+      product_image,
+      product_categ,
+      product_petType,
       product_id,
-      vetid,
     ],
     (err, result) => {
       if (err == null) {
@@ -1970,7 +1960,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => { });
+      db.query(updateProduct, [deduced, product_id], (err, result) => {});
     });
 
     console.log(err);
@@ -3156,7 +3146,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => { }
+          (err, result) => {}
         );
       } else {
         console.log("invalid number");
@@ -3778,7 +3768,6 @@ app.get("/get/user/id/:pet_id", (req, res) => {
 //Notification isViewed update vet clinic
 app.put("/vetclinic/notification/viewed/:vetid", (req, res) => {
   const vetid = req.params.vetid;
-  console.log("viewwwwwwwwwwww");
   const sqlQuery =
     "UPDATE pet_owners JOIN appointment ON pet_owners.pet_owner_id = appointment.pet_owner_id JOIN notifications ON notifications.appointment_id = appointment.appointment_id JOIN services ON services.service_id = notifications.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid SET notifications.isViewed = 1 WHERE vet_clinic.vetid = ? && notifications.status IN ('Done','Cancelled')";
   db.query(sqlQuery, vetid, (err, result) => {
@@ -3808,7 +3797,6 @@ app.put("/vetclinic/notification/isNew/:vetid", (req, res) => {
 app.get("/vetclinic/notification/length/:vetid", (req, res) => {
   // console.log(vetAdminId);
   const vetid = req.params.vetid;
-  console.log("notifffffffffffffffffff");
   const sqlQuery =
     "SELECT * FROM notifications JOIN appointment ON notifications.appointment_id = appointment.appointment_id WHERE appointment.vetid = ? AND notifications.status  IN ('Done','Cancelled') AND notifications.isViewed = 0";
 
@@ -4720,8 +4708,8 @@ app.get("/petowner/order/:pet_owner_id", (req, res) => {
   const pet_owner_id = req.params.pet_owner_id;
   // console.log(petid);
   const sqlQuery =
-    "SELECT order_id FROM reservation WHERE pet_owner_id = ? AND reservation_status = ?";
-  db.query(sqlQuery, pet_owner_id, "Pending", (err, result) => {
+    "SELECT * FROM reservation JOIN vet_clinic ON reservation.vetid = vet_clinic.vetid WHERE reservation.pet_owner_id = ? AND reservation_status = 'Pending';";
+  db.query(sqlQuery, pet_owner_id, (err, result) => {
     // console.log(result);
     // res.send(result);
   });
@@ -4805,7 +4793,7 @@ app.put("/petowner/reservation/cancelled/reservationId", (req, res) => {
 app.get("/staff/order/:orderId", (req, res) => {
   const order_Id = req.params.orderId;
   const sqlQuery =
-    "SELECT * FROM reservation_products JOIN products ON reservation_products.product_id = products.product_id WHERE order_id = ?";
+    "SELECT * FROM reservation_products JOIN products ON reservation_products.product_id = products.product_id WHERE order_id = ? ";
   db.query(sqlQuery, order_Id, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -4916,6 +4904,50 @@ app.put("/doc/vaccination/:immuneId", (req, res) => {
       }
     }
   );
+});
+
+//vet admin notif api's
+//number of new notif
+app.get("/vetadmin/notification/length/:vetid", (req, res) => {
+  // console.log(vetAdminId);
+  const vetid = req.params.vetid;
+  const sqlQuery =
+    "SELECT * FROM notifications JOIN appointment ON notifications.appointment_id = appointment.appointment_id WHERE appointment.vetid = ? AND notifications.status  IN ('Pending','Cancelled') AND notifications.isViewed = 0";
+
+  db.query(sqlQuery, vetid, (err, result) => {
+    // console.log(result.length);
+    if (err == null) {
+      res.send({ view: result.length });
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+//notif details
+pp.get("/vetadmin/notification/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  // console.log(pet_owner_id);
+  const sqlQuery =
+    "SELECT pet_owners.profilePicture, pet_owners.name, services.service_name, notifications.status, notifications.date_time_created FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id = appointment.pet_owner_id JOIN notifications ON notifications.appointment_id = appointment.appointment_id JOIN services  ON services.service_id = notifications.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE vet_clinic.vetid = ? && notifications.status IN ('Pending', 'Cancelled')  ORDER BY notifications.date_time_created DESC ";
+  db.query(sqlQuery, vetid, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+//update the value of isview
+app.put("/vetadmin/notification/viewed/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  const sqlQuery =
+    "UPDATE pet_owners JOIN appointment ON pet_owners.pet_owner_id = appointment.pet_owner_id JOIN notifications ON notifications.appointment_id = appointment.appointment_id JOIN services ON services.service_id = notifications.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid SET notifications.isViewed = 1 WHERE vet_clinic.vetid = ? && notifications.status IN ('Pending','Cancelled')";
+  db.query(sqlQuery, vetid, (err, result) => {
+    if (err === null) {
+      res.send({ message: "Correct" });
+    } else {
+      console.log(err);
+    }
+  });
 });
 
 //------------------------------------------------------------------------------------------------------------------
