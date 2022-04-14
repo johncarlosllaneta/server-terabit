@@ -73,23 +73,23 @@ app.post("/video/token", (req, res) => {
 // Email Verification
 
 //--------------------------------------------------------------------------//
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "terravet",
-});
-
-// const db = mysql.createPool({
-//   connectionLimit: 1000,
-//   connectTimeout: 60 * 60 * 1000,
-//   acquireTimeout: 60 * 60 * 1000,
-//   timeout: 60 * 60 * 1000,
-//   host: "us-cdbr-east-05.cleardb.net",
-//   user: "bdb2dd6ba41ba9",
-//   password: "9542972d",
-//   database: "heroku_9d423aff4dc7247",
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "terravet",
 // });
+
+const db = mysql.createPool({
+  connectionLimit: 1000,
+  connectTimeout: 60 * 60 * 1000,
+  acquireTimeout: 60 * 60 * 1000,
+  timeout: 60 * 60 * 1000,
+  host: "us-cdbr-east-05.cleardb.net",
+  user: "bdb2dd6ba41ba9",
+  password: "9542972d",
+  database: "heroku_9d423aff4dc7247",
+});
 
 // console.log(db);
 
@@ -841,9 +841,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-      Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1971,7 +1971,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => {});
+      db.query(updateProduct, [deduced, product_id], (err, result) => { });
     });
 
     console.log(err);
@@ -3157,7 +3157,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => {}
+          (err, result) => { }
         );
       } else {
         console.log("invalid number");
