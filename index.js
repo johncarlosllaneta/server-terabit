@@ -73,23 +73,23 @@ app.post("/video/token", (req, res) => {
 // Email Verification
 
 //--------------------------------------------------------------------------//
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "terravet",
-// });
-
-const db = mysql.createPool({
-  connectionLimit: 1000,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host: "us-cdbr-east-05.cleardb.net",
-  user: "bdb2dd6ba41ba9",
-  password: "9542972d",
-  database: "heroku_9d423aff4dc7247",
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "terravet",
 });
+
+// const db = mysql.createPool({
+//   connectionLimit: 1000,
+//   connectTimeout: 60 * 60 * 1000,
+//   acquireTimeout: 60 * 60 * 1000,
+//   timeout: 60 * 60 * 1000,
+//   host: "us-cdbr-east-05.cleardb.net",
+//   user: "bdb2dd6ba41ba9",
+//   password: "9542972d",
+//   database: "heroku_9d423aff4dc7247",
+// });
 
 // console.log(db);
 
@@ -841,9 +841,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-    Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -945,7 +945,16 @@ app.post("/vetclinic/insert", (req, res) => {
         "INSERT INTO vet_clinic (email,password,vet_name,vet_status,vetid,isOnline,longitude,Latitude) VALUES (?,?,?,?,?,?,?,?)";
       db.query(
         sqlQuery,
-        [email, hash, name, "Unverified", hashId.replace("/", "5"), 0, lon, lat],
+        [
+          email,
+          hash,
+          name,
+          "Unverified",
+          hashId.replace("/", "5"),
+          0,
+          lon,
+          lat,
+        ],
         (err, result) => {
           if (err !== null) {
             console.log(err);
@@ -1962,7 +1971,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => { });
+      db.query(updateProduct, [deduced, product_id], (err, result) => {});
     });
 
     console.log(err);
@@ -3148,7 +3157,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => { }
+          (err, result) => {}
         );
       } else {
         console.log("invalid number");
@@ -3358,7 +3367,7 @@ app.get("/vetclinic/registered/pets/:vetid", (req, res) => {
   // console.log(pet_owner_id);
 
   const sqlQuery =
-    "SELECT DISTINCT pets.pet_id, pets.pet_owner_name, pets.pet_name, pets.type_of_pet, pets.breed_of_pet, pets.gender, pets.birth_day, pets.pet_picture, pets.pet_owner_name, appointment.appointment_status, vet_clinic.vet_name FROM vet_clinic JOIN appointment ON vet_clinic.vetid = appointment.vetid JOIN pets ON pets.pet_id = appointment.pet_id JOIN pet_owners ON pet_owners.pet_owner_id = pets.pet_owner_id WHERE vet_clinic.vetid = ? && appointment.appointment_status = 'Done'";
+    "SELECT DISTINCT pets.pet_id, pets.pet_owner_name, pets.pet_name, pets.type_of_pet, pets.breed_of_pet, pets.gender, pets.birth_day, pets.pet_picture, pets.pet_owner_name, appointment.appointment_status, vet_clinic.vet_name FROM vet_clinic JOIN appointment ON vet_clinic.vetid = appointment.vetid JOIN pets ON pets.pet_id = appointment.pet_id JOIN pet_owners ON pet_owners.pet_owner_id = pets.pet_owner_id WHERE vet_clinic.vetid = ? AND appointment.appointment_status = 'Done'";
 
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
@@ -3728,7 +3737,7 @@ app.get("/pet/immunization/history/:vetid/:id", (req, res) => {
   const id = req.params.id;
   // console.log(id);
   const sqlQuery =
-    "SELECT * FROM appointment JOIN immunization_history ON appointment.appointment_id = immunization_history.appointment_id WHERE appointment.vetid = ? && immunization_history.pet_id= ?";
+    "SELECT * FROM appointment JOIN immunization_history ON appointment.appointment_id = immunization_history.appointment_id WHERE appointment.vetid = ? && immunization_history.pet_id= ? && appointment.appointment_status = 'Done'";
 
   db.query(sqlQuery, [vetid, id], (err, result) => {
     // var resultData = JSON.parse(JSON.stringify(result));
@@ -4999,13 +5008,11 @@ app.put("/vetadmin/notification/viewed/:vetid", (req, res) => {
   });
 });
 
-
 //number of new notif messages
 app.get("/vetadmin/notification/messages/length/:vetid", (req, res) => {
   // console.log(vetAdminId);
   const vetid = req.params.vetid;
-  const sqlQuery =
-    "SELECT * FROM messages where vetid = ? AND isView = 0 ";
+  const sqlQuery = "SELECT * FROM messages where vetid = ? AND isView = 0 ";
 
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result.length);
@@ -5020,14 +5027,77 @@ app.get("/vetadmin/notification/messages/length/:vetid", (req, res) => {
 //update the value of isview on messages
 app.put("/vetadmin/notification/messages/viewed/:vetid", (req, res) => {
   const vetid = req.params.vetid;
-  const sqlQuery =
-    "UPDATE messages SET isView = 1 where vetid = ?";
+  const sqlQuery = "UPDATE messages SET isView = 1 where vetid = ?";
   db.query(sqlQuery, vetid, (err, result) => {
     if (err === null) {
       res.send({ message: "Correct" });
     } else {
       console.log(err);
     }
+  });
+});
+
+//Record
+//Health record
+app.get("/pet/medical/history/record/:vetid/:id", (req, res) => {
+  // console.log(vetAdminId);
+  const vetid = req.params.vetid;
+  const id = req.params.id;
+  // console.log(id);
+  const sqlQuery =
+    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN medical_history ON medical_history.appointment_id = appointment.appointment_id JOIN services ON services.service_id = medical_history.service_id WHERE appointment.vetid = ? AND appointment.pet_id = ? AND appointment.appointment_status = 'Done'";
+
+  db.query(sqlQuery, [vetid, id], (err, result) => {
+    // var resultData = JSON.parse(JSON.stringify(result));
+    res.send(result);
+    // console.log(result);
+  });
+});
+
+//vaccine record
+app.get("/pet/vaccine/record/:vetid/:id", (req, res) => {
+  // console.log(vetAdminId);
+  const vetid = req.params.vetid;
+  const id = req.params.id;
+  console.log("vaccineee" + vetid + " " + id);
+  const sqlQuery =
+    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN immunization_history ON immunization_history.pet_id = pets.pet_id JOIN appointment ON appointment.appointment_id = immunization_history.appointment_id JOIN services ON services.service_id = appointment.service_id WHERE appointment.vetid = ? AND appointment.pet_id = ? AND appointment.appointment_status = 'Done'";
+
+  db.query(sqlQuery, [vetid, id], (err, result) => {
+    // var resultData = JSON.parse(JSON.stringify(result));
+    res.send(result);
+    console.log(result);
+  });
+});
+
+///consultation record
+app.get("/pet/consultation/record/:vetid/:id", (req, res) => {
+  // console.log(vetAdminId);
+  const vetid = req.params.vetid;
+  const id = req.params.id;
+  // console.log(id);
+  const sqlQuery =
+    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN consultation ON consultation.pet_id = pets.pet_id JOIN appointment ON appointment.appointment_id = consultation.appointment_id JOIN services ON services.service_id = appointment.service_id WHERE appointment.vetid = ? AND appointment.pet_id = ? AND appointment.appointment_status = 'Done'";
+
+  db.query(sqlQuery, [vetid, id], (err, result) => {
+    // var resultData = JSON.parse(JSON.stringify(result));
+    res.send(result);
+    // console.log(result);
+  });
+});
+
+app.get("/pet/grooming/record/:vetid/:id", (req, res) => {
+  // console.log(vetAdminId);
+  const vetid = req.params.vetid;
+  const id = req.params.id;
+  // console.log(id);
+  const sqlQuery =
+    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id = appointment.service_id WHERE appointment.vetid = ? AND appointment.pet_id = ? AND appointment.appointment_status = 'Done' AND services.category = 'Pet Grooming'";
+
+  db.query(sqlQuery, [vetid, id], (err, result) => {
+    // var resultData = JSON.parse(JSON.stringify(result));
+    res.send(result);
+    // console.log(result);
   });
 });
 
