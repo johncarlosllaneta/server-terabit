@@ -4999,6 +4999,38 @@ app.put("/vetadmin/notification/viewed/:vetid", (req, res) => {
   });
 });
 
+
+//number of new notif messages
+app.get("/vetadmin/notification/messages/length/:vetid", (req, res) => {
+  // console.log(vetAdminId);
+  const vetid = req.params.vetid;
+  const sqlQuery =
+    "SELECT * FROM messages where vetid = ? AND isView = 0 ";
+
+  db.query(sqlQuery, vetid, (err, result) => {
+    // console.log(result.length);
+    if (err == null) {
+      res.send({ view: result.length });
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+//update the value of isview on messages
+app.put("/vetadmin/notification/messages/viewed/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  const sqlQuery =
+    "UPDATE messages SET isView = 1 where vetid = ?";
+  db.query(sqlQuery, vetid, (err, result) => {
+    if (err === null) {
+      res.send({ message: "Correct" });
+    } else {
+      console.log(err);
+    }
+  });
+});
+
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
