@@ -1533,6 +1533,8 @@ app.post("/product/update/stockused/:productUpdateId", (req, res) => {
   });
 });
 
+
+
 //Reservation API
 app.post("/products/reserve/:productId", (req, res) => {
   const order_id = req.params.orderId;
@@ -4648,7 +4650,7 @@ app.get("/doc/pets/:petid", (req, res) => {
 });
 
 //new petwoner checkout api
-app.get("/petowner/check/reservedid/orderid", (req, res) => {
+app.get("/petowner/check/reservedid/:orderid", (req, res) => {
   const orderid = req.params.orderid;
   // console.log(petid);
   const sqlQuery = "SELECT order_id FROM reservation WHERE order_id = ? ";
@@ -4663,16 +4665,68 @@ app.get("/petowner/check/reservedid/orderid", (req, res) => {
   });
 });
 
+///for 
+
+
+///new api for post order id
+app.post("/petowner/checkout/:petowner_id", (req, res) => {
+  const petowner_id = req.params.petowner_id;
+  const vet_id = req.body.vetid;
+  var date = new Date();
+  date.setHours(date.getHours() + 8);
+  var isodate = date.toISOString();
+
+  var order_id = Math.random().toString(36).slice(2);
+  console.log(vet_id);
+  db.query(
+    "INSERT INTO reservation (order_id, pet_owner_id, vetid, reservation_status, date_reserve) VALUES (?,?,?,?,?);",
+    [order_id, petowner_id, vet_id, "Pending", isodate],
+    (err, result) => {
+      if (err === null) {
+        res.send({ message: "Successfull" , orderId : order_id});
+      } else {
+        console.log(err);
+        
+      }
+    }
+  );
+});
+
+///new API insert product Reservation
+app.post("/petowners/InsertProduct/:orderid", (req, res) => {
+  const orderid = req.params.orderid;
+  const product_id = req.body.productId;
+  const product_quantity = req.body.quantity
+
+  console.log(product_id);
+  
+  db.query(
+    "INSERT INTO reservation_products (order_id, product_id, res_quantity) VALUES (?,?,?);",
+    [orderid,product_id, product_quantity,],
+    (err, result) => {
+      if (err === null) {
+        res.send({ message: "Successfull" });
+      } else {
+        console.log(err);
+      }
+    }
+  );
+});
+
+
+
 app.get("/petowner/order/:pet_owner_id", (req, res) => {
   const pet_owner_id = req.params.pet_owner_id;
   // console.log(petid);
+  console.log(pet_owner_id);
   const sqlQuery =
-    "SELECT order_id FROM reservation WHERE pet_owner_id = ? AND reservation_status = ?";
-  db.query(sqlQuery, pet_owner_id, "Pending", (err, result) => {
+    "SELECT * FROM reservation JOIN vet_clinic ON reservation.vetid = vet_clinic.vetid WHERE reservation.pet_owner_id = ? AND reservation_status = 'Pending'";
+  db.query(sqlQuery, pet_owner_id, (err, result) => {
     // console.log(result);
-    // res.send(result);
+     res.send(result);
   });
 });
+  
 
 app.get("/petowner/order/products/:order_id", (req, res) => {
   const order_id = req.params.orderId;
@@ -4680,7 +4734,7 @@ app.get("/petowner/order/products/:order_id", (req, res) => {
   const sqlQuery =
     "SELECT * FROM reservation_product JOIN products ON reservation_products.product_id = products.product_id WHERE order_id = ?";
   db.query(sqlQuery, order_id, (err, result) => {
-    // console.log(result);
+    // console.log(result);re
     res.send(result);
   });
 });
