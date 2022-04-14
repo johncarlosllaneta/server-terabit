@@ -4781,14 +4781,16 @@ app.get("/petowner/order/:pet_owner_id", (req, res) => {
 });
   
 
-app.get("/petowner/order/products/:order_id", (req, res) => {
+app.get("/petowner/order/products/:orderId", (req, res) => {
   const order_id = req.params.orderId;
-  // console.log(petid);
+
+   console.log(order_id);
   const sqlQuery =
-    "SELECT * FROM reservation_product JOIN products ON reservation_products.product_id = products.product_id WHERE order_id = ?";
+    "SELECT * FROM reservation_products JOIN products ON reservation_products.product_id = products.product_id WHERE order_id = ?";
   db.query(sqlQuery, order_id, (err, result) => {
-    // console.log(result);re
+    console.log(result);
     res.send(result);
+  
   });
 });
 
@@ -4868,7 +4870,6 @@ app.get("/staff/order/:orderId", (req, res) => {
 
 app.get("/staff/order/total/:orderId", (req, res) => {
   const order_Id = req.params.orderId;
-
   const sqlQuery =
     "SELECT SUM(products.price * reservation_products.res_quantity) AS totalprice FROM reservation_products JOIN products ON reservation_products.product_id = products.product_id WHERE order_id = ?";
   db.query(sqlQuery, order_Id, (err, result) => {
@@ -4876,6 +4877,7 @@ app.get("/staff/order/total/:orderId", (req, res) => {
     res.send(JSON.parse(JSON.stringify(result)));
   });
 });
+
 
 app.put("/staff/expiration/reservation/:orderid", (req, res) => {
   const orderid = req.params.orderid;
