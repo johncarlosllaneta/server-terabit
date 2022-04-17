@@ -2131,7 +2131,7 @@ app.get("/pharmacy", (req, res) => {
 
 app.get("/pharmacy/:vetid", (req, res) => {
   const vetid = req.params.vetid;
-  const sqlQuery = "SELECT * FROM pharmacy WHERE vetid = ?";
+  const sqlQuery = "SELECT * FROM pharmacy WHERE vetid = ? AND status= 1";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -4944,7 +4944,6 @@ app.get("/petowner/order/:pet_owner_id", (req, res) => {
 
 app.get("/petowner/order/products/:orderId", (req, res) => {
   const order_id = req.params.orderId;
-
   console.log(order_id);
   const sqlQuery =
     "SELECT * FROM reservation_products JOIN products ON reservation_products.product_id = products.product_id WHERE order_id = ?";
@@ -4955,14 +4954,15 @@ app.get("/petowner/order/products/:orderId", (req, res) => {
 });
 
 //cancelled
-app.put("/petowner/reservation/cancelled/reservationId", (req, res) => {
+app.put("/petowner/reservation/cancelled/:reservationId", (req, res) => {
   const reservation_id = req.params.reservationId;
   var date = new Date();
   date.setHours(date.getHours() + 8);
   var isodate = date.toISOString();
+  console.log(reservation_id);
   // console.log(isodate);
   const sqlQuery =
-    "UPDATE reservation SET reservation_status = ? , date_accomplished = ? WHERE reserve_id = ?";
+    "UPDATE reservation SET reservation_status = ? , date_accomplished = ? WHERE order_id = ?";
   db.query(sqlQuery, ["Cancelled", isodate, reservation_id], (err, result) => {
     if (err == null) {
       res.send("Success");
@@ -4972,13 +4972,12 @@ app.put("/petowner/reservation/cancelled/reservationId", (req, res) => {
   });
 });
 
-app.get("/petowner/order/history/pet_owner_id", (req, res) => {
+app.get("/petowner/order/history/:pet_owner_id", (req, res) => {
   const petownerid = req.params.pet_owner_id;
-  // console.log(petid);
+  console.log(petownerid);
   const sqlQuery =
     "SELECT * FROM reservation WHERE pet_owner_id = ? AND reservation_status = ?";
-  db.query(sqlQuery, petownerid, "Done", (err, result) => {
-    // console.log(result);
+  db.query(sqlQuery, [petownerid, "Done"], (err, result) => {
     res.send(result);
   });
 });
