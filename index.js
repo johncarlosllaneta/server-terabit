@@ -2005,7 +2005,7 @@ app.get("/pharmacy", (req, res) => {
 
 app.get("/pharmacy/:vetid", (req, res) => {
   const vetid = req.params.vetid;
-  const sqlQuery = "SELECT * FROM pharmacy WHERE vetid = ?";
+  const sqlQuery = "SELECT * FROM pharmacy WHERE vetid = ? AND status= 1";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
