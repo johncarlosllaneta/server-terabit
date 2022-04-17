@@ -841,9 +841,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-    Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1038,6 +1038,78 @@ app.put("/vetclinic/update/:vet_admin_id", (req, res) => {
   );
 });
 
+//api of vet staff if they need to update their vet staff info
+app.put("/staff/update/:vet_staff_id", (req, res) => {
+  const vet_staff_id = req.params.vet_staff_id;
+  const email = req.body.email;
+  const vet_fname = req.body.vetFname;
+  const vet_mname = req.body.vetMname;
+  const vet_lname = req.body.vetLname;
+  const vet_contact_number = req.body.vet_contact_number;
+  const oldnumber = req.body.oldnumber;
+  // console.log(oldnumber);
+  const sqlQuery = `UPDATE vet_staff SET vet_staff_email = ?, vet_staff_fname = ? , vet_staff_lname = ?, vet_staff_mname = ?,vet_staff_contactNumber = ? WHERE	vet_staff_id = ?`;
+  db.query(
+    sqlQuery,
+    [email, vet_fname, vet_lname, vet_mname, vet_contact_number, vet_staff_id],
+    (err, result) => {
+      if (err == null) {
+        db.query(
+          "UPDATE user_role SET email = ? , phone_number = ? WHERE email = ? AND phone_number = ?",
+          [email, vet_contact_number, email, oldnumber],
+          (err, result) => {
+            if (err == null) {
+              res.send({ message: "Update Successfully" });
+              // console.log("Update Successfully");
+            } else {
+              console.log(err);
+            }
+          }
+        );
+      } else {
+        console.log(err);
+        // res.sendStatus(400).send('Bad');
+      }
+    }
+  );
+});
+
+//api of vet staff if they need to update their vet staff info
+app.put("/doc/update/:vet_doc_id", (req, res) => {
+  const vet_doc_id = req.params.vet_doc_id;
+  const email = req.body.email;
+  const vet_fname = req.body.vetFname;
+  const vet_mname = req.body.vetMname;
+  const vet_lname = req.body.vetLname;
+  const vet_contact_number = req.body.vet_contact_number;
+  const oldnumber = req.body.oldnumber;
+  // console.log(oldnumber);
+  const sqlQuery = `UPDATE vet_doctors SET vet_doc_email = ?, vet_doc_fname = ? , vet_doc_lname = ?, vet_doc_mname = ?,vet_doc_contactNumber = ? WHERE	vet_doc_id = ?`;
+  db.query(
+    sqlQuery,
+    [email, vet_fname, vet_lname, vet_mname, vet_contact_number, vet_doc_id],
+    (err, result) => {
+      if (err == null) {
+        db.query(
+          "UPDATE user_role SET email = ? , phone_number = ? WHERE email = ? AND phone_number = ?",
+          [email, vet_contact_number, email, oldnumber],
+          (err, result) => {
+            if (err == null) {
+              res.send({ message: "Update Successfully" });
+              // console.log("Update Successfully");
+            } else {
+              console.log(err);
+            }
+          }
+        );
+      } else {
+        console.log(err);
+        // res.sendStatus(400).send('Bad');
+      }
+    }
+  );
+});
+
 //Update Vet Clinic Hours Only
 app.put("/vetclinic/schedule/update/:vet_admin_id", (req, res) => {
   const vet_admin_id = req.params.vet_admin_id;
@@ -1205,6 +1277,60 @@ app.get("/vet/uploads", (req, res) => {
             role: 2,
             vetStatus: result[0].vet_status,
             id: result[0].vet_admin_id,
+          });
+        }
+      );
+    }
+
+    if (result[0].userrole == 4) {
+      db.query(
+        "SELECT * FROM vet_doctors WHERE vet_doc_email = ?",
+        email,
+        (err, result) => {
+          if (err) {
+            res.send({ err: err });
+          }
+          const user = { result };
+          // console.log(user)
+          const accessToken = generateAccessToken(user);
+          const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+          refreshTokens.push(refreshToken);
+          let u = JSON.parse(JSON.stringify(user));
+          // console.log(u.result[0].name)
+          res.send({
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            message: "Correct",
+            role: 4,
+            // vetStatus: result[0].vet_status,
+            id: result[0].vet_doc_id,
+          });
+        }
+      );
+    }
+
+    if (result[0].userrole == 5) {
+      db.query(
+        "SELECT * FROM vet_staff WHERE vet_staff_email = ?",
+        email,
+        (err, result) => {
+          if (err) {
+            res.send({ err: err });
+          }
+          const user = { result };
+          // console.log(user)
+          const accessToken = generateAccessToken(user);
+          const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+          refreshTokens.push(refreshToken);
+          let u = JSON.parse(JSON.stringify(user));
+          // console.log(u.result[0].name)
+          res.send({
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            message: "Correct",
+            role: 5,
+            // vetStatus: result[0].vet_status,
+            id: result[0].vet_staff_id,
           });
         }
       );
@@ -1664,7 +1790,7 @@ app.get("/history/reservation/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   // console.log(pet_owner_id);
   const sqlQuery =
-    "SELECT * FROM reservation JOIN pet_owners ON reservation.pet_owner_id = pet_owners.pet_owner_id WHERE reservation.vetid = ? AND reservation.reservation_status = 'Done' ORDER BY reservation.reserve_id DESC";
+    "SELECT * FROM reservation JOIN pet_owners ON reservation.pet_owner_id = pet_owners.pet_owner_id WHERE reservation.vetid = ? AND reservation.reservation_status = 'Purchased' ORDER BY reservation.reserve_id DESC";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -1971,7 +2097,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => { });
+      db.query(updateProduct, [deduced, product_id], (err, result) => {});
     });
 
     console.log(err);
@@ -3048,7 +3174,8 @@ app.post("/web/user/compare", (req, res) => {
   const currentHashPassword = req.body.currentHashPassword;
   const currentPassword = req.body.currentPassword;
 
-  // console.log(currentPassword);
+  console.log(currentPassword);
+  // console.log(currentHashPassword);
 
   bcrypt.compare(currentPassword, currentHashPassword, function (err, result) {
     console.log(result);
@@ -3092,6 +3219,48 @@ app.put("/web/vetclinic/password/:vetid", (req, res) => {
     }
     const sqlQuery = "UPDATE vet_clinic SET password = ?  WHERE vetid = ?";
     db.query(sqlQuery, [hash, vetid], (err, result) => {
+      if (err === null) {
+        res.send({ message: "Successfully" });
+      } else {
+        console.log(err);
+      }
+    });
+  });
+});
+
+//staff change password
+app.put("/web/vetstaff/password/:staffId", (req, res) => {
+  const staff_id = req.params.staffId;
+  const newPassword = req.body.newPassword;
+
+  bcrypt.hash(newPassword, saltRounds, (err, hash) => {
+    if (err) {
+      console.log(err);
+    }
+    const sqlQuery =
+      "UPDATE vet_staff SET vet_staff_password = ?  WHERE vet_staff_id = ?";
+    db.query(sqlQuery, [hash, staff_id], (err, result) => {
+      if (err === null) {
+        res.send({ message: "Successfully" });
+      } else {
+        console.log(err);
+      }
+    });
+  });
+});
+
+//doc change password
+app.put("/web/doc/password/:docId", (req, res) => {
+  const doc_id = req.params.docId;
+  const newPassword = req.body.newPassword;
+
+  bcrypt.hash(newPassword, saltRounds, (err, hash) => {
+    if (err) {
+      console.log(err);
+    }
+    const sqlQuery =
+      "UPDATE vet_doctors SET vet_doc_password = ?  WHERE vet_doc_id = ?";
+    db.query(sqlQuery, [hash, doc_id], (err, result) => {
       if (err === null) {
         res.send({ message: "Successfully" });
       } else {
@@ -3157,7 +3326,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => { }
+          (err, result) => {}
         );
       } else {
         console.log("invalid number");
@@ -4776,13 +4945,12 @@ app.get("/petowner/order/:pet_owner_id", (req, res) => {
 app.get("/petowner/order/products/:orderId", (req, res) => {
   const order_id = req.params.orderId;
 
-   console.log(order_id);
+  console.log(order_id);
   const sqlQuery =
     "SELECT * FROM reservation_products JOIN products ON reservation_products.product_id = products.product_id WHERE order_id = ?";
   db.query(sqlQuery, order_id, (err, result) => {
     console.log(result);
     res.send(result);
-  
   });
 });
 
@@ -4870,7 +5038,6 @@ app.get("/staff/order/total/:orderId", (req, res) => {
   });
 });
 
-
 app.put("/staff/expiration/reservation/:orderid", (req, res) => {
   const orderid = req.params.orderid;
   var date = new Date();
@@ -4890,7 +5057,7 @@ app.put("/staff/reservation/claim/:reservedId", (req, res) => {
   const mop = req.body.mop;
   const claim_By = req.body.claimBy;
   const sqlQuery =
-    "UPDATE reservation SET reservation_status = 'Done',mop = ?, claimBy= ? WHERE reserve_id = ? ";
+    "UPDATE reservation SET reservation_status = 'Purchased',mop = ?, claimBy= ? WHERE reserve_id = ? ";
   db.query(sqlQuery, [mop, claim_By, reserved_Id], (err, result) => {
     // console.log(result);
     res.send("Sucessfully updated");
