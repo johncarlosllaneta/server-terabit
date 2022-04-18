@@ -3132,7 +3132,7 @@ app.post("/notification/appointment", (req, res) => {
   });
 });
 
-//Notification for pet owner
+//Notification for pet owner Appointment
 app.get("/petOwner/notification/:pet_owner_id", (req, res) => {
   const pet_owner_id = req.params.pet_owner_id;
   // console.log(pet_owner_id);
@@ -4121,15 +4121,13 @@ app.put("/petowner/appointment/cancel/:appointment_id", (req, res) => {
 //Reservation notif product
 
 //Insert notif reserved product
-app.post("/notification/reserved", (req, res) => {
-  const reserve_id = req.body.reserve_id;
-  const product_id = req.body.product_id;
-  const status = req.body.status;
+app.post("/notification/reserved/pending", (req, res) => {
+  const order_id = req.body.order_id;
   // console.log(reserve_id);
   // console.log(product_id);
   // console.log(status);
-  const sqlQuery = `INSERT INTO notification_reservation (reserve_id,product_id,status) VALUES (?,?,?)`;
-  db.query(sqlQuery, [reserve_id, product_id, status], (err, result) => {
+  const sqlQuery = `INSERT INTO notification_reservation (order_id,status) VALUES (?,?)`;
+  db.query(sqlQuery, [order_id,"Pending"], (err, result) => {
     console.log("Reserved Notification");
     console.log(err);
     res.send({ message: "Reserved Notification" });
@@ -4138,12 +4136,11 @@ app.post("/notification/reserved", (req, res) => {
 
 //Insert notif reserved product cancelled
 app.post("/notification/reserved/cancelled", (req, res) => {
-  const reserve_id = req.body.reserve_id;
+  const order_id = req.body.order_id;
   const product_id = req.body.product_id;
-  const status = req.body.status;
 
-  const sqlQuery = `INSERT INTO notification_reservation (reserve_id,product_id,status) VALUES (?,?,?)`;
-  db.query(sqlQuery, [reserve_id, product_id, status], (err, result) => {
+  const sqlQuery = `INSERT INTO notification_reservation (order_id,product_id,status) VALUES (?,?,?)`;
+  db.query(sqlQuery, [order_id, product_id, "Cancelled"], (err, result) => {
     console.log(result);
     res.send({ message: "Reserved Notification" });
   });
@@ -4165,11 +4162,11 @@ app.post("/notification/reserved/done", (req, res) => {
 //Display reservation notif for pet owner
 app.get("/petOwner/notification/reservation/:pet_owner_id", (req, res) => {
   const pet_owner_id = req.params.pet_owner_id;
-  // console.log(pet_owner_id);
-  const sqlQuery =
-    "SELECT pet_owners.pet_owner_id ,vet_clinic.vet_picture, vet_clinic.vet_name, products.product_name, notification_reservation.status, notification_reservation.date_time_created FROM pet_owners JOIN reservation ON pet_owners.pet_owner_id = reservation.pet_owner_id JOIN notification_reservation ON notification_reservation.reserve_id = reservation.reserve_id JOIN products ON products.product_id = notification_reservation.product_id JOIN vet_clinic ON vet_clinic.vetid = products.vetid WHERE pet_owners.pet_owner_id = ? AND notification_reservation.status = 'Purchased' ORDER BY notification_reservation.date_time_created DESC";
+  console.log(pet_owner_id);
+  const sqlQuery = 
+    "SELECT * FROM  vet_clinic JOIN reservation ON vet_clinic.vetid = reservation.vetid JOIN notification_reservation ON notification_reservation.order_id = reservation.order_id WHERE reservation.pet_owner_id= ? AND notification_reservation.status IN ('Purchased', 'Expired') ORDER BY notification_reservation.date_time_created DESC";
   db.query(sqlQuery, pet_owner_id, (err, result) => {
-    // console.log(result);
+   console.log(result);
     res.send(result);
   });
 });
@@ -4180,7 +4177,7 @@ app.put(
   (req, res) => {
     const pet_owner_id = req.params.pet_owner_id;
     const sqlQuery =
-      "UPDATE pet_owners JOIN reservation ON pet_owners.pet_owner_id = reservation.pet_owner_id JOIN notification_reservation ON notification_reservation.reserve_id = reservation.reserve_id JOIN products ON products.product_id = notification_reservation.product_id JOIN vet_clinic ON vet_clinic.vetid = products.vetid SET notification_reservation.isViewed = 1 WHERE pet_owners.pet_owner_id = ? AND notification_reservation.status = 'Purchased'";
+      "UPDATE pet_owners JOIN reservation ON pet_owners.pet_owner_id = reservation.pet_owner_id JOIN notification_reservation ON notification_reservation.order_id = reservation.order_id SET notification_reservation.isViewed = 1 WHERE pet_owners.pet_owner_id = ? AND NOT notification_reservation.status IN ( 'Pending', 'Cancelled')";
     db.query(sqlQuery, pet_owner_id, (err, result) => {
       if (err === null) {
         res.send({ message: "Correct" });
@@ -4216,7 +4213,7 @@ app.get(
     const pet_owner_id = req.params.pet_owner_id;
     // console.log(vetid);
     const sqlQuery =
-      "SELECT * FROM notification_reservation JOIN reservation ON notification_reservation.reserve_id = reservation.reserve_id WHERE reservation.pet_owner_id = ? AND notification_reservation.isViewed = 0 AND notification_reservation.status = 'Purchased'";
+      "SELECT * FROM notification_reservation JOIN reservation ON notification_reservation.order_id = reservation.order_id WHERE reservation.pet_owner_id = ? AND notification_reservation.isViewed = 0 AND notification_reservation.status = 'Purchased'";
 
     db.query(sqlQuery, pet_owner_id, (err, result) => {
       // console.log(result.length);
