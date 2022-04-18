@@ -1790,7 +1790,7 @@ app.get("/history/reservation/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   // console.log(pet_owner_id);
   const sqlQuery =
-    "SELECT * FROM reservation JOIN pet_owners ON reservation.pet_owner_id = pet_owners.pet_owner_id WHERE reservation.vetid = ? AND reservation.reservation_status = 'Purchased' ORDER BY reservation.reserve_id DESC";
+    "SELECT * FROM reservation JOIN pet_owners ON reservation.pet_owner_id = pet_owners.pet_owner_id WHERE reservation.vetid = ? AND reservation.reservation_status IN ('Purchased', 'Expired') ORDER BY reservation.reserve_id DESC";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -4121,15 +4121,11 @@ app.put("/petowner/appointment/cancel/:appointment_id", (req, res) => {
 //Reservation notif product
 
 //Insert notif reserved product
-app.post("/notification/reserved", (req, res) => {
-  const reserve_id = req.body.reserve_id;
-  const product_id = req.body.product_id;
+app.post("/notification/reserved/purchased", (req, res) => {
+  const order_id = req.body.order_id;
   const status = req.body.status;
-  // console.log(reserve_id);
-  // console.log(product_id);
-  // console.log(status);
-  const sqlQuery = `INSERT INTO notification_reservation (reserve_id,product_id,status) VALUES (?,?,?)`;
-  db.query(sqlQuery, [reserve_id, product_id, status], (err, result) => {
+  const sqlQuery = `INSERT INTO notification_reservation (status, order_id) VALUES (?,?)`;
+  db.query(sqlQuery, [status, order_id], (err, result) => {
     console.log("Reserved Notification");
     console.log(err);
     res.send({ message: "Reserved Notification" });
@@ -4137,13 +4133,12 @@ app.post("/notification/reserved", (req, res) => {
 });
 
 //Insert notif reserved product cancelled
-app.post("/notification/reserved/cancelled", (req, res) => {
-  const reserve_id = req.body.reserve_id;
-  const product_id = req.body.product_id;
+app.post("/notification/reserved/expired", (req, res) => {
+  const order_id = req.body.order_id;
   const status = req.body.status;
 
-  const sqlQuery = `INSERT INTO notification_reservation (reserve_id,product_id,status) VALUES (?,?,?)`;
-  db.query(sqlQuery, [reserve_id, product_id, status], (err, result) => {
+  const sqlQuery = `INSERT INTO notification_reservation (status, order_id) VALUES (?,?,?)`;
+  db.query(sqlQuery, [status, order_id], (err, result) => {
     console.log(result);
     res.send({ message: "Reserved Notification" });
   });
@@ -4255,7 +4250,7 @@ app.get("/vetclinic/notification/reservation/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   // console.log(pet_owner_id);
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN reservation ON pet_owners.pet_owner_id = reservation.pet_owner_id JOIN notification_reservation ON notification_reservation.reserve_id = reservation.reserve_id JOIN vet_clinic ON vet_clinic.vetid = reservation.vetid WHERE vet_clinic.vetid = ? && notification_reservation.status IN ('Pending', 'Cancelled')  ORDER BY notification_reservation.date_time_created DESC";
+    "SELECT * FROM pet_owners JOIN reservation ON pet_owners.pet_owner_id = reservation.pet_owner_id JOIN notification_reservation ON notification_reservation.order_id = reservation.order_id JOIN vet_clinic ON vet_clinic.vetid = reservation.vetid WHERE vet_clinic.vetid = ? && notification_reservation.status IN ('Pending', 'Cancelled')  ORDER BY notification_reservation.date_time_created DESC";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -4266,7 +4261,7 @@ app.get("/vetclinic/notification/reservation/:vetid", (req, res) => {
 app.put("/vetclinic/notification/reservation/viewed/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   const sqlQuery =
-    "UPDATE pet_owners JOIN reservation ON pet_owners.pet_owner_id = reservation.pet_owner_id JOIN notification_reservation ON notification_reservation.reserve_id = reservation.reserve_id JOIN reservation_products ON reservation_products.order_id = notification_reservation.order_id JOIN products ON products.product_id = reservation_products.product_id JOIN vet_clinic ON vet_clinic.vetid = products.vetid SET notification_reservation.isViewed = 1 WHERE vet_clinic.vetid = ? AND NOT notification_reservation.status = 'Done'";
+    "UPDATE vet_clinic JOIN reservation ON vet_clinic.vetid = reservation.vetid JOIN notification_reservation ON notification_reservation.order_id = reservation.order_id SET notification_reservation.isViewed = 1 WHERE vet_clinic.vetid = ? AND NOT notification_reservation.status IN ( 'Purchased', 'Expired')";
   db.query(sqlQuery, vetid, (err, result) => {
     if (err === null) {
       res.send({ message: "Correct" });
@@ -4277,18 +4272,18 @@ app.put("/vetclinic/notification/reservation/viewed/:vetid", (req, res) => {
 });
 
 //Notification isNew update vet clinic
-app.put("/vetclinic/notification/reservation/isNew/:vetid", (req, res) => {
-  const vetid = req.params.vetid;
-  const sqlQuery =
-    "UPDATE pet_owners JOIN reservation ON pet_owners.pet_owner_id = reservation.pet_owner_id JOIN notification_reservation ON notification_reservation.reserve_id = reservation.reserve_id JOIN products ON products.product_id = notification_reservation.product_id JOIN vet_clinic ON vet_clinic.vetid = products.vetid SET notification_reservation.isNew = 1 WHERE vet_clinic.vetid = ? AND NOT notification_reservation.status = 'Purchased'";
-  db.query(sqlQuery, vetid, (err, result) => {
-    if (err === null) {
-      res.send({ message: "Correct" });
-    } else {
-      console.log(err);
-    }
-  });
-});
+// app.put("/vetclinic/notification/reservation/isNew/:vetid", (req, res) => {
+//   const vetid = req.params.vetid;
+//   const sqlQuery =
+//     "UPDATE pet_owners JOIN reservation ON pet_owners.pet_owner_id = reservation.pet_owner_id JOIN notification_reservation ON notification_reservation.reserve_id = reservation.reserve_id JOIN products ON products.product_id = notification_reservation.product_id JOIN vet_clinic ON vet_clinic.vetid = products.vetid SET notification_reservation.isNew = 1 WHERE vet_clinic.vetid = ? AND NOT notification_reservation.status = 'Purchased'";
+//   db.query(sqlQuery, vetid, (err, result) => {
+//     if (err === null) {
+//       res.send({ message: "Correct" });
+//     } else {
+//       console.log(err);
+//     }
+//   });
+// });
 
 // Number of unviewed notif for vet clinic
 app.get("/vetclinic/notification/reservation/length/:vetid", (req, res) => {
@@ -4296,7 +4291,7 @@ app.get("/vetclinic/notification/reservation/length/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   // console.log(vetid);
   const sqlQuery =
-    "SELECT * FROM notification_reservation JOIN reservation ON notification_reservation.reserve_id = reservation.reserve_id WHERE reservation.vetid = ? AND notification_reservation.isViewed = 0 AND NOT notification_reservation.status = 'Done'";
+    "SELECT * FROM notification_reservation JOIN reservation ON notification_reservation.order_id= reservation.order_id WHERE reservation.vetid = ? AND notification_reservation.isViewed = 0 AND NOT notification_reservation.status IN  ('Purchased', 'Expired')";
 
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result.length);
@@ -4309,25 +4304,25 @@ app.get("/vetclinic/notification/reservation/length/:vetid", (req, res) => {
 });
 
 // Number of unviewed notif for vet clinic
-app.get(
-  "/vetclinic/notification/reservation/isNew/length/:vetid",
-  (req, res) => {
-    // console.log(vetAdminId);
-    const vetid = req.params.vetid;
-    // console.log(vetid);
-    const sqlQuery =
-      "SELECT * FROM notification_reservation JOIN reservation ON notification_reservation.reserve_id = reservation.reserve_id WHERE reservation.vetid = ? AND notification_reservation.isNew = 0 AND NOT notification_reservation.status = 'Purchased'";
+// app.get(
+//   "/vetclinic/notification/reservation/isNew/length/:vetid",
+//   (req, res) => {
+//     // console.log(vetAdminId);
+//     const vetid = req.params.vetid;
+//     // console.log(vetid);
+//     const sqlQuery =
+//       "SELECT * FROM notification_reservation JOIN reservation ON notification_reservation.reserve_id = reservation.reserve_id WHERE reservation.vetid = ? AND notification_reservation.isNew = 0 AND NOT notification_reservation.status = 'Purchased'";
 
-    db.query(sqlQuery, vetid, (err, result) => {
-      // console.log(result.length);
-      if (err == null) {
-        res.send({ view: result.length });
-      } else {
-        console.log(err);
-      }
-    });
-  }
-);
+//     db.query(sqlQuery, vetid, (err, result) => {
+//       // console.log(result.length);
+//       if (err == null) {
+//         res.send({ view: result.length });
+//       } else {
+//         console.log(err);
+//       }
+//     });
+//   }
+// );
 
 //Display all service completed in every pet in health card
 // Number of unviewed notif for vet clinic
@@ -5266,6 +5261,16 @@ app.get("/pet/grooming/record/:vetid/:id", (req, res) => {
     // var resultData = JSON.parse(JSON.stringify(result));
     res.send(result);
     // console.log(result);
+  });
+});
+
+app.put("/staff/reservation/expired/:reservedId", (req, res) => {
+  const reserved_Id = req.params.reservedId;
+  const sqlQuery =
+    "UPDATE reservation SET reservation_status = 'Expired' WHERE reserve_id = ? ";
+  db.query(sqlQuery, reserved_Id, (err, result) => {
+    // console.log(result);
+    res.send("Sucessfully updated");
   });
 });
 
