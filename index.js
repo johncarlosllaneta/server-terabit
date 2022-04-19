@@ -73,23 +73,23 @@ app.post("/video/token", (req, res) => {
 // Email Verification
 
 //--------------------------------------------------------------------------//
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "terravet",
-});
-
-// const db = mysql.createPool({
-//   connectionLimit: 1000,
-//   connectTimeout: 60 * 60 * 1000,
-//   acquireTimeout: 60 * 60 * 1000,
-//   timeout: 60 * 60 * 1000,
-//   host: "us-cdbr-east-05.cleardb.net",
-//   user: "bdb2dd6ba41ba9",
-//   password: "9542972d",
-//   database: "heroku_9d423aff4dc7247",
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "terravet",
 // });
+
+const db = mysql.createPool({
+  connectionLimit: 1000,
+  connectTimeout: 60 * 60 * 1000,
+  acquireTimeout: 60 * 60 * 1000,
+  timeout: 60 * 60 * 1000,
+  host: "us-cdbr-east-05.cleardb.net",
+  user: "bdb2dd6ba41ba9",
+  password: "9542972d",
+  database: "heroku_9d423aff4dc7247",
+});
 
 // console.log(db);
 
@@ -4127,7 +4127,7 @@ app.post("/notification/reserved/pending", (req, res) => {
   // console.log(product_id);
   // console.log(status);
   const sqlQuery = `INSERT INTO notification_reservation (order_id,status) VALUES (?,?)`;
-  db.query(sqlQuery, [order_id,"Pending"], (err, result) => {
+  db.query(sqlQuery, [order_id, "Pending"], (err, result) => {
     console.log("Reserved Notification");
     console.log(err);
     res.send({ message: "Reserved Notification" });
@@ -4151,7 +4151,7 @@ app.post("/notification/reserved/cancelled", (req, res) => {
   const product_id = req.body.product_id;
 
   const sqlQuery = `INSERT INTO notification_reservation (order_id,product_id,status) VALUES (?,?,?)`;
-  db.query(sqlQuery, [order_id, product_id, "Cancelled"], (err, result) => { 
+  db.query(sqlQuery, [order_id, product_id, "Cancelled"], (err, result) => {
     console.log(result);
     res.send({ message: "Reserved Notification" });
   });
@@ -4160,7 +4160,6 @@ app.post("/notification/reserved/cancelled", (req, res) => {
 app.post("/notification/reserved/expired", (req, res) => {
   const order_id = req.body.order_id;
   const status = req.body.status;
-  
 
   const sqlQuery = `INSERT INTO notification_reservation (status, order_id) VALUES (?,?,?)`;
   db.query(sqlQuery, [status, order_id], (err, result) => {
@@ -4186,10 +4185,10 @@ app.post("/notification/reserved/done", (req, res) => {
 app.get("/petOwner/notification/reservation/:pet_owner_id", (req, res) => {
   const pet_owner_id = req.params.pet_owner_id;
   console.log(pet_owner_id);
-  const sqlQuery = 
+  const sqlQuery =
     "SELECT * FROM  vet_clinic JOIN reservation ON vet_clinic.vetid = reservation.vetid JOIN notification_reservation ON notification_reservation.order_id = reservation.order_id WHERE reservation.pet_owner_id= ? AND notification_reservation.status IN ('Purchased', 'Expired') ORDER BY notification_reservation.date_time_created DESC";
   db.query(sqlQuery, pet_owner_id, (err, result) => {
-   console.log(result);
+    console.log(result);
     res.send(result);
   });
 });
