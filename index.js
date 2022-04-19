@@ -310,6 +310,10 @@ app.post("/api/login", (req, res) => {
                       refreshTokens.push(refreshToken);
                       let u = JSON.parse(JSON.stringify(user));
                       console.log(result[0]);
+                      db.query(
+                        "UPDATE vet_doctors SET isOnline = ? WHERE vet_doc_id = ?",
+                        [true, result[0].vet_doc_id]
+                      );
                       res.send({
                         accessToken: accessToken,
                         refreshToken: refreshToken,
@@ -360,6 +364,10 @@ app.post("/api/login", (req, res) => {
                       refreshTokens.push(refreshToken);
                       let u = JSON.parse(JSON.stringify(user));
                       console.log(result[0]);
+                      db.query(
+                        "UPDATE vet_staff SET isOnline = ? WHERE vet_staff_id = ?",
+                        [true, result[0].vet_staff_id]
+                      );
                       res.send({
                         accessToken: accessToken,
                         refreshToken: refreshToken,
@@ -1432,7 +1440,24 @@ app.delete("/logout", (req, res) => {
 // logout vet clinic admin
 app.put("/logout/user/vetclinic/:vetid", (req, res) => {
   const vetid = req.params.vetid;
+  console.log(vetid);
+  db.query(
+    "UPDATE vet_clinic SET isOnline = 0 WHERE vetid = ?",
+    vetid,
+    (err, result) => {
+      if (err == null) {
+        res.send({ message: "Success" });
+      } else {
+        console.log("Logout Error");
+      }
+    }
+  );
+});
 
+// logout unverified vet clinic admin
+app.put("/logout/user/vetclinic/unverified/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  console.log("here");
   db.query(
     "UPDATE vet_clinic SET isOnline = 0 WHERE vetid = ?",
     vetid,
