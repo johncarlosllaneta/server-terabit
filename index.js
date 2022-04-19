@@ -73,23 +73,23 @@ app.post("/video/token", (req, res) => {
 // Email Verification
 
 //--------------------------------------------------------------------------//
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "terravet",
-// });
-
-const db = mysql.createPool({
-  connectionLimit: 1000,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
-  host: "us-cdbr-east-05.cleardb.net",
-  user: "bdb2dd6ba41ba9",
-  password: "9542972d",
-  database: "heroku_9d423aff4dc7247",
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "terravet",
 });
+
+// const db = mysql.createPool({
+//   connectionLimit: 1000,
+//   connectTimeout: 60 * 60 * 1000,
+//   acquireTimeout: 60 * 60 * 1000,
+//   timeout: 60 * 60 * 1000,
+//   host: "us-cdbr-east-05.cleardb.net",
+//   user: "bdb2dd6ba41ba9",
+//   password: "9542972d",
+//   database: "heroku_9d423aff4dc7247",
+// });
 
 // console.log(db);
 
@@ -2644,7 +2644,7 @@ app.get("/pending/appointment/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   // console.log(vetid)
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Approved' ORDER BY appointment.appointment_id DESC";
+    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Pending' ORDER BY appointment.appointment_id DESC";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -2656,7 +2656,7 @@ app.get("/general/appointment/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   // console.log(vetid)
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Approved' ORDER BY appointment.appointment_id DESC";
+    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Pending' ORDER BY appointment.appointment_id DESC";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
