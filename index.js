@@ -310,6 +310,10 @@ app.post("/api/login", (req, res) => {
                       refreshTokens.push(refreshToken);
                       let u = JSON.parse(JSON.stringify(user));
                       console.log(result[0]);
+                      db.query(
+                        "UPDATE vet_doctors SET isOnline = ? WHERE vet_doc_id = ?",
+                        [true, result[0].vet_doc_id]
+                      );
                       res.send({
                         accessToken: accessToken,
                         refreshToken: refreshToken,
@@ -360,6 +364,10 @@ app.post("/api/login", (req, res) => {
                       refreshTokens.push(refreshToken);
                       let u = JSON.parse(JSON.stringify(user));
                       console.log(result[0]);
+                      db.query(
+                        "UPDATE vet_staff SET isOnline = ? WHERE vet_staff_id = ?",
+                        [true, result[0].vet_staff_id]
+                      );
                       res.send({
                         accessToken: accessToken,
                         refreshToken: refreshToken,
@@ -841,9 +849,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-      Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1432,7 +1440,24 @@ app.delete("/logout", (req, res) => {
 // logout vet clinic admin
 app.put("/logout/user/vetclinic/:vetid", (req, res) => {
   const vetid = req.params.vetid;
+  console.log(vetid);
+  db.query(
+    "UPDATE vet_clinic SET isOnline = 0 WHERE vetid = ?",
+    vetid,
+    (err, result) => {
+      if (err == null) {
+        res.send({ message: "Success" });
+      } else {
+        console.log("Logout Error");
+      }
+    }
+  );
+});
 
+// logout unverified vet clinic admin
+app.put("/logout/user/vetclinic/unverified/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  console.log('here');
   db.query(
     "UPDATE vet_clinic SET isOnline = 0 WHERE vetid = ?",
     vetid,
@@ -2097,7 +2122,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => {});
+      db.query(updateProduct, [deduced, product_id], (err, result) => { });
     });
 
     console.log(err);
@@ -3326,7 +3351,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => {}
+          (err, result) => { }
         );
       } else {
         console.log("invalid number");
@@ -4127,7 +4152,7 @@ app.post("/notification/reserved/pending", (req, res) => {
   // console.log(product_id);
   // console.log(status);
   const sqlQuery = `INSERT INTO notification_reservation (order_id,status) VALUES (?,?)`;
-  db.query(sqlQuery, [order_id,"Pending"], (err, result) => {
+  db.query(sqlQuery, [order_id, "Pending"], (err, result) => {
     console.log("Reserved Notification");
     console.log(err);
     res.send({ message: "Reserved Notification" });
@@ -4151,7 +4176,7 @@ app.post("/notification/reserved/cancelled", (req, res) => {
   const product_id = req.body.product_id;
 
   const sqlQuery = `INSERT INTO notification_reservation (order_id,product_id,status) VALUES (?,?,?)`;
-  db.query(sqlQuery, [order_id, product_id, "Cancelled"], (err, result) => { 
+  db.query(sqlQuery, [order_id, product_id, "Cancelled"], (err, result) => {
     console.log(result);
     res.send({ message: "Reserved Notification" });
   });
@@ -4160,7 +4185,7 @@ app.post("/notification/reserved/cancelled", (req, res) => {
 app.post("/notification/reserved/expired", (req, res) => {
   const order_id = req.body.order_id;
   const status = req.body.status;
-  
+
 
   const sqlQuery = `INSERT INTO notification_reservation (status, order_id) VALUES (?,?,?)`;
   db.query(sqlQuery, [status, order_id], (err, result) => {
@@ -4186,10 +4211,10 @@ app.post("/notification/reserved/done", (req, res) => {
 app.get("/petOwner/notification/reservation/:pet_owner_id", (req, res) => {
   const pet_owner_id = req.params.pet_owner_id;
   console.log(pet_owner_id);
-  const sqlQuery = 
+  const sqlQuery =
     "SELECT * FROM  vet_clinic JOIN reservation ON vet_clinic.vetid = reservation.vetid JOIN notification_reservation ON notification_reservation.order_id = reservation.order_id WHERE reservation.pet_owner_id= ? AND notification_reservation.status IN ('Purchased', 'Expired') ORDER BY notification_reservation.date_time_created DESC";
   db.query(sqlQuery, pet_owner_id, (err, result) => {
-   console.log(result);
+    console.log(result);
     res.send(result);
   });
 });
