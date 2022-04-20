@@ -818,6 +818,66 @@ app.post("/pets/vaccination/record/:pet_id", (req, res) => {
   );
 });
 
+
+//API pet consultation insertion
+app.post("/pets/consultation/records/:pet_id", (req, res) => {
+  const pet_id = req.params.pet_id;
+  const appointment_id = req.body.appointment_id;
+  const service_id = req.body.service_id;
+  const vetid = req.body.vetid;
+  console.log(pet_id);
+  const sqlQuery =
+    "INSERT INTO consultation (vetid,pet_id,appointment_id,service_id) VALUES (?,?,?,?)";
+  db.query(
+    sqlQuery,
+    [
+      vetid,
+      pet_id,
+      appointment_id,
+      service_id
+    ],
+    (err, result) => {
+      if (err == null) {
+        res.send({
+          response: "success",
+        });
+      } else {
+        console.log(err);
+      }
+    }
+  );
+});
+
+
+//API pet medical history
+app.post("/pets/medicalhistory/record/:pet_id", (req, res) => {
+  const pet_id = req.params.pet_id;
+  const appointment_id = req.body.appointment_id;
+  const service_id = req.body.service_id;
+  const vetid = req.body.vetid;
+  console.log(vetid);
+  const sqlQuery =
+    "INSERT INTO medical_history (service_id,pet_id,vetid,appointment_id) VALUES (?,?,?,?)";
+  db.query(
+    sqlQuery,
+    [
+      service_id,
+      pet_id,
+      vetid,
+      appointment_id,
+    ],
+    (err, result) => {
+      if (err == null) {
+        res.send({
+          response: "success",
+        });
+      } else {
+        console.log(err);
+      }
+    }
+  );
+});
+
 //---------------------------------------------------------------Get Verified & Pending, Add, Delete, Update, Approved Vet Clinic----------------------------------------//
 
 //this api is for vet clinic
@@ -849,9 +909,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-      Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -1440,24 +1500,7 @@ app.delete("/logout", (req, res) => {
 // logout vet clinic admin
 app.put("/logout/user/vetclinic/:vetid", (req, res) => {
   const vetid = req.params.vetid;
-  console.log(vetid);
-  db.query(
-    "UPDATE vet_clinic SET isOnline = 0 WHERE vetid = ?",
-    vetid,
-    (err, result) => {
-      if (err == null) {
-        res.send({ message: "Success" });
-      } else {
-        console.log("Logout Error");
-      }
-    }
-  );
-});
 
-// logout unverified vet clinic admin
-app.put("/logout/user/vetclinic/unverified/:vetid", (req, res) => {
-  const vetid = req.params.vetid;
-  console.log("here");
   db.query(
     "UPDATE vet_clinic SET isOnline = 0 WHERE vetid = ?",
     vetid,
@@ -2122,7 +2165,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => {});
+      db.query(updateProduct, [deduced, product_id], (err, result) => { });
     });
 
     console.log(err);
@@ -2681,7 +2724,7 @@ app.get("/general/appointment/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   // console.log(vetid)
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Pending' ORDER BY appointment.appointment_id DESC";
+    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Approved' ORDER BY appointment.appointment_id DESC";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -3351,7 +3394,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => {}
+          (err, result) => { }
         );
       } else {
         console.log("invalid number");
