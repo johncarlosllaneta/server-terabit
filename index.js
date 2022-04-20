@@ -5143,13 +5143,14 @@ app.put("/staff/reservation/claim/:reservedId", (req, res) => {
 
 //add presciption and findings
 app.put("/doc/consultation/:consultationId", (req, res) => {
+  const docId = req.body.vet_doc_id;
   const consult_id = req.body.consultationId;
   const prescrip = req.body.prescrip;
   const findings = req.body.findings;
 
   const sqlQuery =
-    "UPDATE consultation SET prescription = ?, findings = ? WHERE consultation_id = ? ";
-  db.query(sqlQuery, [prescrip, findings, consult_id], (err, result) => {
+    "UPDATE consultation SET vet_doc_id= ?, prescription = ?, findings = ? WHERE consultation_id = ? ";
+  db.query(sqlQuery, [docId, prescrip, findings, consult_id], (err, result) => {
     if (err === null) {
       res.send({ message: "Success" });
     } else {
@@ -5172,19 +5173,24 @@ app.put("/doc/consultation/status/:appointmentId", (req, res) => {
 
 //add presciption and findings
 app.put("/doc/examination/:medicalId", (req, res) => {
+  const docId = req.body.vet_doc_id;
   const medicalHistoryId = req.body.medicalId;
   const prescrip = req.body.prescrip;
   const findings = req.body.findings;
 
   const sqlQuery =
-    "UPDATE medical_history SET prescription = ?, findings = ? WHERE medical_history_id = ?";
-  db.query(sqlQuery, [prescrip, findings, medicalHistoryId], (err, result) => {
-    if (err === null) {
-      res.send({ message: "Success" });
-    } else {
-      console.log(err);
+    "UPDATE medical_history SET vet_doc_id= ?, prescription = ?, findings = ? WHERE medical_history_id = ?";
+  db.query(
+    sqlQuery,
+    [docId, prescrip, findings, medicalHistoryId],
+    (err, result) => {
+      if (err === null) {
+        res.send({ message: "Success" });
+      } else {
+        console.log(err);
+      }
     }
-  });
+  );
 });
 
 app.put("/doc/vaccination/:immuneId", (req, res) => {
