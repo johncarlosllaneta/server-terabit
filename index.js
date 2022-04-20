@@ -287,7 +287,6 @@ app.post("/api/login", (req, res) => {
             if (err) {
               res.send({ err: err });
             }
-
             if (result.length > 0) {
               bcrypt.compare(
                 password,
@@ -2838,7 +2837,7 @@ app.put("/vetclinic/appointment/done/:appointment_id", (req, res) => {
 app.post("/talktovet/thread/creating", (req, res) => {
   const pet_owner_id = req.body.pet_owner_id;
   const vetid = req.body.vetid;
-  // console.log(vetid);
+  console.log(vetid);
   const sqlQuery = "INSERT INTO thread (pet_owner_id,vetid) VALUES (?,?) ";
   db.query(sqlQuery, [pet_owner_id, vetid], (err, result) => {
     console.log(result);
@@ -2871,13 +2870,33 @@ app.post("/talktovet/vetclinic/thread/refresh", (req, res) => {
 });
 
 // Get Thread Pet Owner
-app.get("/talktovet/petOwner/thread/:petOwnerId", (req, res) => {
+app.get("/talktovet/petOwner/thread/:petOwnerId/:vetid", (req, res) => {
   const petOwnerId = req.params.petOwnerId;
+  const vetid = req.params.vetid;
 
-  const sqlQuery = `SELECT * FROM pet_owners JOIN thread ON pet_owners.pet_owner_id = thread.pet_owner_id JOIN vet_clinic ON vet_clinic.vetid = thread.vetid WHERE pet_owners.pet_owner_id = ? ORDER BY thread.thread_id ASC`;
-  db.query(sqlQuery, petOwnerId, (err, result) => {
+  const sqlQuery = `SELECT * FROM pet_owners JOIN thread ON pet_owners.pet_owner_id = thread.pet_owner_id JOIN vet_clinic ON vet_clinic.vetid = thread.vetid WHERE thread.pet_owner_id = ? AND thread.vetid = ? ORDER BY thread.thread_id ASC`;
+  db.query(sqlQuery, [petOwnerId, vetid], (err, result) => {
     // console.log(result);
     res.send(result);
+  });
+});
+
+
+///check if vet_id existing
+app.get("/talktovet/petOwner/vetclinic/:vetid/:pet_owner_id", (req, res) => {
+  const petOwnerId = req.params.pet_owner_id;
+  const vetid = req.params.vetid;
+  console.log(petOwnerId);
+  const sqlQuery = `SELECT * FROM thread WHERE vetid = ? AND pet_owner_id = ?`;
+  db.query(sqlQuery,[vetid ,petOwnerId], (err, result) => {
+
+    if (err == null && result.length != 0) {
+        res.send({message: 'Exist'})
+    }else if (err == null && result.length == 0){
+      res.send({message: 'not Exist'})
+    }else{
+      console.log(err);
+    }
   });
 });
 
