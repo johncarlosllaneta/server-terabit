@@ -287,7 +287,6 @@ app.post("/api/login", (req, res) => {
             if (err) {
               res.send({ err: err });
             }
-
             if (result.length > 0) {
               bcrypt.compare(
                 password,
@@ -1500,7 +1499,57 @@ app.delete("/logout", (req, res) => {
 // logout vet clinic admin
 app.put("/logout/user/vetclinic/:vetid", (req, res) => {
   const vetid = req.params.vetid;
+  db.query(
+    "UPDATE vet_clinic SET isOnline = 0 WHERE vetid = ?",
+    vetid,
+    (err, result) => {
+      if (err == null) {
+        res.send({ message: "Success" });
+      } else {
+        console.log("Logout Error");
+      }
+    }
+  );
+});
 
+// logout veterinarian
+app.put("/logout/user/doc/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  console.log(vetid);
+  db.query(
+    "UPDATE vet_doctors SET isOnline = 0 WHERE vetid = ?",
+    vetid,
+    (err, result) => {
+      if (err == null) {
+        res.send({ message: "Success" });
+      } else {
+        console.log("Logout Error");
+      }
+    }
+  );
+});
+
+// logout vet staff
+app.put("/logout/user/staff/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  console.log(vetid);
+  db.query(
+    "UPDATE vet_staff SET isOnline = 0 WHERE vetid = ?",
+    vetid,
+    (err, result) => {
+      if (err == null) {
+        res.send({ message: "Success" });
+      } else {
+        console.log("Logout Error");
+      }
+    }
+  );
+});
+
+// logout unverified vet clinic admin
+app.put("/logout/user/vetclinic/unverified/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  console.log("here");
   db.query(
     "UPDATE vet_clinic SET isOnline = 0 WHERE vetid = ?",
     vetid,
@@ -2847,7 +2896,7 @@ app.put("/vetclinic/appointment/done/:appointment_id", (req, res) => {
 app.post("/talktovet/thread/creating", (req, res) => {
   const pet_owner_id = req.body.pet_owner_id;
   const vetid = req.body.vetid;
-  // console.log(vetid);
+  console.log(vetid);
   const sqlQuery = "INSERT INTO thread (pet_owner_id,vetid) VALUES (?,?) ";
   db.query(sqlQuery, [pet_owner_id, vetid], (err, result) => {
     console.log(result);
@@ -2880,13 +2929,33 @@ app.post("/talktovet/vetclinic/thread/refresh", (req, res) => {
 });
 
 // Get Thread Pet Owner
-app.get("/talktovet/petOwner/thread/:petOwnerId", (req, res) => {
+app.get("/talktovet/petOwner/thread/:petOwnerId/:vetid", (req, res) => {
   const petOwnerId = req.params.petOwnerId;
+  const vetid = req.params.vetid;
 
-  const sqlQuery = `SELECT * FROM pet_owners JOIN thread ON pet_owners.pet_owner_id = thread.pet_owner_id JOIN vet_clinic ON vet_clinic.vetid = thread.vetid WHERE pet_owners.pet_owner_id = ? ORDER BY thread.thread_id ASC`;
-  db.query(sqlQuery, petOwnerId, (err, result) => {
+  const sqlQuery = `SELECT * FROM pet_owners JOIN thread ON pet_owners.pet_owner_id = thread.pet_owner_id JOIN vet_clinic ON vet_clinic.vetid = thread.vetid WHERE thread.pet_owner_id = ? AND thread.vetid = ? ORDER BY thread.thread_id ASC`;
+  db.query(sqlQuery, [petOwnerId, vetid], (err, result) => {
     // console.log(result);
     res.send(result);
+  });
+});
+
+
+///check if vet_id existing
+app.get("/talktovet/petOwner/vetclinic/:vetid/:pet_owner_id", (req, res) => {
+  const petOwnerId = req.params.pet_owner_id;
+  const vetid = req.params.vetid;
+  console.log(petOwnerId);
+  const sqlQuery = `SELECT * FROM thread WHERE vetid = ? AND pet_owner_id = ?`;
+  db.query(sqlQuery, [vetid, petOwnerId], (err, result) => {
+
+    if (err == null && result.length != 0) {
+      res.send({ message: 'Exist' })
+    } else if (err == null && result.length == 0) {
+      res.send({ message: 'not Exist' })
+    } else {
+      console.log(err);
+    }
   });
 });
 
@@ -5152,13 +5221,14 @@ app.put("/staff/reservation/claim/:reservedId", (req, res) => {
 
 //add presciption and findings
 app.put("/doc/consultation/:consultationId", (req, res) => {
+  const docId = req.body.vet_doc_id;
   const consult_id = req.body.consultationId;
   const prescrip = req.body.prescrip;
   const findings = req.body.findings;
 
   const sqlQuery =
-    "UPDATE consultation SET prescription = ?, findings = ? WHERE consultation_id = ? ";
-  db.query(sqlQuery, [prescrip, findings, consult_id], (err, result) => {
+    "UPDATE consultation SET vet_doc_id= ?, prescription = ?, findings = ? WHERE consultation_id = ? ";
+  db.query(sqlQuery, [docId, prescrip, findings, consult_id], (err, result) => {
     if (err === null) {
       res.send({ message: "Success" });
     } else {
@@ -5181,34 +5251,48 @@ app.put("/doc/consultation/status/:appointmentId", (req, res) => {
 
 //add presciption and findings
 app.put("/doc/examination/:medicalId", (req, res) => {
+  const docId = req.body.vet_doc_id;
   const medicalHistoryId = req.body.medicalId;
   const prescrip = req.body.prescrip;
   const findings = req.body.findings;
 
   const sqlQuery =
-    "UPDATE medical_history SET prescription = ?, findings = ? WHERE medical_history_id = ?";
-  db.query(sqlQuery, [prescrip, findings, medicalHistoryId], (err, result) => {
-    if (err === null) {
-      res.send({ message: "Success" });
-    } else {
-      console.log(err);
+    "UPDATE medical_history SET vet_doc_id= ?, prescription = ?, findings = ? WHERE medical_history_id = ?";
+  db.query(
+    sqlQuery,
+    [docId, prescrip, findings, medicalHistoryId],
+    (err, result) => {
+      if (err === null) {
+        res.send({ message: "Success" });
+      } else {
+        console.log(err);
+      }
     }
-  });
+  );
 });
 
 app.put("/doc/vaccination/:immuneId", (req, res) => {
   const immunizationId = req.body.immuneId;
   const weight = req.body.weight;
+  const vaccine_name = req.body.vaccineName;
   const against = req.body.againsts;
   const manufacturer = req.body.manufacturer;
   const vaccineNumber = req.body.vaccineNumber;
   const prescrip = req.body.prescription;
 
   const sqlQuery =
-    "UPDATE immunization_history SET pet_weight = ?, againts = ?, vaccine_number = ?, manufacturer = ?, prescription = ? WHERE immunization_id = ?";
+    "UPDATE immunization_history SET pet_weight = ?, vaccine_name = ?, againts = ?, vaccine_number = ?, manufacturer = ?, prescription = ? WHERE immunization_id = ?";
   db.query(
     sqlQuery,
-    [weight, against, vaccineNumber, manufacturer, prescrip, immunizationId],
+    [
+      weight,
+      vaccine_name,
+      against,
+      vaccineNumber,
+      manufacturer,
+      prescrip,
+      immunizationId,
+    ],
     (err, result) => {
       if (err === null) {
         res.send({ message: "Success" });
