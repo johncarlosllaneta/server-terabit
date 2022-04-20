@@ -1454,6 +1454,40 @@ app.put("/logout/user/vetclinic/:vetid", (req, res) => {
   );
 });
 
+// logout veterinarian
+app.put("/logout/user/doc/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  console.log(vetid);
+  db.query(
+    "UPDATE vet_doctors SET isOnline = 0 WHERE vetid = ?",
+    vetid,
+    (err, result) => {
+      if (err == null) {
+        res.send({ message: "Success" });
+      } else {
+        console.log("Logout Error");
+      }
+    }
+  );
+});
+
+// logout vet staff
+app.put("/logout/user/staff/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  console.log(vetid);
+  db.query(
+    "UPDATE vet_staff SET isOnline = 0 WHERE vetid = ?",
+    vetid,
+    (err, result) => {
+      if (err == null) {
+        res.send({ message: "Success" });
+      } else {
+        console.log("Logout Error");
+      }
+    }
+  );
+});
+
 // logout unverified vet clinic admin
 app.put("/logout/user/vetclinic/unverified/:vetid", (req, res) => {
   const vetid = req.params.vetid;
@@ -5156,16 +5190,25 @@ app.put("/doc/examination/:medicalId", (req, res) => {
 app.put("/doc/vaccination/:immuneId", (req, res) => {
   const immunizationId = req.body.immuneId;
   const weight = req.body.weight;
+  const vaccine_name = req.body.vaccineName;
   const against = req.body.againsts;
   const manufacturer = req.body.manufacturer;
   const vaccineNumber = req.body.vaccineNumber;
   const prescrip = req.body.prescription;
 
   const sqlQuery =
-    "UPDATE immunization_history SET pet_weight = ?, againts = ?, vaccine_number = ?, manufacturer = ?, prescription = ? WHERE immunization_id = ?";
+    "UPDATE immunization_history SET pet_weight = ?, vaccine_name = ?, againts = ?, vaccine_number = ?, manufacturer = ?, prescription = ? WHERE immunization_id = ?";
   db.query(
     sqlQuery,
-    [weight, against, vaccineNumber, manufacturer, prescrip, immunizationId],
+    [
+      weight,
+      vaccine_name,
+      against,
+      vaccineNumber,
+      manufacturer,
+      prescrip,
+      immunizationId,
+    ],
     (err, result) => {
       if (err === null) {
         res.send({ message: "Success" });
