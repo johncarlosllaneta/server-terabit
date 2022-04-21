@@ -1228,8 +1228,8 @@ app.put("/vetclinic/offers/update/:vet_admin_id", (req, res) => {
   const enableConsultationPhysical = req.body.enableConsultationPhysical;
   const enableOnlineConsultation = req.body.enableOnlineConsultation;
 
-  const sqlQuery = `UPDATE vet_clinic SET enableProduct = ? , enablePharmacy = ?,  enableServices = ? , enableConsultation = ?,
-  enableExamination = ? , enableVaccination = ? , enableGrooming = ? ,enablePreventiveControls = ? , enableOnlineConsultation = ? , enablePhysicalConsultation = ?
+  const sqlQuery = `UPDATE vet_clinic SET enableProduct = ? , enablePharmacy = ?,  enableServices = ? , 
+  enableExamination = ? , enableVaccination = ? , enableGrooming = ? ,enablePreventiveControls = ? ,  enableConsultation = ?
     WHERE	vet_admin_id = ?`;
   db.query(
     sqlQuery,
@@ -1237,13 +1237,11 @@ app.put("/vetclinic/offers/update/:vet_admin_id", (req, res) => {
       enableProduct,
       enablePharmacy,
       enableServices,
-      enableConsultation,
       enableExamination,
       enableVaccination,
       enableGrooming,
       enablePreventiveControls,
-      enableOnlineConsultation,
-      enableConsultationPhysical,
+      enableConsultation,
       vet_admin_id,
     ],
     (err, result) => {
@@ -2043,6 +2041,30 @@ app.get("/consultation/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   const sqlQuery =
     "SELECT * FROM services WHERE vetid = ? AND category = 'Consultation'";
+  db.query(sqlQuery, vetid, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+//this api is for consulation physical services
+
+app.get("/consultation/physical/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  const sqlQuery =
+    "SELECT * FROM services WHERE vetid = ? AND category = 'Consultation' AND service_name='Physical Consultation'";
+  db.query(sqlQuery, vetid, (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+//this api is for consulation virtual services
+
+app.get("/consultation/virtual/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  const sqlQuery =
+    "SELECT * FROM services WHERE vetid = ? AND category = 'Consultation' AND service_name='Online Consultation'";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
