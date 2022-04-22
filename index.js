@@ -824,16 +824,18 @@ app.post("/pets/consultation/records/:pet_id", (req, res) => {
   const appointment_id = req.body.appointment_id;
   const service_id = req.body.service_id;
   const vetid = req.body.vetid;
+  const consultationType = req.body.consultationType;
   console.log(pet_id);
   const sqlQuery =
-    "INSERT INTO consultation (vetid,pet_id,appointment_id,service_id) VALUES (?,?,?,?)";
+    "INSERT INTO consultation (vetid,pet_id,appointment_id,service_id,consultation_type) VALUES (?,?,?,?,?)";
   db.query(
     sqlQuery,
     [
       vetid,
       pet_id,
       appointment_id,
-      service_id
+      service_id,
+      consultationType
     ],
     (err, result) => {
       if (err == null) {
