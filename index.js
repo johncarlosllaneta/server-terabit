@@ -2477,7 +2477,6 @@ app.get("/petowner/vaccination/:pet_id", (req, res) => {
 //for pet consultation record
 app.get("/petowner/consultation/:pet_id", (req, res) => {
   const pet_id = req.params.pet_id;
-    console.log("pet id"+pet_id);
   const sqlQuery =
     "SELECT * FROM vet_clinic JOIN consultation ON vet_clinic.vetid = consultation.vetid JOIN pets ON pets.pet_id = consultation.pet_id JOIN pet_owners ON pet_owners.pet_owner_id = pets.pet_owner_id WHERE pets.pet_id =?";
   db.query(sqlQuery, pet_id, (err, result) => {
