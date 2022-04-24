@@ -1275,6 +1275,42 @@ app.post("/vetclinic/update/profile", (req, res) => {
   );
 });
 
+// api update profile picture of vet clinic
+app.post("/staff/update/profile", (req, res) => {
+  const imageUrl = req.body.imageUrl;
+  const vetid = req.body.vetid;
+
+  db.query(
+    "UPDATE vet_staff SET vet_staff_profilePic = ? WHERE vet_staff_id = ?",
+    [imageUrl, vetid],
+    (err, result) => {
+      if (err === null) {
+        res.send({ message: "Update Successfully" });
+      } else {
+        console.log(err);
+      }
+    }
+  );
+});
+
+// api update profile picture of vet clinic
+app.post("/doc/update/profile", (req, res) => {
+  const imageUrl = req.body.imageUrl;
+  const vetid = req.body.vetid;
+
+  db.query(
+    "UPDATE vet_doctors SET vet_doc_profilePic = ? WHERE vet_doc_id = ?",
+    [imageUrl, vetid],
+    (err, result) => {
+      if (err === null) {
+        res.send({ message: "Update Successfully" });
+      } else {
+        console.log(err);
+      }
+    }
+  );
+});
+
 //api of system admin if they need to approved a vet clinic
 app.put("/vetclinic/confirm/:vet_admin_id", (req, res) => {
   const vet_admin_id = req.params.vet_admin_id;
@@ -5470,7 +5506,9 @@ app.put("/staff/reservation/expired/:reservedId", (req, res) => {
     "UPDATE reservation SET reservation_status = 'Expired' WHERE reserve_id = ? ";
   db.query(sqlQuery, reserved_Id, (err, result) => {
     // console.log(result);
-    res.send("Sucessfully updated");
+    res.send({
+      message: "Sucessfully updated",
+    });
   });
 });
 
