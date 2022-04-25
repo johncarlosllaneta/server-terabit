@@ -5189,12 +5189,15 @@ app.put("/petowner/reservation/cancelled/:reservationId", (req, res) => {
 });
 
 app.get("/petowner/order/history/:pet_owner_id", (req, res) => {
-  const petownerid = req.params.pet_owner_id;
-  console.log(petownerid);
+  const pet_owner_id = req.params.pet_owner_id;
   const sqlQuery =
-    "SELECT * FROM reservation WHERE pet_owner_id = ? AND reservation_status = ?";
-  db.query(sqlQuery, [petownerid, "Done"], (err, result) => {
-    res.send(result);
+    "SELECT * FROM reservation INNER JOIN vet_clinic ON vet_clinic.vetid = reservation.vetid WHERE pet_owner_id = ? AND (reservation.reservation_status = 'Done' OR reservation.reservation_status = 'Purchased')";
+  db.query(sqlQuery, pet_owner_id, (err, result) => {
+    if (err === null) {
+      res.send(result);
+    } else {
+      console.log(err);
+    }
   });
 });
 
