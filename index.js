@@ -817,7 +817,6 @@ app.post("/pets/vaccination/record/:pet_id", (req, res) => {
   );
 });
 
-
 //API pet consultation insertion
 app.post("/pets/consultation/records/:pet_id", (req, res) => {
   const pet_id = req.params.pet_id;
@@ -830,13 +829,7 @@ app.post("/pets/consultation/records/:pet_id", (req, res) => {
     "INSERT INTO consultation (vetid,pet_id,appointment_id,service_id,consultation_type) VALUES (?,?,?,?,?)";
   db.query(
     sqlQuery,
-    [
-      vetid,
-      pet_id,
-      appointment_id,
-      service_id,
-      consultationType
-    ],
+    [vetid, pet_id, appointment_id, service_id, consultationType],
     (err, result) => {
       if (err == null) {
         res.send({
@@ -849,7 +842,6 @@ app.post("/pets/consultation/records/:pet_id", (req, res) => {
   );
 });
 
-
 //API pet medical history
 app.post("/pets/medicalhistory/record/:pet_id", (req, res) => {
   const pet_id = req.params.pet_id;
@@ -861,12 +853,7 @@ app.post("/pets/medicalhistory/record/:pet_id", (req, res) => {
     "INSERT INTO medical_history (service_id,pet_id,vetid,appointment_id) VALUES (?,?,?,?)";
   db.query(
     sqlQuery,
-    [
-      service_id,
-      pet_id,
-      vetid,
-      appointment_id,
-    ],
+    [service_id, pet_id, vetid, appointment_id],
     (err, result) => {
       if (err == null) {
         res.send({
@@ -910,9 +897,9 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
-    Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c; // Distance in km
   return Math.round(d * 10) / 10;
@@ -2274,7 +2261,7 @@ app.put("/reservation/cancel", (req, res) => {
 
       const updateProduct =
         "UPDATE products SET quantity = ? WHERE product_id = ?";
-      db.query(updateProduct, [deduced, product_id], (err, result) => { });
+      db.query(updateProduct, [deduced, product_id], (err, result) => {});
     });
 
     console.log(err);
@@ -2828,6 +2815,30 @@ app.get("/pending/appointment/:vetid", (req, res) => {
   });
 });
 
+app.get("/approved/appointment/today/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  // console.log(vetid)
+  var date = new Date();
+  const sqlQuery =
+    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Approved' AND appointment.date_scheduled = ? AND NOT services.category = 'Vaccination' ORDER BY appointment.appointment_id DESC";
+  db.query(sqlQuery, [vetid, date], (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
+app.get("/approved/vaccination/today/:vetid", (req, res) => {
+  const vetid = req.params.vetid;
+  // console.log(vetid)
+  var date = new Date();
+  const sqlQuery =
+    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Approved' AND appointment.date_scheduled = ? AND services.category = 'Vaccination' ORDER BY appointment.appointment_id DESC";
+  db.query(sqlQuery, [vetid, date], (err, result) => {
+    // console.log(result);
+    res.send(result);
+  });
+});
+
 //API for General Appointments
 app.get("/general/appointment/:vetid", (req, res) => {
   const vetid = req.params.vetid;
@@ -3000,7 +3011,6 @@ app.get("/talktovet/petOwner/thread/:petOwnerId/:vetid", (req, res) => {
   });
 });
 
-
 ///check if vet_id existing
 app.get("/talktovet/petOwner/vetclinic/:vetid/:pet_owner_id", (req, res) => {
   const petOwnerId = req.params.pet_owner_id;
@@ -3008,11 +3018,10 @@ app.get("/talktovet/petOwner/vetclinic/:vetid/:pet_owner_id", (req, res) => {
   console.log(petOwnerId);
   const sqlQuery = `SELECT * FROM thread WHERE vetid = ? AND pet_owner_id = ?`;
   db.query(sqlQuery, [vetid, petOwnerId], (err, result) => {
-
     if (err == null && result.length != 0) {
-      res.send({ message: 'Exist' })
+      res.send({ message: "Exist" });
     } else if (err == null && result.length == 0) {
-      res.send({ message: 'not Exist' })
+      res.send({ message: "not Exist" });
     } else {
       console.log(err);
     }
@@ -3523,7 +3532,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
         db.query(
           sqlQueryInsert,
           [phoneNumber, verificationCode],
-          (err, result) => { }
+          (err, result) => {}
         );
       } else {
         console.log("invalid number");
