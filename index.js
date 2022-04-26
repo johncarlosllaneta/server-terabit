@@ -2501,7 +2501,7 @@ app.get("/petowner/vaccination/:pet_id", (req, res) => {
 app.get("/petowner/consultation/:pet_id", (req, res) => {
   const pet_id = req.params.pet_id;
   const sqlQuery =
-    "SELECT * FROM vet_clinic JOIN consultation ON vet_clinic.vetid = consultation.vetid JOIN pets ON pets.pet_id = consultation.pet_id JOIN pet_owners ON pet_owners.pet_owner_id = pets.pet_owner_id WHERE pets.pet_id =?";
+    "SELECT * FROM vet_clinic JOIN consultation ON vet_clinic.vetid = consultation.vetid JOIN pets ON pets.pet_id = consultation.pet_id JOIN pet_owners ON pet_owners.pet_owner_id = pets.pet_owner_id WHERE pets.pet_id = ? ";
   db.query(sqlQuery, pet_id, (err, result) => {
     console.log(result);
     res.send(result);
@@ -2512,7 +2512,7 @@ app.get("/petowner/consultation/:pet_id", (req, res) => {
 app.get("/petowner/apppointment/:pet_id", (req, res) => {
   const pet_id = req.params.pet_id;
   const sqlQuery =
-    "SELECT * FROM vet_clinic JOIN vet_doctors ON vet_clinic.vetid = vet_doctors.vetid JOIN consultation ON consultation.vetid = vet_clinic.vetid JOIN pets ON pets.pet_id = consultation.pet_id JOIN pet_owners ON pet_owners.pet_owner_id = pets.pet_owner_id WHERE pets.pet_id =?";
+    "SELECT pet_owners.name, pets.pet_name, services.service_name, services.service_description, vet_clinic.vet_name, services.category, appointment.date_accomplished FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id = appointment.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE pets.pet_id = ? AND appointment.appointment_status= 'Done' AND services.category= 'Pet grooming'";
   db.query(sqlQuery, pet_id, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -4561,7 +4561,7 @@ app.get("/petOwner/services/health/card/:pet_id", (req, res) => {
   const pet_id = req.params.pet_id;
   // console.log(vetid);
   const sqlQuery =
-    "SELECT pet_owners.name, pets.pet_name, services.service_name, services.service_description, vet_clinic.vet_name, services.category, appointment.date_accomplished FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id = appointment.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE pets.pet_id = ? AND appointment.appointment_status= 'Done'";
+    "SELECT pet_owners.name, pets.pet_name, services.service_name, services.service_description, vet_clinic.vet_name, services.category, appointment.date_accomplished FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id = appointment.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE pets.pet_id = ? AND appointment.appointment_status = 'Done' AND services.category != 'Consultation' AND services.category != 'Pet grooming'";
 
   db.query(sqlQuery, pet_id, (err, result) => {
     // console.log(result);
@@ -5139,7 +5139,6 @@ app.post("/petowners/InsertProduct/:orderid", (req, res) => {
   const orderid = req.params.orderid;
   const product_id = req.body.productId;
   const product_quantity = req.body.quantity;
-
   console.log(product_id);
 
   db.query(
