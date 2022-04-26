@@ -5350,9 +5350,10 @@ app.put("/doc/vaccination/:immuneId", (req, res) => {
   const manufacturer = req.body.manufacturer;
   const vaccineNumber = req.body.vaccineNumber;
   const prescrip = req.body.prescription;
+  const docId = req.body.vetDocId;
 
   const sqlQuery =
-    "UPDATE immunization_history SET pet_weight = ?, vaccine_name = ?, againts = ?, vaccine_number = ?, manufacturer = ?, prescription = ? WHERE immunization_id = ?";
+    "UPDATE immunization_history SET pet_weight = ?, vaccine_name = ?, againts = ?, vaccine_number = ?, manufacturer = ?, prescription = ?, vet_doc_id = ? WHERE immunization_id = ?";
   db.query(
     sqlQuery,
     [
@@ -5362,6 +5363,7 @@ app.put("/doc/vaccination/:immuneId", (req, res) => {
       vaccineNumber,
       manufacturer,
       prescrip,
+      docId,
       immunizationId,
     ],
     (err, result) => {
