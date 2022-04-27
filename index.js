@@ -2489,10 +2489,8 @@ app.get("/pet/length", (req, res) => {
 //for pet vaccination record #new
 app.get("/petowner/vaccination/:pet_id", (req, res) => {
   const pet_id = req.params.pet_id;
-  const sqlQuery =
-    "SELECT * FROM vet_doctors JOIN vet_clinic ON vet_doctors.vetid = vet_clinic.vetid JOIN appointment ON appointment.vetid = vet_clinic.vetid JOIN immunization_history ON immunization_history.appointment_id = appointment.appointment_id JOIN pets ON pets.pet_id = immunization_history.pet_id WHERE pets.pet_id = ?";
+  const sqlQuery ="SELECT *  FROM vet_doctors JOIN immunization_history ON vet_doctors.vet_doc_id = immunization_history.vet_doc_id JOIN appointment ON immunization_history.appointment_id = appointment.appointment_id JOIN services ON services.service_id = appointment.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE appointment.pet_id = ? AND appointment.appointment_status= 'Done' AND services.category = 'Vaccination'";
   db.query(sqlQuery, pet_id, (err, result) => {
-    // console.log(result);
     res.send(result);
   });
 });
@@ -2501,7 +2499,7 @@ app.get("/petowner/vaccination/:pet_id", (req, res) => {
 app.get("/petowner/consultation/:pet_id", (req, res) => {
   const pet_id = req.params.pet_id;
   const sqlQuery =
-    "SELECT * FROM vet_clinic JOIN consultation ON vet_clinic.vetid = consultation.vetid JOIN pets ON pets.pet_id = consultation.pet_id JOIN pet_owners ON pet_owners.pet_owner_id = pets.pet_owner_id WHERE pets.pet_id = ? ";
+    "SELECT *  FROM vet_doctors JOIN consultation ON vet_doctors.vet_doc_id = consultation.vet_doc_id JOIN appointment  ON consultation.appointment_id = appointment.appointment_id  JOIN services ON services.service_id = appointment.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE appointment.pet_id = ? AND appointment.appointment_status= 'Done' AND services.category = 'Consultation'";
   db.query(sqlQuery, pet_id, (err, result) => {
     console.log(result);
     res.send(result);
@@ -4557,11 +4555,9 @@ app.get("/vetclinic/notification/reservation/length/:vetid", (req, res) => {
 //Display all service completed in every pet in health card
 // Number of unviewed notif for vet clinic
 app.get("/petOwner/services/health/card/:pet_id", (req, res) => {
-  // console.log(vetAdminId);
+
   const pet_id = req.params.pet_id;
-  // console.log(vetid);
-  const sqlQuery =
-    "SELECT pet_owners.name, pets.pet_name, services.service_name, services.service_description, vet_clinic.vet_name, services.category, appointment.date_accomplished FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id = appointment.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE pets.pet_id = ? AND appointment.appointment_status = 'Done' AND services.category != 'Consultation' AND services.category != 'Pet grooming'";
+  const sqlQuery = "SELECT *  FROM vet_doctors JOIN medical_history  ON vet_doctors.vet_doc_id = medical_history.vet_doc_id JOIN appointment ON medical_history.appointment_id = appointment.appointment_id JOIN services ON services.service_id = appointment.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE appointment.pet_id = ? AND appointment.appointment_status= 'Done' AND services.category IN ('Preventive Controls', 'Pet Examination')";
 
   db.query(sqlQuery, pet_id, (err, result) => {
     // console.log(result);
