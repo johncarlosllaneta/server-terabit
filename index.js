@@ -2295,7 +2295,7 @@ app.get("/pharmacy", (req, res) => {
 
 app.get("/pharmacy/:vetid", (req, res) => {
   const vetid = req.params.vetid;
-  const sqlQuery = "SELECT * FROM pharmacy WHERE vetid = ? AND status= 1";
+  const sqlQuery = "SELECT * FROM pharmacy WHERE vetid = ?";
   db.query(sqlQuery, vetid, (err, result) => {
     // console.log(result);
     res.send(result);
@@ -5286,7 +5286,7 @@ app.put("/staff/reservation/claim/:reservedId", (req, res) => {
     "UPDATE reservation SET reservation_status = 'Purchased',mop = ?, claimBy= ? WHERE reserve_id = ? ";
   db.query(sqlQuery, [mop, claim_By, reserved_Id], (err, result) => {
     // console.log(result);
-    res.send("Sucessfully updated");
+    res.send({ message: "Claimed Successfully" });
   });
 });
 
@@ -5457,7 +5457,7 @@ app.get("/pet/medical/history/record/:vetid/:id", (req, res) => {
   const id = req.params.id;
   // console.log(id);
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN medical_history ON medical_history.appointment_id = appointment.appointment_id JOIN services ON services.service_id = medical_history.service_id WHERE appointment.vetid = ? AND appointment.pet_id = ? AND appointment.appointment_status = 'Done'";
+    "SELECT * FROM vet_doctors JOIN medical_history ON vet_doctors.vet_doc_id = medical_history.vet_doc_id JOIN appointment ON medical_history.appointment_id = appointment.appointment_id JOIN services ON services.service_id = appointment.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE appointment.vetid = ? AND appointment.pet_id = ? AND appointment.appointment_status= 'Done' AND services.category IN ('Preventive Controls', 'Pet Examination')";
 
   db.query(sqlQuery, [vetid, id], (err, result) => {
     // var resultData = JSON.parse(JSON.stringify(result));
@@ -5473,7 +5473,7 @@ app.get("/pet/vaccine/record/:vetid/:id", (req, res) => {
   const id = req.params.id;
   console.log("vaccineee" + vetid + " " + id);
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN immunization_history ON immunization_history.pet_id = pets.pet_id JOIN appointment ON appointment.appointment_id = immunization_history.appointment_id JOIN services ON services.service_id = appointment.service_id WHERE appointment.vetid = ? AND appointment.pet_id = ? AND appointment.appointment_status = 'Done'";
+    "SELECT * FROM vet_doctors JOIN immunization_history ON vet_doctors.vet_doc_id = immunization_history.vet_doc_id JOIN appointment ON immunization_history.appointment_id = appointment.appointment_id JOIN services ON services.service_id = appointment.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE appointment.vetid = ? AND appointment.pet_id = ? AND appointment.appointment_status= 'Done' AND services.category = 'Vaccination'";
 
   db.query(sqlQuery, [vetid, id], (err, result) => {
     // var resultData = JSON.parse(JSON.stringify(result));
@@ -5489,7 +5489,7 @@ app.get("/pet/consultation/record/:vetid/:id", (req, res) => {
   const id = req.params.id;
   // console.log(id);
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN consultation ON consultation.pet_id = pets.pet_id JOIN appointment ON appointment.appointment_id = consultation.appointment_id JOIN services ON services.service_id = appointment.service_id WHERE appointment.vetid = ? AND appointment.pet_id = ? AND appointment.appointment_status = 'Done'";
+    "SELECT * FROM vet_doctors JOIN consultation ON vet_doctors.vet_doc_id = consultation.vet_doc_id JOIN appointment ON consultation.appointment_id = appointment.appointment_id JOIN services ON services.service_id = appointment.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE appointment.vetid = ? AND appointment.pet_id = ? AND appointment.appointment_status= 'Done' AND services.category = 'Consultation'";
 
   db.query(sqlQuery, [vetid, id], (err, result) => {
     // var resultData = JSON.parse(JSON.stringify(result));
