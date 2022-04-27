@@ -2715,6 +2715,7 @@ app.post("/appointment/set", (req, res) => {
 
       console.log(err);
       if (err === null) {
+        console.log(result.appointment_id);
         res.send({
           message: "Success",
         });
@@ -2767,17 +2768,16 @@ app.get("/appointments/histories/:pet_owner_id", (req, res) => {
   });
 });
 
-// Get appointment for pet owner approved
+// Pending appointment for pet owner
 app.get("/appointments/pending/:pet_owner_id", (req, res) => {
   const pet_owner_id = req.params.pet_owner_id;
-  // console.log(pet_owner_id)
-  const sqlQuery = `SELECT * FROM appointment INNER JOIN services ON  appointment.service_id = services.service_id INNER JOIN vet_clinic ON vet_clinic.vetid = appointment.vetid WHERE pet_owner_id = ? AND appointment.appointment_status = 'Pending' ORDER BY appointment.appointment_id DESC`;
+  const sqlQuery = "SELECT * FROM appointment INNER JOIN services ON  appointment.service_id = services.service_id INNER JOIN vet_clinic ON vet_clinic.vetid = appointment.vetid WHERE appointment.pet_owner_id = ? AND appointment.appointment_status = 'Pending' ORDER BY appointment.appointment_id DESC";
 
-  db.query(sqlQuery, pet_owner_id.substring(1), (err, result) => {
+  db.query(sqlQuery, pet_owner_id, (err, result) => {
     // console.log(err);
     if (err === null) {
       res.send(result);
-      // 
+  
     } else {
       console.log(err);
     }
