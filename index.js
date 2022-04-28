@@ -5509,6 +5509,18 @@ app.get("/pet/grooming/record/:vetid/:id", (req, res) => {
   });
 });
 
+app.get("/petOwner/ratings/:appointment_Id", (req, res) => {
+
+  const appoint_id = req.params.appointment_Id;
+  const sqlQuery = "SELECT * FROM rate_feedback WHERE rate_feedback.appointment_id= ?";
+
+  db.query(sqlQuery,appoint_id, (err, result) => {
+ 
+    res.send(result);
+    //
+  });
+});
+
 app.put("/staff/reservation/expired/:reservedId", (req, res) => {
   const reserved_Id = req.params.reservedId;
   const sqlQuery =
