@@ -525,8 +525,12 @@ app.post("/api/login/mobile", (req, res) => {
             bcrypt.compare(password, result[0].password, (error, response) => {
               console.log(error);
               if (response) {
+                if (result[0].isOnline == true) {
+                  res.send({ message: "Already Login in other device", user: result });
+                }else{
+                  res.send({ message: "Correct", user: result });
+                }
                 //
-                res.send({ message: "Correct", user: result });
               } else {
                 res.send({ message: "Incorrect Email/Password combination" });
               }
@@ -2501,7 +2505,6 @@ app.get("/petowner/apppointment/:pet_id", (req, res) => {
   const sqlQuery =
     "SELECT pet_owners.name, pets.pet_name, services.service_name, services.service_description, vet_clinic.vet_name, services.category, appointment.date_accomplished FROM pet_owners JOIN pets ON pet_owners.pet_owner_id = pets.pet_owner_id JOIN appointment ON appointment.pet_id = pets.pet_id JOIN services ON services.service_id = appointment.service_id JOIN vet_clinic ON vet_clinic.vetid = services.vetid WHERE pets.pet_id = ? AND appointment.appointment_status= 'Done' AND services.category= 'Pet grooming'";
   db.query(sqlQuery, pet_id, (err, result) => {
-    //
     res.send(result);
   });
 });
@@ -5291,6 +5294,7 @@ app.put("/doc/consultation/status/:appointmentId", (req, res) => {
   });
 });
 
+
 //add presciption and findings
 app.put("/doc/examination/:medicalId", (req, res) => {
   const docId = req.body.vet_doc_id;
@@ -5482,6 +5486,31 @@ app.get("/pet/grooming/record/:vetid/:id", (req, res) => {
     //
   });
 });
+
+//update isonline to 1 for Login
+app.put("/petOwner/isOnline/one/:email", (req, res) => {
+  const email = req.params.email;
+  // console.log(vetid);
+  const sqlQuery =
+  "UPDATE pet_owners SET isOnline = 1 WHERE email = ?";
+  db.query(sqlQuery, email, (err, result) => {
+    //
+    res.send("Sucessfully updated");
+  });
+});
+
+//update isonline to 0 for Login
+app.put("/petOwner/isOnline/zero/:email", (req, res) => {
+  const email = req.params.email;
+  // console.log(vetid);
+  const sqlQuery =
+  "UPDATE pet_owners SET isOnline = 0 WHERE email = ?";
+  db.query(sqlQuery, email, (err, result) => {
+    //
+    res.send("Sucessfully updated");
+  });
+});
+
 
 app.get("/petOwner/ratings/:appointment_Id", (req, res) => {
 
