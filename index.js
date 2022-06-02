@@ -525,10 +525,14 @@ app.post("/api/login/mobile", (req, res) => {
             bcrypt.compare(password, result[0].password, (error, response) => {
               console.log(error);
               if (response) {
-                if (result[0].isOnline == true) {
-                  res.send({ message: "Already Login in other device", user: result });
+                if (result[0].isVerified == true) {
+                  if (result[0].isOnline == true) {
+                    res.send({ message: "Already Login in other device", user: result });
+                  }else{
+                    res.send({ message: "Correct", user: result });
+                  }
                 }else{
-                  res.send({ message: "Correct", user: result });
+                  res.send({ message: "Email is not Verified", user: result });
                 }
                 //
               } else {
@@ -5534,6 +5538,65 @@ app.put("/staff/reservation/expired/:reservedId", (req, res) => {
       message: "Sucessfully updated",
     });
   });
+});
+
+
+// Send email veterinarian for mobile
+app.post("/verifyEmail/mobile", async (req, res) => {
+  const hostUrl = req.body.hostUrl;
+  const email = req.body.email;
+  console.log(email);
+  const verificationCode = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
+  var transporter = nodemailer.createTransport({
+    service: "yahoo",
+    auth: {
+      user: "terravetinc@yahoo.com",
+      pass: "yxftzwvsmltbnmii",
+    },
+  });
+
+  var mailOptions = {
+    from: "terravetinc@yahoo.com",
+    to: email,
+    subject: " TerraVet Account Verification",
+    html: `
+      <h3> Thenk you for choosing terravet, </h3>
+  
+      <p>To verify your account, use the button below to get started. </p>
+      <a style="background-color: #293394;
+      color: white;
+      padding: 14px 25px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;" target="_" href=${`${hostUrl}/verify/pet_owner/${email}`}>verify</a>
+      <p>If you have any questions, just reply to this email—we're always happy to help out.</p>
+      `,
+  };
+
+  await transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      res.send("error");
+    } else {
+      res.send("Success");
+    }
+  });
+});
+
+// Email verification pet owner
+app.get("/verify/pet_owner/:email", (req, res) => {
+  db.query(
+    "UPDATE pet_owners SET isVerified = true where email = ?",
+    req.params.email,
+    (err, result) => {
+      if (err == null) {
+        res.send("Email Verified");
+      } else {
+        console.log(err);
+      }
+    }
+  );
 });
 
 //------------------------------------------------------------------------------------------------------------------
