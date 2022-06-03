@@ -527,12 +527,12 @@ app.post("/api/login/mobile", (req, res) => {
               if (response) {
                 if (result[0].isVerified == true) {
                   if (result[0].isOnline == true) {
-                    res.send({ message: "Already Login in other device", user: result });
+                    res.send({ message: "Already Login in other device"});
                   }else{
-                    res.send({ message: "Correct", user: result });
+                    res.send({ message: "Correct",});
                   }
                 }else{
-                  res.send({ message: "Email is not Verified", user: result });
+                  res.send({ message: "Email is not Verified" });
                 }
                 //
               } else {
