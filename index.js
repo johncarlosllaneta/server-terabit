@@ -13,6 +13,7 @@ const config = require("./config");
 var nodemailer = require("nodemailer");
 // const pino = require('express-pino-logger')();
 const { videoToken } = require("./tokens");
+const { Console } = require("console");
 app.use(express.json());
 app.use(cors());
 
@@ -527,12 +528,12 @@ app.post("/api/login/mobile", (req, res) => {
               if (response) {
                 if (result[0].isVerified == true) {
                   if (result[0].isOnline == true) {
-                    res.send({ message: "Already Login in other device"});
+                    res.send({ message: "Already Login in other device",user: result });
                   }else{
-                    res.send({ message: "Correct",});
+                    res.send({ message: "Correct",user: result });
                   }
                 }else{
-                  res.send({ message: "Email is not Verified" });
+                  res.send({ message: "Email is not Verified",user: result });
                 }
                 //
               } else {
