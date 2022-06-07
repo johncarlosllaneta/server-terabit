@@ -526,8 +526,11 @@ app.post("/api/login/mobile", (req, res) => {
               console.log(error);
               if (response) {
                 if (result[0].isOnline == true) {
-                  res.send({ message: "Already Login in other device", user: result });
-                }else{
+                  res.send({
+                    message: "Already Login in other device",
+                    user: result,
+                  });
+                } else {
                   res.send({ message: "Correct", user: result });
                 }
                 //
@@ -2823,7 +2826,7 @@ app.get("/approved/appointment/today/:vetid", (req, res) => {
   date = new Date(date.getTime() - offset * 60 * 1000);
   var actualDate = date.toISOString().split("T")[0];
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Approved' AND appointment.date_scheduled = ? AND services.category IN ('Preventive Controls', 'Pet Examination', 'Consultation') ORDER BY appointment.appointment_id DESC";
+    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Approved' AND appointment.date_scheduled = ? AND services.category IN ('Preventive Controls', 'Pet Examination', 'Consultation','Surgery') ORDER BY appointment.appointment_id DESC";
   db.query(sqlQuery, [vetid, actualDate], (err, result) => {
     //
     res.send(result);
@@ -5339,7 +5342,6 @@ app.put("/doc/consultation/status/:appointmentId", (req, res) => {
   });
 });
 
-
 //add presciption and findings
 app.put("/doc/examination/:medicalId", (req, res) => {
   const docId = req.body.vet_doc_id;
@@ -5552,8 +5554,7 @@ app.get("/pet/grooming/record/:vetid/:id", (req, res) => {
 app.put("/petOwner/isOnline/one/:email", (req, res) => {
   const email = req.params.email;
   // console.log(vetid);
-  const sqlQuery =
-  "UPDATE pet_owners SET isOnline = 1 WHERE email = ?";
+  const sqlQuery = "UPDATE pet_owners SET isOnline = 1 WHERE email = ?";
   db.query(sqlQuery, email, (err, result) => {
     //
     res.send("Sucessfully updated");
@@ -5564,14 +5565,12 @@ app.put("/petOwner/isOnline/one/:email", (req, res) => {
 app.put("/petOwner/isOnline/zero/:email", (req, res) => {
   const email = req.params.email;
   // console.log(vetid);
-  const sqlQuery =
-  "UPDATE pet_owners SET isOnline = 0 WHERE email = ?";
+  const sqlQuery = "UPDATE pet_owners SET isOnline = 0 WHERE email = ?";
   db.query(sqlQuery, email, (err, result) => {
     //
     res.send("Sucessfully updated");
   });
 });
-
 
 app.get("/petOwner/ratings/:appointment_Id", (req, res) => {
   const appoint_id = req.params.appointment_Id;
