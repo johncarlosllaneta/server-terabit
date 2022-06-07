@@ -13,6 +13,7 @@ const config = require("./config");
 var nodemailer = require("nodemailer");
 // const pino = require('express-pino-logger')();
 const { videoToken } = require("./tokens");
+const { Console } = require("console");
 app.use(express.json());
 app.use(cors());
 
@@ -525,13 +526,17 @@ app.post("/api/login/mobile", (req, res) => {
             bcrypt.compare(password, result[0].password, (error, response) => {
               console.log(error);
               if (response) {
-                if (result[0].isOnline == true) {
-                  res.send({
-                    message: "Already Login in other device",
-                    user: result,
-                  });
+                if (result[0].isVerified == true) {
+                  if (result[0].isOnline == true) {
+                    res.send({
+                      message: "Already Login in other device",
+                      user: result,
+                    });
+                  } else {
+                    res.send({ message: "Correct", user: result });
+                  }
                 } else {
-                  res.send({ message: "Correct", user: result });
+                  res.send({ message: "Email is not Verified", user: result });
                 }
                 //
               } else {
@@ -861,6 +866,30 @@ app.post("/pets/medicalhistory/record/:pet_id", (req, res) => {
   db.query(
     sqlQuery,
     [service_id, pet_id, vetid, appointment_id],
+    (err, result) => {
+      if (err == null) {
+        res.send({
+          response: "success",
+        });
+      } else {
+        console.log(err);
+      }
+    }
+  );
+});
+
+//API surgery insertion
+app.post("/pets/surgery/records/:pet_id", (req, res) => {
+  const pet_id = req.params.pet_id;
+  const appointment_id = req.body.appointment_id;
+  const service_id = req.body.service_id;
+  const vetid = req.body.vetid;
+  console.log(pet_id);
+  const sqlQuery =
+    "INSERT INTO surgery (vetid,pet_id,appointment_id,service_id) VALUES (?,?,?,?)";
+  db.query(
+    sqlQuery,
+    [vetid, pet_id, appointment_id, service_id],
     (err, result) => {
       if (err == null) {
         res.send({
@@ -1221,9 +1250,10 @@ app.put("/vetclinic/offers/update/:vet_admin_id", (req, res) => {
   const enablePreventiveControls = req.body.enablePreventiveControls;
   const enableConsultationPhysical = req.body.enableConsultationPhysical;
   const enableOnlineConsultation = req.body.enableOnlineConsultation;
+  const enableSurgery = req.body.enableSurgery;
 
   const sqlQuery = `UPDATE vet_clinic SET enableProduct = ? , enablePharmacy = ?,  enableServices = ? , 
-  enableExamination = ? , enableVaccination = ? , enableGrooming = ? ,enablePreventiveControls = ? ,  enableConsultation = ?
+  enableExamination = ? , enableVaccination = ? , enableGrooming = ? ,enablePreventiveControls = ? ,  enableConsultation = ? , enableInHouseLab = ?
     WHERE	vet_admin_id = ?`;
   db.query(
     sqlQuery,
@@ -1236,6 +1266,7 @@ app.put("/vetclinic/offers/update/:vet_admin_id", (req, res) => {
       enableGrooming,
       enablePreventiveControls,
       enableConsultation,
+      enableSurgery,
       vet_admin_id,
     ],
     (err, result) => {
@@ -2889,7 +2920,7 @@ app.get("/appointment/viewdetails/:appointment_id", (req, res) => {
   const appointment_id = req.params.appointment_id;
   // console.log(appointment_id)
   const sqlQuery =
-    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.appointment_id = ? AND appointment.appointment_status='Done' OR appointment.appointment_status='Decline'";
+    "SELECT * FROM  pets JOIN pet_owners ON pets.pet_owner_id  =  pet_owners.pet_owner_id JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.appointment_id = ? AND appointment.appointment_status='Done' OR appointment.appointment_status='Decline'";
   db.query(sqlQuery, appointment_id, (err, result) => {
     //
     res.send(result);
@@ -3177,7 +3208,7 @@ app.get("/pending/vetclinic/length/:vetid", (req, res) => {
   const vetid = req.params.vetid;
   //console.log(vet_admin_id)
   const sqlQuery =
-    "SELECT * FROM appointment WHERE vetid=? && appointment_status='Pending'";
+    "SELECT * FROM pet_owners JOIN appointment ON pet_owners.pet_owner_id=appointment.pet_owner_id JOIN services ON services.service_id=appointment.service_id WHERE appointment.vetid = ? AND appointment.appointment_status='Pending' ORDER BY appointment.appointment_id DESC";
   db.query(sqlQuery, vetid, (err, result) => {
     res.send({
       pending: result.length,
@@ -4697,7 +4728,19 @@ app.post("/verifyEmail/vetadmin", async (req, res) => {
     from: "terravetinc@yahoo.com",
     to: email,
     subject: " TerraVet Account Verification",
-    text: `Thank you for choosing terravet, ${email}! To verify your account, kindly click the link within this email ${`${hostUrl}/verify/vetadmin/${email}`}.`,
+    html: `
+      <h3> Thenk you for choosing terravet, </h3>
+  
+      <p>To verify your account, use the button below to get started. </p>
+      <a style="background-color: #293394;
+      color: white;
+      padding: 14px 25px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;" target="_" href=${`${hostUrl}/verify/vetadmin/${email}`}>verify</a>
+      <p>If you have any questions, just reply to this email—we're always happy to help out.</p>
+      `,
   };
 
   await transporter.sendMail(mailOptions, function (error, info) {
@@ -4728,7 +4771,19 @@ app.post("/verifyEmail", async (req, res) => {
     from: "terravetinc@yahoo.com",
     to: email,
     subject: " TerraVet Account Verification",
-    text: `Thank you for choosing terravet, ${email}! To verify your account, kindly click the link within this email ${`${hostUrl}/verify/veterinarian/${email}`}.`,
+    html: `
+      <h3> Thenk you for choosing terravet, </h3>
+  
+      <p>To verify your account, use the button below to get started. </p>
+      <a style="background-color: #293394;
+      color: white;
+      padding: 14px 25px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;" target="_" href=${`${hostUrl}/verify/veterinarian/${email}`}>verify</a>
+      <p>If you have any questions, just reply to this email—we're always happy to help out.</p>
+      `,
   };
 
   await transporter.sendMail(mailOptions, function (error, info) {
@@ -4758,7 +4813,19 @@ app.post("/verifyEmail/vetStaff", async (req, res) => {
     from: "terravetinc@yahoo.com",
     to: email,
     subject: " TerraVet Account Verification",
-    text: `Thank you for choosing terravet, ${email}! To verify your account, kindly click the link within this email ${`${hostUrl}/verify/vetStaff/${email}`}.`,
+    html: `
+      <h3> Thenk you for choosing terravet, </h3>
+  
+      <p>To verify your account, use the button below to get started. </p>
+      <a style="background-color: #293394;
+      color: white;
+      padding: 14px 25px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;" target="_" href=${`${hostUrl}/verify/vetStaff/${email}`}>verify</a>
+      <p>If you have any questions, just reply to this email—we're always happy to help out.</p>
+      `,
   };
 
   await transporter.sendMail(mailOptions, function (error, info) {
@@ -5595,9 +5662,66 @@ app.put("/staff/reservation/expired/:reservedId", (req, res) => {
   });
 });
 
+// Send email veterinarian for mobile
+app.post("/verifyEmail/mobile", async (req, res) => {
+  const hostUrl = req.body.hostUrl;
+  const email = req.body.email;
+  console.log(email);
+  const verificationCode = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
+  var transporter = nodemailer.createTransport({
+    service: "yahoo",
+    auth: {
+      user: "terravetinc@yahoo.com",
+      pass: "yxftzwvsmltbnmii",
+    },
+  });
+
+  var mailOptions = {
+    from: "terravetinc@yahoo.com",
+    to: email,
+    subject: " TerraVet Account Verification",
+    html: `
+      <h3> Thenk you for choosing terravet, </h3>
+  
+      <p>To verify your account, use the button below to get started. </p>
+      <a style="background-color: #293394;
+      color: white;
+      padding: 14px 25px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;" target="_" href=${`${hostUrl}/verify/pet_owner/${email}`}>verify</a>
+      <p>If you have any questions, just reply to this email—we're always happy to help out.</p>
+      `,
+  };
+
+  await transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      res.send("error");
+    } else {
+      res.send("Success");
+    }
+  });
+});
+
+// Email verification pet owner
+app.get("/verify/pet_owner/:email", (req, res) => {
+  db.query(
+    "UPDATE pet_owners SET isVerified = true where email = ?",
+    req.params.email,
+    (err, result) => {
+      if (err == null) {
+        res.send("Email Verified");
+      } else {
+        console.log(err);
+      }
+    }
+  );
+});
+
 //------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log("Im here");
   console.log(`Running  Server ${PORT}`);
 });
