@@ -3543,9 +3543,9 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
       if (result.length > 0) {
         console.log(JSON.stringify(result[0]["userrole"]));
         // console.log(err);
-        res.send({ message: "valid number" });
+
         const accountSid = "AC1d13c48bd74f0c915a132a46f15305d1";
-        const authToken = "bc12c3de798e634ce4d7a8f8ff59dff0";
+        const authToken = "825240230eab46771d263dab5cb27577";
         const client = require("twilio")(accountSid, authToken);
 
         client.messages
@@ -3556,10 +3556,10 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
           })
           .then((message) => {
             console.log(message);
-            res.send(message);
+            res.send('Message sent');
           })
           .catch((err) => {
-            console.log("Error");
+            console.log(err);
           })
           .done();
         const sqlQueryInsert =
@@ -3577,6 +3577,7 @@ app.post("/sendSMS/:phoneNumber", (req, res) => {
       console.log("Network Error");
     }
   });
+  res.send({ message: "valid number" });
 });
 
 app.post("/sendSMS/verify/:phoneNumber", (req, res) => {
@@ -5690,7 +5691,7 @@ app.post("/verifyEmail/mobile", async (req, res) => {
       font-weight: bold;
       text-align: center;
       text-decoration: none;
-      display: inline-block;" target="_" href=${`${hostUrl}/verify/pet_owner/${email}`}>verify</a>
+      display: inline-block;" target="_" href='${`${hostUrl}/verify/pet_owner/${email}`}'>verify</a>
       <p>If you have any questions, just reply to this email—we're always happy to help out.</p>
       `,
   };
